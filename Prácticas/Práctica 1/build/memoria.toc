@@ -1,0 +1,17 @@
+\select@language {spanish}
+\select@language {spanish}
+\contentsline {section}{\numberline {1}Descripci\IeC {\'o}n de la pr\IeC {\'a}ctica}{1}
+\contentsline {section}{\numberline {2}C\IeC {\'o}digo fuente a utilizar}{1}
+\contentsline {subsection}{\numberline {2.1}Floyd}{1}
+\contentsline {subsection}{\numberline {2.2}Hanoi}{1}
+\contentsline {subsection}{\numberline {2.3}Algoritmos de ordenaci\IeC {\'o}n}{1}
+\contentsline {subsubsection}{\numberline {2.3.1}Burbuja}{1}
+\contentsline {subsubsection}{\numberline {2.3.2}Selecci\IeC {\'o}n}{1}
+\contentsline {subsubsection}{\numberline {2.3.3}Inserci\IeC {\'o}n}{1}
+\contentsline {subsubsection}{\numberline {2.3.4}\textit {Heapsort}}{1}
+\contentsline {subsubsection}{\numberline {2.3.5}\textit {Mergesort}}{1}
+\contentsline {subsubsection}{\numberline {2.3.6}\textit {Quicksort}}{1}
+\contentsline {section}{\numberline {3}C\IeC {\'a}lculo de la eficiencia emp\IeC {\'\i }rica}{1}
+\contentsline {subsection}{\numberline {3.1}Gr\IeC {\'a}ficas comparativas}{1}
+\contentsline {subsection}{\numberline {3.2}Comprobaci\IeC {\'o}n del Principio de Invarianza}{1}
+\contentsline {section}{\numberline {4}C\IeC {\'a}lculo de la eficiencia h\IeC {\'\i }brida}{2}

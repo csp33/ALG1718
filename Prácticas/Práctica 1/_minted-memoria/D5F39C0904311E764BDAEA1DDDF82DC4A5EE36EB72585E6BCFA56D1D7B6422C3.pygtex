@@ -1,0 +1,147 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+cp}{\PYGZsh{}include} \PYG{c+cpf}{\PYGZlt{}iostream\PYGZgt{}}
+\PYG{k}{using} \PYG{k}{namespace} \PYG{n}{std}\PYG{p}{;}
+\PYG{c+cp}{\PYGZsh{}include} \PYG{c+cpf}{\PYGZlt{}ctime\PYGZgt{}}
+\PYG{c+cp}{\PYGZsh{}include} \PYG{c+cpf}{\PYGZlt{}cstdlib\PYGZgt{}}
+\PYG{c+cp}{\PYGZsh{}include} \PYG{c+cpf}{\PYGZlt{}climits\PYGZgt{}}
+\PYG{c+cp}{\PYGZsh{}include} \PYG{c+cpf}{\PYGZlt{}cassert\PYGZgt{}}
+\PYG{c+cp}{\PYGZsh{}include} \PYG{c+cpf}{\PYGZlt{}cmath\PYGZgt{}}
+
+\PYG{k}{static} \PYG{k+kt}{int} \PYG{k}{const} \PYG{n}{MAX\PYGZus{}LONG}  \PYG{o}{=} \PYG{l+m+mi}{10}\PYG{p}{;}
+
+\PYG{c+cm}{/**}
+\PYG{c+cm}{   @brief Reserva espacio en memoria dinámica para una matriz cuadrada.}
+
+\PYG{c+cm}{   @param dim: dimensión de la matriz. dim \PYGZgt{} 0.}
+
+\PYG{c+cm}{   @returns puntero a la zona de memoria reservada.}
+\PYG{c+cm}{*/}
+\PYG{k+kt}{int} \PYG{o}{**} \PYG{n+nf}{ReservaMatriz}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{dim}\PYG{p}{);}
+
+\PYG{c+cm}{/**}
+\PYG{c+cm}{   @brief Libera el espacio asignado a una matriz cuadrada.}
+
+\PYG{c+cm}{   @param M: puntero a la zona de memoria reservada. Es MODIFICADO.}
+\PYG{c+cm}{   @param dim: dimensión de la matriz. dim \PYGZgt{} 0.}
+
+\PYG{c+cm}{   Liberar la zona memoria asignada a M y lo pone a NULL.}
+\PYG{c+cm}{*/}
+\PYG{k+kt}{void} \PYG{n+nf}{LiberaMatriz}\PYG{p}{(}\PYG{k+kt}{int} \PYG{o}{**} \PYG{o}{\PYGZam{}} \PYG{n}{M}\PYG{p}{,} \PYG{k+kt}{int} \PYG{n}{dim}\PYG{p}{);}
+
+\PYG{c+cm}{/**}
+\PYG{c+cm}{   @brief Rellena una matriz cuadrada con valores aleaotorias.}
+
+\PYG{c+cm}{   @param M: puntero a la zona de memoria reservada. Es MODIFICADO.}
+\PYG{c+cm}{   @param dim: dimensión de la matriz. dim \PYGZgt{} 0.}
+
+\PYG{c+cm}{   Asigna un valor aleatorio entero de [0, MAX\PYGZus{}LONG \PYGZhy{} 1] a cada}
+\PYG{c+cm}{   elemento de la matriz M, salvo los de la diagonal principal}
+\PYG{c+cm}{   que quedan a 0..}
+\PYG{c+cm}{*/}
+\PYG{k+kt}{void} \PYG{n+nf}{RellenaMatriz}\PYG{p}{(}\PYG{k+kt}{int} \PYG{o}{**}\PYG{n}{M}\PYG{p}{,} \PYG{k+kt}{int} \PYG{n}{dim}\PYG{p}{);}
+
+\PYG{c+cm}{/**}
+\PYG{c+cm}{   @brief Cálculo de caminos mínimos.}
+
+\PYG{c+cm}{   @param M: Matriz de longitudes de los caminos. Es MODIFICADO.}
+\PYG{c+cm}{   @param dim: dimensión de la matriz. dim \PYGZgt{} 0.}
+
+\PYG{c+cm}{   Calcula la longitud del camino mínimo entre cada par de nodos (i,j),}
+\PYG{c+cm}{   que se almacena en M[i][j].}
+\PYG{c+cm}{*/}
+\PYG{k+kt}{void} \PYG{n+nf}{Floyd}\PYG{p}{(}\PYG{k+kt}{int} \PYG{o}{**}\PYG{n}{M}\PYG{p}{,} \PYG{k+kt}{int} \PYG{n}{dim}\PYG{p}{);}
+
+
+\PYG{c+cm}{/**}
+\PYG{c+cm}{   Implementación de las funciones}
+\PYG{c+cm}{**/}
+
+\PYG{k+kt}{int} \PYG{o}{**} \PYG{n+nf}{ReservaMatriz}\PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{dim}\PYG{p}{)}
+\PYG{p}{\PYGZob{}}
+  \PYG{k+kt}{int} \PYG{o}{**}\PYG{n}{M}\PYG{p}{;}
+  \PYG{k}{if} \PYG{p}{(}\PYG{n}{dim}  \PYG{o}{\PYGZlt{}=} \PYG{l+m+mi}{0}\PYG{p}{)}
+    \PYG{p}{\PYGZob{}}
+      \PYG{n}{cerr}\PYG{o}{\PYGZlt{}\PYGZlt{}} \PYG{l+s}{\PYGZdq{}}\PYG{l+s+se}{\PYGZbs{}n}\PYG{l+s}{ ERROR: Dimension de la matriz debe ser mayor que 0\PYGZdq{}} \PYG{o}{\PYGZlt{}\PYGZlt{}} \PYG{n}{endl}\PYG{p}{;}
+      \PYG{n}{exit}\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{p}{);}
+    \PYG{p}{\PYGZcb{}}
+  \PYG{n}{M} \PYG{o}{=} \PYG{k}{new} \PYG{k+kt}{int} \PYG{o}{*} \PYG{p}{[}\PYG{n}{dim}\PYG{p}{];}
+  \PYG{k}{if} \PYG{p}{(}\PYG{n}{M} \PYG{o}{==} \PYG{n+nb}{NULL}\PYG{p}{)}
+    \PYG{p}{\PYGZob{}}
+      \PYG{n}{cerr} \PYG{o}{\PYGZlt{}\PYGZlt{}} \PYG{l+s}{\PYGZdq{}}\PYG{l+s+se}{\PYGZbs{}n}\PYG{l+s}{ ERROR: No puedo reservar memoria para un matriz de \PYGZdq{}}
+	   \PYG{o}{\PYGZlt{}\PYGZlt{}} \PYG{n}{dim} \PYG{o}{\PYGZlt{}\PYGZlt{}} \PYG{l+s}{\PYGZdq{} x \PYGZdq{}} \PYG{o}{\PYGZlt{}\PYGZlt{}} \PYG{n}{dim} \PYG{o}{\PYGZlt{}\PYGZlt{}} \PYG{l+s}{\PYGZdq{}elementos\PYGZdq{}} \PYG{o}{\PYGZlt{}\PYGZlt{}} \PYG{n}{endl}\PYG{p}{;}
+      \PYG{n}{exit}\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{p}{);}
+    \PYG{p}{\PYGZcb{}}
+  \PYG{k}{for} \PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{i} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;} \PYG{n}{i} \PYG{o}{\PYGZlt{}} \PYG{n}{dim}\PYG{p}{;} \PYG{n}{i}\PYG{o}{++}\PYG{p}{)}
+    \PYG{p}{\PYGZob{}}
+      \PYG{n}{M}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]}\PYG{o}{=} \PYG{k}{new} \PYG{k+kt}{int} \PYG{p}{[}\PYG{n}{dim}\PYG{p}{];}
+      \PYG{k}{if} \PYG{p}{(}\PYG{n}{M}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]} \PYG{o}{==} \PYG{n+nb}{NULL}\PYG{p}{)}
+	\PYG{p}{\PYGZob{}}
+	  \PYG{n}{cerr} \PYG{o}{\PYGZlt{}\PYGZlt{}} \PYG{l+s}{\PYGZdq{}ERROR: No puedo reservar memoria para un matriz de \PYGZdq{}}
+	       \PYG{o}{\PYGZlt{}\PYGZlt{}} \PYG{n}{dim} \PYG{o}{\PYGZlt{}\PYGZlt{}} \PYG{l+s}{\PYGZdq{} x \PYGZdq{}} \PYG{o}{\PYGZlt{}\PYGZlt{}} \PYG{n}{dim} \PYG{o}{\PYGZlt{}\PYGZlt{}} \PYG{n}{endl}\PYG{p}{;}
+	  \PYG{k}{for} \PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{j} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;} \PYG{n}{j} \PYG{o}{\PYGZlt{}} \PYG{n}{i}\PYG{p}{;} \PYG{n}{j}\PYG{o}{++}\PYG{p}{)}
+	    \PYG{k}{delete} \PYG{p}{[]} \PYG{n}{M}\PYG{p}{[}\PYG{n}{i}\PYG{p}{];}
+	  \PYG{k}{delete} \PYG{p}{[]} \PYG{n}{M}\PYG{p}{;}
+	  \PYG{n}{exit}\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{p}{);}
+	\PYG{p}{\PYGZcb{}}
+    \PYG{p}{\PYGZcb{}}
+  \PYG{k}{return} \PYG{n}{M}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+
+\PYG{k+kt}{void} \PYG{n+nf}{LiberaMatriz}\PYG{p}{(}\PYG{k+kt}{int} \PYG{o}{**} \PYG{o}{\PYGZam{}} \PYG{n}{M}\PYG{p}{,} \PYG{k+kt}{int} \PYG{n}{dim}\PYG{p}{)}
+\PYG{p}{\PYGZob{}}
+  \PYG{k}{for} \PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{i} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;} \PYG{n}{i} \PYG{o}{\PYGZlt{}} \PYG{n}{dim}\PYG{p}{;} \PYG{n}{i}\PYG{o}{++}\PYG{p}{)}
+    \PYG{k}{delete} \PYG{p}{[]} \PYG{n}{M}\PYG{p}{[}\PYG{n}{i}\PYG{p}{];}
+  \PYG{k}{delete} \PYG{p}{[]} \PYG{n}{M}\PYG{p}{;}
+  \PYG{n}{M} \PYG{o}{=} \PYG{n+nb}{NULL}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+
+
+\PYG{k+kt}{void} \PYG{n+nf}{RellenaMatriz}\PYG{p}{(}\PYG{k+kt}{int} \PYG{o}{**}\PYG{n}{M}\PYG{p}{,} \PYG{k+kt}{int} \PYG{n}{dim}\PYG{p}{)}
+\PYG{p}{\PYGZob{}}
+  \PYG{k}{for} \PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{i} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;} \PYG{n}{i} \PYG{o}{\PYGZlt{}} \PYG{n}{dim}\PYG{p}{;} \PYG{n}{i}\PYG{o}{++}\PYG{p}{)}
+    \PYG{k}{for} \PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{j} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;} \PYG{n}{j} \PYG{o}{\PYGZlt{}} \PYG{n}{dim}\PYG{p}{;} \PYG{n}{j}\PYG{o}{++}\PYG{p}{)}
+      \PYG{k}{if} \PYG{p}{(}\PYG{n}{i} \PYG{o}{!=} \PYG{n}{j}\PYG{p}{)}
+	\PYG{n}{M}\PYG{p}{[}\PYG{n}{i}\PYG{p}{][}\PYG{n}{j}\PYG{p}{]}\PYG{o}{=} \PYG{p}{(}\PYG{n}{rand}\PYG{p}{()} \PYG{o}{\PYGZpc{}} \PYG{n}{MAX\PYGZus{}LONG}\PYG{p}{);}
+\PYG{p}{\PYGZcb{}}
+
+\PYG{k+kt}{void} \PYG{n+nf}{Floyd}\PYG{p}{(}\PYG{k+kt}{int} \PYG{o}{**}\PYG{n}{M}\PYG{p}{,} \PYG{k+kt}{int} \PYG{n}{dim}\PYG{p}{)}
+\PYG{p}{\PYGZob{}}
+	\PYG{k}{for} \PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{k} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;} \PYG{n}{k} \PYG{o}{\PYGZlt{}} \PYG{n}{dim}\PYG{p}{;} \PYG{n}{k}\PYG{o}{++}\PYG{p}{)}
+	  \PYG{k}{for} \PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{i} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;} \PYG{n}{i} \PYG{o}{\PYGZlt{}} \PYG{n}{dim}\PYG{p}{;}\PYG{n}{i}\PYG{o}{++}\PYG{p}{)}
+	    \PYG{k}{for} \PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{j} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;} \PYG{n}{j} \PYG{o}{\PYGZlt{}} \PYG{n}{dim}\PYG{p}{;}\PYG{n}{j}\PYG{o}{++}\PYG{p}{)}
+	      \PYG{p}{\PYGZob{}}
+		\PYG{k+kt}{int} \PYG{n}{sum} \PYG{o}{=} \PYG{n}{M}\PYG{p}{[}\PYG{n}{i}\PYG{p}{][}\PYG{n}{k}\PYG{p}{]} \PYG{o}{+} \PYG{n}{M}\PYG{p}{[}\PYG{n}{k}\PYG{p}{][}\PYG{n}{j}\PYG{p}{];}
+	    	\PYG{n}{M}\PYG{p}{[}\PYG{n}{i}\PYG{p}{][}\PYG{n}{j}\PYG{p}{]} \PYG{o}{=} \PYG{p}{(}\PYG{n}{M}\PYG{p}{[}\PYG{n}{i}\PYG{p}{][}\PYG{n}{j}\PYG{p}{]} \PYG{o}{\PYGZgt{}} \PYG{n}{sum}\PYG{p}{)} \PYG{o}{?} \PYG{n+nl}{sum} \PYG{p}{:} \PYG{n}{M}\PYG{p}{[}\PYG{n}{i}\PYG{p}{][}\PYG{n}{j}\PYG{p}{];}
+	      \PYG{p}{\PYGZcb{}}
+\PYG{p}{\PYGZcb{}}
+
+\PYG{k+kt}{int} \PYG{n+nf}{main} \PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{argc}\PYG{p}{,} \PYG{k+kt}{char} \PYG{o}{**}\PYG{n}{argv}\PYG{p}{)}
+\PYG{p}{\PYGZob{}}
+\PYG{c+c1}{//  clock\PYGZus{}t tantes;    // Valor del reloj antes de la ejecución}
+\PYG{c+c1}{//  clock\PYGZus{}t tdespues;  // Valor del reloj después de la ejecución}
+  \PYG{k+kt}{int} \PYG{n}{dim}\PYG{p}{;}           \PYG{c+c1}{// Dimensión de la matriz}
+
+  \PYG{c+c1}{//Lectura de los parametros de entrada}
+  \PYG{k}{if} \PYG{p}{(}\PYG{n}{argc} \PYG{o}{!=} \PYG{l+m+mi}{2}\PYG{p}{)}
+    \PYG{p}{\PYGZob{}}
+      \PYG{n}{cout} \PYG{o}{\PYGZlt{}\PYGZlt{}} \PYG{l+s}{\PYGZdq{}Parámetros de entrada: \PYGZdq{}} \PYG{o}{\PYGZlt{}\PYGZlt{}} \PYG{n}{endl}
+	   \PYG{o}{\PYGZlt{}\PYGZlt{}} \PYG{l+s}{\PYGZdq{}1.\PYGZhy{} Número de nodos\PYGZdq{}} \PYG{o}{\PYGZlt{}\PYGZlt{}} \PYG{n}{endl} \PYG{o}{\PYGZlt{}\PYGZlt{}} \PYG{n}{endl}\PYG{p}{;}
+      \PYG{k}{return} \PYG{l+m+mi}{1}\PYG{p}{;}
+    \PYG{p}{\PYGZcb{}}
+
+  \PYG{n}{dim} \PYG{o}{=} \PYG{n}{atoi}\PYG{p}{(}\PYG{n}{argv}\PYG{p}{[}\PYG{l+m+mi}{1}\PYG{p}{]);}
+  \PYG{k+kt}{int} \PYG{o}{**} \PYG{n}{M} \PYG{o}{=} \PYG{n}{ReservaMatriz}\PYG{p}{(}\PYG{n}{dim}\PYG{p}{);}
+
+  \PYG{n}{RellenaMatriz}\PYG{p}{(}\PYG{n}{M}\PYG{p}{,}\PYG{n}{dim}\PYG{p}{);}
+
+
+  \PYG{c+c1}{// Empieza el algoritmo de floyd}
+\PYG{c+c1}{//  tantes = clock();}
+  \PYG{n}{Floyd}\PYG{p}{(}\PYG{n}{M}\PYG{p}{,}\PYG{n}{dim}\PYG{p}{);}
+\PYG{c+c1}{//  tdespues = clock();}
+\PYG{c+c1}{//  cout \PYGZlt{}\PYGZlt{} \PYGZdq{}Tiempo: \PYGZdq{} \PYGZlt{}\PYGZlt{} ((double)(tdespues\PYGZhy{}tantes))/CLOCKS\PYGZus{}PER\PYGZus{}SEC \PYGZlt{}\PYGZlt{} \PYGZdq{} s\PYGZdq{} \PYGZlt{}\PYGZlt{} endl;}
+  \PYG{n}{LiberaMatriz}\PYG{p}{(}\PYG{n}{M}\PYG{p}{,}\PYG{n}{dim}\PYG{p}{);}
+
+  \PYG{k}{return} \PYG{l+m+mi}{0}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+\end{Verbatim}

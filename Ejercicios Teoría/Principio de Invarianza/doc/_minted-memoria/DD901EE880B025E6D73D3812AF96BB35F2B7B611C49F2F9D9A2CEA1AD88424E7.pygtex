@@ -1,0 +1,39 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k+kd}{public} \PYG{k+kd}{class} \PYG{n+nc}{BurbujaJava} \PYG{o}{\PYGZob{}}
+    \PYG{k+kd}{public} \PYG{k+kd}{static} \PYG{k+kt}{void} \PYG{n+nf}{Burbuja} \PYG{o}{(}\PYG{k+kt}{double} \PYG{o}{[]} \PYG{n}{v}\PYG{o}{,} \PYG{k+kt}{int} \PYG{n}{posini}\PYG{o}{,} \PYG{k+kt}{int} \PYG{n}{posfin}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+        \PYG{k+kt}{int} \PYG{n}{i}\PYG{o}{,} \PYG{n}{j}\PYG{o}{;}
+        \PYG{k+kt}{double} \PYG{n}{aux}\PYG{o}{;}
+        \PYG{k+kt}{boolean} \PYG{n}{haycambios}\PYG{o}{=} \PYG{k+kc}{true}\PYG{o}{;}
+        \PYG{n}{i}\PYG{o}{=} \PYG{n}{posini}\PYG{o}{;}
+        \PYG{k}{while} \PYG{o}{(}\PYG{n}{haycambios}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+            \PYG{n}{haycambios}\PYG{o}{=}\PYG{k+kc}{false}\PYG{o}{;} \PYG{c+c1}{// Suponemos vector ya ordenado}
+            \PYG{c+c1}{// Recorremos vector de final a i}
+            \PYG{k}{for} \PYG{o}{(}\PYG{n}{j}\PYG{o}{=} \PYG{n}{posfin}\PYG{o}{;} \PYG{n}{j}\PYG{o}{\PYGZgt{}}\PYG{n}{i}\PYG{o}{;} \PYG{n}{j}\PYG{o}{\PYGZhy{}\PYGZhy{})} \PYG{o}{\PYGZob{}}
+                \PYG{c+c1}{// Dos elementos consecutivos mal ordenados}
+                \PYG{k}{if} \PYG{o}{(}\PYG{n}{v}\PYG{o}{[}\PYG{n}{j}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{o}{]\PYGZgt{}}\PYG{n}{v}\PYG{o}{[}\PYG{n}{j}\PYG{o}{])} \PYG{o}{\PYGZob{}}
+                    \PYG{n}{aux}\PYG{o}{=} \PYG{n}{v}\PYG{o}{[}\PYG{n}{j}\PYG{o}{];} \PYG{c+c1}{// Los intercambiamos}
+                    \PYG{n}{v}\PYG{o}{[}\PYG{n}{j}\PYG{o}{]=} \PYG{n}{v}\PYG{o}{[}\PYG{n}{j}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{o}{];}
+                    \PYG{n}{v}\PYG{o}{[}\PYG{n}{j}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{o}{]=} \PYG{n}{aux}\PYG{o}{;}
+                    \PYG{c+c1}{// Al intercambiar, hay cambio}
+                    \PYG{n}{haycambios}\PYG{o}{=} \PYG{k+kc}{true}\PYG{o}{;}
+                \PYG{o}{\PYGZcb{}}
+            \PYG{o}{\PYGZcb{}}
+            \PYG{n}{i}\PYG{o}{++;}
+        \PYG{o}{\PYGZcb{}}
+    \PYG{o}{\PYGZcb{}}
+    \PYG{k+kd}{public} \PYG{k+kd}{static} \PYG{k+kt}{void} \PYG{n+nf}{main}\PYG{o}{(}\PYG{n}{String}\PYG{o}{[]} \PYG{n}{args}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+        \PYG{k+kd}{final} \PYG{k+kt}{int} \PYG{n}{SIZE}\PYG{o}{=} \PYG{l+m+mi}{20000}\PYG{o}{;}
+        \PYG{k+kt}{double} \PYG{o}{[]}\PYG{n}{vect}\PYG{o}{=} \PYG{k}{new} \PYG{k+kt}{double}\PYG{o}{[}\PYG{n}{SIZE}\PYG{o}{];}
+        \PYG{k+kt}{long} \PYG{n}{tini}\PYG{o}{,} \PYG{n}{tfin}\PYG{o}{;}
+        \PYG{k}{for} \PYG{o}{(}\PYG{k+kt}{int} \PYG{n}{TAM}\PYG{o}{=} \PYG{l+m+mi}{1000}\PYG{o}{;} \PYG{n}{TAM}\PYG{o}{\PYGZlt{}=}\PYG{n}{SIZE}\PYG{o}{;} \PYG{n}{TAM}\PYG{o}{+=} \PYG{l+m+mi}{1000}\PYG{o}{)} \PYG{o}{\PYGZob{}}
+            \PYG{c+c1}{// Ejemplo: Vector al revés}
+            \PYG{k}{for} \PYG{o}{(}\PYG{k+kt}{int} \PYG{n}{i}\PYG{o}{=} \PYG{l+m+mi}{0}\PYG{o}{;} \PYG{n}{i}\PYG{o}{\PYGZlt{}}\PYG{n}{TAM}\PYG{o}{;} \PYG{n}{i}\PYG{o}{++)}
+                \PYG{n}{vect}\PYG{o}{[}\PYG{n}{i}\PYG{o}{]=} \PYG{n}{TAM}\PYG{o}{\PYGZhy{}}\PYG{n}{i}\PYG{o}{;}
+            \PYG{n}{tini}\PYG{o}{=} \PYG{n}{System}\PYG{o}{.}\PYG{n+na}{currentTimeMillis}\PYG{o}{();} \PYG{c+c1}{// Tiempo inicial}
+            \PYG{n}{Burbuja}\PYG{o}{(}\PYG{n}{vect}\PYG{o}{,} \PYG{l+m+mi}{0}\PYG{o}{,} \PYG{n}{TAM}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{o}{);}
+            \PYG{n}{tfin}\PYG{o}{=} \PYG{n}{System}\PYG{o}{.}\PYG{n+na}{currentTimeMillis}\PYG{o}{();} \PYG{c+c1}{// Tiempo final}
+            \PYG{n}{System}\PYG{o}{.}\PYG{n+na}{out}\PYG{o}{.}\PYG{n+na}{println}\PYG{o}{(}\PYG{l+s}{\PYGZdq{}N: \PYGZdq{}}\PYG{o}{+}\PYG{n}{TAM}\PYG{o}{+}\PYG{l+s}{\PYGZdq{} T (ms): \PYGZdq{}}\PYG{o}{+(}\PYG{n}{tfin}\PYG{o}{\PYGZhy{}}\PYG{n}{tini}\PYG{o}{));}
+        \PYG{o}{\PYGZcb{}}
+    \PYG{o}{\PYGZcb{}}
+\PYG{o}{\PYGZcb{}}
+\end{Verbatim}
