@@ -1,0 +1,39 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c}{\PYGZsh{}Definimos etiquetas}
+\PYG{n+nv}{DOC}\PYG{o}{=}doc
+\PYG{n+nv}{SRC}\PYG{o}{=}src
+\PYG{n+nv}{OUTPUTFOLDER}\PYG{o}{=}output
+\PYG{n+nv}{CPPNAME}\PYG{o}{=}BurbujaC
+\PYG{n+nv}{JAVANAME}\PYG{o}{=}BurbujaJava
+\PYG{n+nv}{CPPOUTPUT}\PYG{o}{=}cpp.out
+\PYG{n+nv}{JAVAOUTPUT}\PYG{o}{=}java.out
+
+\PYG{c}{\PYGZsh{}Compilar el archivo C++}
+\PYG{n+nf}{all }\PYG{o}{:} \PYG{n}{ejecutar}
+
+\PYG{n+nf}{cpp }\PYG{o}{:}
+	g++ \PYGZhy{}o \PYG{k}{\PYGZdl{}(}SRC\PYG{k}{)}/\PYG{k}{\PYGZdl{}(}CPPNAME\PYG{k}{)} \PYG{k}{\PYGZdl{}(}SRC\PYG{k}{)}/\PYG{k}{\PYGZdl{}(}CPPNAME\PYG{k}{)}.cpp
+
+\PYG{c}{\PYGZsh{}Compilar el archivo Java}
+
+\PYG{n+nf}{java }\PYG{o}{:}
+	javac \PYG{k}{\PYGZdl{}(}SRC\PYG{k}{)}/\PYG{k}{\PYGZdl{}(}JAVANAME\PYG{k}{)}.java
+
+\PYG{c}{\PYGZsh{}Ejecutamos cada uno y guardamos en la salida}
+
+\PYG{n+nf}{ejecutar }\PYG{o}{:} \PYG{n}{cpp} \PYG{n}{java}
+		\PYG{n+nb}{cd} \PYG{k}{\PYGZdl{}(}SRC\PYG{k}{)}\PYG{p}{;}./\PYG{k}{\PYGZdl{}(}CPPNAME\PYG{k}{)} \PYGZgt{} ../\PYG{k}{\PYGZdl{}(}OUTPUTFOLDER\PYG{k}{)}/\PYG{k}{\PYGZdl{}(}CPPOUTPUT\PYG{k}{)}
+		\PYG{n+nb}{cd} \PYG{k}{\PYGZdl{}(}SRC\PYG{k}{)}\PYG{p}{;}java \PYG{k}{\PYGZdl{}(}JAVANAME\PYG{k}{)} \PYGZgt{} ../\PYG{k}{\PYGZdl{}(}OUTPUTFOLDER\PYG{k}{)}/\PYG{k}{\PYGZdl{}(}JAVAOUTPUT\PYG{k}{)}
+\PYG{c}{\PYGZsh{}LaTEX}
+
+\PYG{n+nf}{memoria }\PYG{o}{:}
+	pdflatex \PYGZhy{}shell\PYGZhy{}escape \PYGZhy{}synctex\PYG{o}{=}\PYG{l+m}{1} \PYGZhy{}interaction\PYG{o}{=}nonstopmode \PYG{k}{\PYGZdl{}(}DOC\PYG{k}{)}/memoria.tex
+
+\PYG{c}{\PYGZsh{}Limpiar}
+
+\PYG{n+nf}{clean }\PYG{o}{:}
+	rm \PYGZhy{}f \PYG{k}{\PYGZdl{}(}SRC\PYG{k}{)}/\PYG{k}{\PYGZdl{}(}CPPNAME\PYG{k}{)} \PYG{k}{\PYGZdl{}(}SRC\PYG{k}{)}/\PYG{k}{\PYGZdl{}(}JAVANAME\PYG{k}{)}
+
+\PYG{n+nf}{mrproper }\PYG{o}{:} \PYG{n}{clean}
+	rm \PYGZhy{}f \PYG{k}{\PYGZdl{}(}OUTPUTFOLDER\PYG{k}{)}/*
+\end{Verbatim}

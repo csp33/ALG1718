@@ -1,0 +1,43 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+cp}{\PYGZsh{}include} \PYG{c+cpf}{\PYGZlt{}iostream\PYGZgt{}}
+\PYG{c+cp}{\PYGZsh{}include} \PYG{c+cpf}{\PYGZlt{}ctime\PYGZgt{}}
+\PYG{k}{using} \PYG{k}{namespace} \PYG{n}{std}\PYG{p}{;}
+
+\PYG{k+kt}{void} \PYG{n+nf}{Burbuja}\PYG{p}{(}\PYG{k+kt}{double} \PYG{o}{*}\PYG{n}{v}\PYG{p}{,} \PYG{k+kt}{int} \PYG{n}{posini}\PYG{p}{,} \PYG{k+kt}{int} \PYG{n}{posfin}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+    \PYG{k+kt}{int} \PYG{n}{i}\PYG{p}{,} \PYG{n}{j}\PYG{p}{;}
+    \PYG{k+kt}{double} \PYG{n}{aux}\PYG{p}{;}
+    \PYG{k+kt}{bool} \PYG{n}{haycambios}\PYG{o}{=} \PYG{n+nb}{true}\PYG{p}{;}
+    \PYG{n}{i}\PYG{o}{=} \PYG{n}{posini}\PYG{p}{;}
+    \PYG{k}{while} \PYG{p}{(}\PYG{n}{haycambios}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+        \PYG{n}{haycambios}\PYG{o}{=}\PYG{n+nb}{false}\PYG{p}{;} \PYG{c+c1}{// Suponemos vector ya ordenado}
+        \PYG{c+c1}{// Recorremos vector de final a i}
+        \PYG{k}{for} \PYG{p}{(}\PYG{n}{j}\PYG{o}{=} \PYG{n}{posfin}\PYG{p}{;} \PYG{n}{j}\PYG{o}{\PYGZgt{}}\PYG{n}{i}\PYG{p}{;} \PYG{n}{j}\PYG{o}{\PYGZhy{}\PYGZhy{}}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+            \PYG{c+c1}{// Dos elementos consecutivos mal ordenados}
+            \PYG{k}{if} \PYG{p}{(}\PYG{n}{v}\PYG{p}{[}\PYG{n}{j}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{]}\PYG{o}{\PYGZgt{}}\PYG{n}{v}\PYG{p}{[}\PYG{n}{j}\PYG{p}{])} \PYG{p}{\PYGZob{}}
+                \PYG{n}{aux}\PYG{o}{=} \PYG{n}{v}\PYG{p}{[}\PYG{n}{j}\PYG{p}{];} \PYG{c+c1}{// Los intercambiamos}
+                \PYG{n}{v}\PYG{p}{[}\PYG{n}{j}\PYG{p}{]}\PYG{o}{=} \PYG{n}{v}\PYG{p}{[}\PYG{n}{j}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{];}
+                \PYG{n}{v}\PYG{p}{[}\PYG{n}{j}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{]}\PYG{o}{=} \PYG{n}{aux}\PYG{p}{;}
+                \PYG{c+c1}{// Al intercambiar, hay cambio}
+                \PYG{n}{haycambios}\PYG{o}{=} \PYG{n+nb}{true}\PYG{p}{;}
+            \PYG{p}{\PYGZcb{}}
+        \PYG{p}{\PYGZcb{}}
+        \PYG{n}{i}\PYG{o}{++}\PYG{p}{;}
+	\PYG{p}{\PYGZcb{}}
+\PYG{p}{\PYGZcb{}}
+
+\PYG{k+kt}{int} \PYG{n+nf}{main}\PYG{p}{()}
+\PYG{p}{\PYGZob{}}
+    \PYG{k}{const} \PYG{k+kt}{int} \PYG{n}{SIZE}\PYG{o}{=} \PYG{l+m+mi}{20000}\PYG{p}{;}
+    \PYG{k+kt}{double} \PYG{n}{vect}\PYG{p}{[}\PYG{n}{SIZE}\PYG{p}{];}
+    \PYG{k+kt}{unsigned} \PYG{k+kt}{long} \PYG{n}{tini}\PYG{p}{,} \PYG{n}{tfin}\PYG{p}{;}
+    \PYG{k}{for} \PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{TAM}\PYG{o}{=} \PYG{l+m+mi}{1000}\PYG{p}{;} \PYG{n}{TAM}\PYG{o}{\PYGZlt{}=}\PYG{n}{SIZE}\PYG{p}{;} \PYG{n}{TAM}\PYG{o}{+=} \PYG{l+m+mi}{1000}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+        \PYG{k}{for} \PYG{p}{(}\PYG{k+kt}{int} \PYG{n}{i}\PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{;} \PYG{n}{i}\PYG{o}{\PYGZlt{}}\PYG{n}{TAM}\PYG{p}{;} \PYG{n}{i}\PYG{o}{++}\PYG{p}{)}
+            \PYG{n}{vect}\PYG{p}{[}\PYG{n}{i}\PYG{p}{]}\PYG{o}{=} \PYG{n}{TAM}\PYG{o}{\PYGZhy{}}\PYG{n}{i}\PYG{p}{;}
+        \PYG{n}{tini}\PYG{o}{=} \PYG{n}{clock}\PYG{p}{();} \PYG{c+c1}{// Tiempo inicial}
+        \PYG{n}{Burbuja}\PYG{p}{(}\PYG{n}{vect}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{n}{TAM}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{);}
+        \PYG{n}{tfin}\PYG{o}{=} \PYG{n}{clock}\PYG{p}{();} \PYG{c+c1}{// Tiempo final}
+        \PYG{n}{cout}\PYG{o}{\PYGZlt{}\PYGZlt{}}\PYG{l+s}{\PYGZdq{}N: \PYGZdq{}}\PYG{o}{\PYGZlt{}\PYGZlt{}}\PYG{n}{TAM}\PYG{o}{\PYGZlt{}\PYGZlt{}}\PYG{l+s}{\PYGZdq{} T (ms.): \PYGZdq{}}\PYG{o}{\PYGZlt{}\PYGZlt{}}\PYG{l+m+mf}{1000.0}\PYG{o}{*}\PYG{p}{(}\PYG{n}{tfin}\PYG{o}{\PYGZhy{}}\PYG{n}{tini}\PYG{p}{)}\PYG{o}{/}\PYG{p}{(}\PYG{k+kt}{double}\PYG{p}{)}\PYG{n}{CLOCKS\PYGZus{}PER\PYGZus{}SEC}\PYG{o}{\PYGZlt{}\PYGZlt{}}\PYG{n}{endl}\PYG{p}{;}
+    \PYG{p}{\PYGZcb{}}
+    \PYG{k}{return} \PYG{l+m+mi}{0}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+\end{Verbatim}
