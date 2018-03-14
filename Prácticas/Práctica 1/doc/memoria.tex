@@ -1207,6 +1207,7 @@ int main(int argc, char * argv[])
 
 \section{Cálculo de la eficiencia empírica}
 Hemos ejecutado cada código 25 veces mediante la creación de dos scripts en Shell Bash, uno que ejecuta cada programa individualmente y otro que se sirve del primero para ejecutarlos todos con tamaños acordes a su eficiencia.
+\begin{listing}[H]
 \begin{minted}[linenos]{bash}
 #!/bin/bash
 if [ $# -eq 3 ]
@@ -1227,13 +1228,13 @@ else
 echo "Error de argumentos"
 fi
 \end{minted}
-\begin{center}
-Primer script
-\end{center}
+\caption{Script individual}
+\end{listing}
 \newpage
-\begin{minted}[linenos]{bash}
-#!/bin/bash
 
+\begin{listing}[H]
+\begin{minted}[linenos]{bash}
+	#!/bin/bash
 echo "Ejecutando burbuja..."
 ./individual.sh burbuja 1000 1000
 echo "Ejecutando insercion..."
@@ -1251,9 +1252,39 @@ echo "Ejecutando hanoi..."
 echo "Ejecutando floyd..."
 ./individual.sh floyd 100 100
 \end{minted}
-\begin{center}
-Segundo script
-\end{center}
+\caption{Script conjunto}
+\end{listing}
+
+También hemos escrito un archivo \textit{Makefile} para que la compilación sea más sencilla.
+\begin{listing}[H]
+\begin{minted}[fontsize=\tiny]{makefile}
+	DOC=doc
+	SRC=src
+	OUT=out
+	BIN=src
+
+	all : todos
+	todos : burbuja floyd hanoi heapsort insercion mergesort quicksort seleccion
+		cd $(SRC) ; ./todos.sh
+	burbuja : 
+		g++ -o ./$(BIN)/burbuja ./$(SRC)/burbuja.cpp
+	floyd : 
+		g++ -o ./$(BIN)/floyd ./$(SRC)/floyd.cpp
+	hanoi : 
+		g++ -o ./$(BIN)/hanoi ./$(SRC)/hanoi.cpp
+	heapsort : 
+		g++ -o ./$(BIN)/heapsort ./$(SRC)/heapsort.cpp
+	insercion : 
+		g++ -o ./$(BIN)/insercion ./$(SRC)/insercion.cpp
+	mergesort : 
+		g++ -o ./$(BIN)/mergesort ./$(SRC)/mergesort.cpp
+	quicksort : 
+		g++ -o ./$(BIN)/quicksort ./$(SRC)/quicksort.cpp
+	seleccion :
+		g++ -o ./$(BIN)/seleccion ./$(SRC)/seleccion.cpp
+\end{minted}
+\caption{Makefile}
+\end{listing}
 Cada programa ha sido modificado añadiendo las siguientes líneas para que su salida sea el tiempo de ejecución:
 
 \begin{minted}[linenos]{c++}
