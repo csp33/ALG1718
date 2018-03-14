@@ -59,6 +59,7 @@
 \tableofcontents
 \thispagestyle{empty}
 \listoftables
+\newpage
 \listoffigures
 \newpage
 \setcounter{page}{1}
@@ -1325,64 +1326,7 @@ Hanoi & $O(2^n)$ & 10 & 34 & 1 \\
 \end{tabular}
 \caption{Parámetros de ejecución de cada programa}
 \end{table}
-\subsection{Entornos de ejecución}
-\label{sec:entorno}
-Todas las ejecuciones se realizarán en el \emph{PC 1}, excepto las que utilicemos para la comparación en el apartado de \textit{\nameref{sec:variacion}}.
-\subsubsection{PC 1}
-\label{sec:pc1}
-\begin{enumerate}
- \item CPU : AMD FX-8320 @3.50Ghz
-  \begin{enumerate}
-    \item Arquitectura : x86\_64
- 	\item Caché
- 	\begin{enumerate}
- 		 \item Caché L1
- 		\begin{enumerate}
- 			 \item L1d : 16K
-			 \item L1i : 64K 
- 		 \end{enumerate}
-		 \item Caché L2 : 2048K
- 		 \item Caché L3 : 8192K
- 	\end{enumerate}
- 	 \item Frecuencia máxima (Overclock) : 4.20 Ghz
-	 \item Núcleos físicos : 4
-	 \item Núcleos lógicos : 8
-	\end{enumerate}
-	\item RAM
-	\begin{enumerate}
-	\item Capacidad : 16384 MB
-	\item Frecuencia : 1600 Mhz
- 	\item Tecnología : DDR3
-	\end{enumerate}
-\end{enumerate}
-\newpage
-\subsubsection{PC 2}
-\label{sec:pc2}
-\begin{enumerate}
-\item CPU : Intel Core i7-6700HQ @2.60Ghz
-\begin{enumerate}
-	\item Arquitectura : x86\_64
-	\item Caché
-	\begin{enumerate}
-		\item Caché L1
-		\begin{enumerate}
-			\item L1d : 32K
-			\item L1i : 32K
-		\end{enumerate}
-		\item Caché L2 : 256K
-		\item Caché L3 : 6144K
-	\end{enumerate}
-	\item Frecuencia máxima (HT) : 3.5 Ghz
-	\item Núcleos físicos : 4
-	\item Núcleos lógicos : 8
-\end{enumerate}
-\item RAM
-\begin{enumerate}
-	\item Capacidad : 8192 MB
- 	\item Frecuencia : 2133 Mhz
- 	\item Tecnología : DDR4
-\end{enumerate}
-\end{enumerate}
+
 \newpage
 \subsection{Gráficas comparativas}
 
@@ -1457,6 +1401,64 @@ Si hacemos zoom, podremos ver mejor la diferencia:
 \end{figure}
 \subsection{Variación de la eficiencia empírica}
 \label{sec:variacion}
+\subsubsection{Entornos de ejecución}
+\label{sec:entorno}
+Todas las ejecuciones se realizarán en el \emph{PC 1}, excepto las que utilicemos para la comparación en el apartado de \textit{\nameref{sec:variacion}}.
+\paragraph{PC 1}
+\label{sec:pc1}
+\begin{enumerate}
+ \item CPU : AMD FX-8320 @3.50Ghz
+  \begin{enumerate}
+    \item Arquitectura : x86\_64
+ 	\item Caché
+ 	\begin{enumerate}
+ 		 \item Caché L1
+ 		\begin{enumerate}
+ 			 \item L1d : 16K
+			 \item L1i : 64K 
+ 		 \end{enumerate}
+		 \item Caché L2 : 2048K
+ 		 \item Caché L3 : 8192K
+ 	\end{enumerate}
+ 	 \item Frecuencia máxima (Overclock) : 4.20 Ghz
+	 \item Núcleos físicos : 4
+	 \item Núcleos lógicos : 8
+	\end{enumerate}
+	\item RAM
+	\begin{enumerate}
+	\item Capacidad : 16384 MB
+	\item Frecuencia : 1600 Mhz
+ 	\item Tecnología : DDR3
+	\end{enumerate}
+\end{enumerate}
+\paragraph{PC 2}
+\label{sec:pc2}
+\begin{enumerate}
+\item CPU : Intel Core i7-6700HQ @2.60Ghz
+\begin{enumerate}
+	\item Arquitectura : x86\_64
+	\item Caché
+	\begin{enumerate}
+		\item Caché L1
+		\begin{enumerate}
+			\item L1d : 32K
+			\item L1i : 32K
+		\end{enumerate}
+		\item Caché L2 : 256K
+		\item Caché L3 : 6144K
+	\end{enumerate}
+	\item Frecuencia máxima (HT) : 3.5 Ghz
+	\item Núcleos físicos : 4
+	\item Núcleos lógicos : 8
+\end{enumerate}
+\item RAM
+\begin{enumerate}
+	\item Capacidad : 8192 MB
+ 	\item Frecuencia : 2133 Mhz
+ 	\item Tecnología : DDR4
+\end{enumerate}
+\end{enumerate}
+
 En esta sección demostraremos empíricamente el \emph{Principio de invarianza}.
 \begin{ppio}[de Invarianza]
 Dos implementaciones diferentes de un  mismo  algoritmo  no  difieren  en  eficiencia  más  que,  a  lo  sumo,  en  una constante multiplicativa.
@@ -1500,6 +1502,8 @@ Hanoi & 0,036 & 0,023 & 1,538\\
 \includegraphics[scale=0.45]{empirica_burbuja_2.png}
 \caption{\nameref{sec:pc2}}
 \end{subfigure}
+\newline
+\newline
 \begin{tabular}{|c|c|c|}
 \hline
 \textbf{Tamaño} & \textbf{Tiempo PC 1} & \textbf{Tiempo PC 2} \\
@@ -1569,6 +1573,8 @@ Hanoi & 0,036 & 0,023 & 1,538\\
 \includegraphics[scale=0.45]{empirica_insercion_2.png}
 \caption{\nameref{sec:pc2}}
 \end{subfigure}
+\newline
+\newline
 \begin{tabular}{|c|c|c|}
 \hline
 \textbf{Tamaño} & \textbf{Tiempo PC 1} & \textbf{Tiempo PC 2} \\
@@ -1638,6 +1644,8 @@ Hanoi & 0,036 & 0,023 & 1,538\\
 \includegraphics[scale=0.45]{empirica_seleccion_2.png}
 \caption{\nameref{sec:pc2}}
 \end{subfigure}
+\newline
+\newline
 \begin{tabular}{|c|c|c|}
 \hline
 \textbf{Tamaño} & \textbf{Tiempo PC 1} & \textbf{Tiempo PC 2} \\
@@ -1708,6 +1716,8 @@ Hanoi & 0,036 & 0,023 & 1,538\\
 \includegraphics[scale=0.45]{empirica_floyd_2.png}
 \caption{\nameref{sec:pc2}}
 \end{subfigure}
+\newline
+\newline
 \begin{tabular}{|c|c|c|}
 \hline
 \textbf{Tamaño} & \textbf{Tiempo PC 1} & \textbf{Tiempo PC 2} \\
@@ -1779,6 +1789,8 @@ Hanoi & 0,036 & 0,023 & 1,538\\
 \includegraphics[scale=0.45]{empirica_mergesort_2.png}
 \caption{\nameref{sec:pc2}}
 \end{subfigure}
+\newline
+\newline
 \begin{tabular}{|c|c|c|}
 \hline
 \textbf{Tamaño} & \textbf{Tiempo PC 1} & \textbf{Tiempo PC 2} \\
@@ -1848,6 +1860,8 @@ Hanoi & 0,036 & 0,023 & 1,538\\
 \includegraphics[scale=0.45]{empirica_quicksort_2.png}
 \caption{\nameref{sec:pc2}}
 \end{subfigure}
+\newline
+\newline
 \begin{tabular}{|c|c|c|}
 \hline
 \textbf{Tamaño} & \textbf{Tiempo PC 1} & \textbf{Tiempo PC 2} \\
@@ -1917,6 +1931,8 @@ Hanoi & 0,036 & 0,023 & 1,538\\
 \includegraphics[scale=0.45]{empirica_heapsort_2.png}
 \caption{\nameref{sec:pc2}}
 \end{subfigure}
+\newline
+\newline
 \begin{tabular}{|c|c|c|}
 \hline
 \textbf{Tamaño} & \textbf{Tiempo PC 1} & \textbf{Tiempo PC 2} \\
@@ -1988,6 +2004,8 @@ Hanoi & 0,036 & 0,023 & 1,538\\
 \includegraphics[scale=0.45]{empirica_hanoi_2.png}
 \caption{\nameref{sec:pc2}}
 \end{subfigure}
+\newline
+\newline
 \begin{tabular}{|c|c|c|}
 \hline
 \textbf{Tamaño} & \textbf{Tiempo PC 1} & \textbf{Tiempo PC 2} \\
