@@ -1,3 +1,4 @@
+
 #Definimos etiquetas
 DOC=doc
 SRC=src
@@ -26,3 +27,9 @@ quicksort :
 	g++ -o ./$(BIN)/quicksort ./$(SRC)/quicksort.cpp
 seleccion :
 	g++ -o ./$(BIN)/seleccion ./$(SRC)/seleccion.cpp
+#LaTeX
+
+memoria : 
+	pdflatex -shell-escape -synctex=1 -interaction=nonstopmode $(DOC)/memoria.tex
+presentacion :  
+	pdflatex -shell-escape -synctex=1 -interaction=nonstopmode $(DOC)/memoria.tex
