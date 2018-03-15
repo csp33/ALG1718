@@ -143,29 +143,6 @@
 \end{minted}  
 \end{frame}
 
-\begin{frame}[fragile]{Script conjunto}
-\begin{minted}[fontsize=\small]{bash}
-	#!/bin/bash
-	echo "Ejecutando burbuja..."
-	./individual.sh burbuja 1000 1000
-	echo "Ejecutando insercion..."
-	./individual.sh insercion 1000 1000
-	echo "Ejecutando seleccion..."
-	./individual.sh seleccion 1000 1000
-	echo "Ejecutando mergesort..."
-	./individual.sh mergesort 1000000 500000
-	echo "Ejecutando quicksort..."
-	./individual.sh quicksort 1000000 500000
-	echo "Ejecutando heapsort..."
-	./individual.sh heapsort 1000000 500000
-	echo "Ejecutando hanoi..."
-	./individual.sh hanoi 10 1
-	echo "Ejecutando floyd..."
-	./individual.sh floyd 100 100
-\end{minted}
-
-\end{frame}
-
 \begin{frame}[fragile]{Generación de gráficas}
 
 \begin{minted}[fontsize=\small]{bash}
@@ -491,8 +468,23 @@ Hanoi & 0,036 & 0,023 & 1,538\\
 \end{minipage}
 \end{figure}
 \end{frame}
+\subsection{Comparación de algoritmos}
+\begin{frame}[fragile]{Comparación entre algoritmos}
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.5]{empirica_todos.png}
+\end{figure}
+\end{frame}
 
-\subsection{Comparación entre algoritmos de ordenación}
+
+\begin{frame}[fragile]{Comparación entre algoritmos (zoom)}
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.5]{empirica_todos_zoom.png}
+\end{figure}
+\end{frame}
+
+\subsubsection{Comparación entre algoritmos de ordenación}
 
 \begin{frame}[fragile]{Comparación entre algoritmos de ordenación}
 \begin{figure}[H]
