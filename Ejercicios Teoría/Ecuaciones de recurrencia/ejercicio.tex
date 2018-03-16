@@ -6,7 +6,7 @@
 \usepackage{multirow}
 \usepackage{xfrac}
 \usepackage{amsmath}
-\usepackage{hyperref}
+\usepackage[hidelinks]{hyperref}
 \usepackage{fixmath}
 \usepackage{caption}
 \usepackage{multicol}
@@ -76,96 +76,71 @@ T(n)=2T(\frac{n}{2})+n \quad \text{con T(1)=1}
 \end{equation}
 
 \section{Resolución}
-El método de expansión consiste en ir resolviendo la ecuación de la forma $T(n-i)$ hasta que llegue un punto en el que podamos obtener un patrón de resolución del que hallaremos una ecuación.
+El método de expansión consiste en ir resolviendo la ecuación de la forma $T(n)$ hasta que llegue un punto en el que podamos obtener un patrón de resolución del que hallaremos una ecuación.
 En ese momento, aplicaremos la ecuación al caso base y acotaremos mediante la notación \textbf{O(n)}.
 \subsection{Ecuación 1}
+Para este ejercicio iremos expandiendo en forma $T(\frac{n}{2^i})$.
 \[T(n)=2T(\frac{n}{2})+1 \quad \text{con T(1)=1}\]
-Comenzamos desarrollando la ecuación para $i=1$
-\[T(n-1)=2 \cdot \left[2T(\frac{n-1}{2})+1\right]+1 = 4T(\frac{n-1}{2})+3\]
-Seguimos ahora con $i=2$
-\[T(n-2)=4 \cdot \left[2T(\frac{n-2}{2})+1\right]+3 = 8T(\frac{n-2}{2}) + 7 \]
+Comenzamos desarrollando la ecuación para $i=1 (\frac{n}{2})$
+\[T(n)= 2T(\frac{n}{2})+1 =2 \cdot \left[2T(\frac{n}{4})+1\right]+1 = 4T(\frac{n}{4})+3= \]
+Seguimos ahora con $i=2 (\frac{n}{4})$
+\[= 4 \cdot \left[2T(\frac{n}{8})+1\right]+3 = 8T(\frac{n}{8}) + 7 = \]
 Intuimos el patrón que sigue la recurrencia:
-\[T(n)=
+\[T(\frac{n}{2^i})=
 \begin{cases}
-	1 & \quad \text{si } n = 1  \\
-	2^{i+1} \cdot T(\frac{n-i}{2}) + 2^{i+1}-1 & \quad \text{en otro caso}
+	1 & \quad \text{si } i = 0  \\
+	2^{i+1} \cdot T(\frac{n}{2^{i+1}}) + 2^{i+1} - 1 & \quad \text{en otro caso}
 \end{cases}
 \]
 Lo comprobamos para $i=3$
 \begin{enumerate}
 \item Por expansión
-\[ T(n-3)=8 \cdot \left[2T(\frac{n-3}{2})+1\right]+7=16T(\frac{n-3}{2})+15\]
+\[ = 8 \cdot \left[2T(\frac{n}{16})+1\right]+7=16T(\frac{n}{16})+15\]
 \item Mediante la ecuación del patrón
-\[ T(n-3)=2^{3+1} \cdot T(\frac{n-3}{2}) + 2^{3+1} - 1 = 16T(\frac{n-3}{2})+15 \]
+\[ =2^{3+1} \cdot T(\frac{n}{2^{3+1}}) + 2^{3+1} - 1 = 16T(\frac{n}{16})+15 \]
 \end{enumerate}
-Por tanto, nuestro patrón era acertado. Ahora, aplicamos al \textit{caso base} ($i=n-2$)
+Por tanto, nuestro patrón era acertado. Ahora, aplicamos al \textit{caso base} ($\frac{n}{2^{i+1}} = 1 \rightarrow n=2^{i+1} \rightarrow i=\log_2n-1$)
 
 \begin{equation}
 \begin{split}
-&T\left[n-(n-2)\right]=T(2)=2^{(n-2)+1} \cdot T(\frac{n-(n-2)}{2})+2^{(n-2)+1}-1= \\
-&= 2^{n-1} \cdot T(1) + 2^{n-1}-1 = 2^{n-1} + 2^{n-1}-1 = 2^{n} -1 
+&T(\frac{n}{2^{\log_2n}})=2^{\log_2n-1 + 1} \cdot T(1) + 2^{\log_2n-1+1} - 1= 2 \cdot 2^{\log_2n} + 1 = 2^{\log_2n+1} - 1 \simeq 2n-1
 \end{split}
 \end{equation}
 
 \begin{center}
-Por tanto, concluimos que $T(n)$ es del orden de $O(2^{n})$ en la notación \textbf{O}.
+Por tanto, concluimos que $T(n)$ es del orden de $O(n)$ en la notación \textbf{O}.
 \end{center}
 
 \subsection{Ecuación 2}
 \[T(n)=2T(\frac{n}{2})+n \quad \text{con T(1)=1}\]
-Igual que en el apartado anterior, comenzamos desarrollando para $i=1$
-\[T(n-1)=2 \cdot \left[2T(\frac{n-1}{2})+n\right]+n=4T(\frac{n-1}{n})+3n \]
-Procedemos para $i=2$
-\[T(n-2)=4 \cdot \left[2T(\frac{n-2}{2}+n\right]+3n=8T(\frac{n-2}{2})+7n \]
+Vemos que el ejercicio es prácticamente igual al anterior, por lo que sólo tendremos que añadir una $n$ multiplicando al último patrón. No obstante, desarrollamos para comprobarlo: 
+Comenzamos desarrollando la ecuación para $i=1 (\frac{n}{2})$
+\[T(n)= 2T(\frac{n}{2})+n =2 \cdot \left[2T(\frac{n}{4})+n\right]+1 = 4T(\frac{n}{4})+3n= \]
+Procedemos con $i=2 (\frac{n}{4})$
+\[= 4 \cdot \left[2T(\frac{n}{8})+n\right]+3 = 8T(\frac{n}{8}) + 7n = \]
 Vemos que el patrón de la ecuación es probablemente el siguiente: 
-\[T(n)=
+\[T(\frac{n}{2^i})=
 \begin{cases}
-	1 & \quad \text{si } n = 1  \\
-	2^{i+1} \cdot T(\frac{n-i}{2}) + (2^{i+1}-1)n & \quad \text{en otro caso}
+	1 & \quad \text{si } i = 0  \\
+	2^{i+1} \cdot T(\frac{n}{2^{i+1}}) + (2^{i+1} - 1)n & \quad \text{en otro caso}
 \end{cases}
 \]
 Comprobamos para $i=3$
 \begin{enumerate}
 \item Por expansión
-\[ T(n-3)=8 \cdot \left[2T(\frac{n-3}{2})+n\right]+7=16T(\frac{n-3}{2})+15n\]
+\[ = 8 \cdot \left[2T(\frac{n}{16})+n\right]+7n=16T(\frac{n}{16})+15n\]
 \item Mediante la ecuación del patrón
-\[ T(n-3)=2^{3+1} \cdot T(\frac{n-3}{2}) + (2^{3+1} - 1)n = 16T(\frac{n-3}{2})+15n \]
+\[ =2^{3+1} \cdot T(\frac{n}{2^{3+1}}) + (2^{3+1} - 1)n = 16T(\frac{n}{16})+15n \]
 \end{enumerate}
 Por tanto, nuestro patrón es correcto.
-Aplicamos al \textit{caso base} ($i=n-2$):
+Aplicamos al \textit{caso base} ($i=\log_2n-1$):
 \begin{equation}
 \begin{split}
-&T\left[n-(n-2)\right]=T(2)=2^{(n-2)+1} \cdot T(\frac{n-(n-2)}{2})+(2^{(n-2)+1}-1)n= \\
-&= 2^{n-1} \cdot T(1) + (2^{n-1}-1)n = 2^{n-1} + (2^{n-1}-1)n = (2^{n-1}-1)n +2^{n-1} 
+& T(\frac{n}{2^{\log_2n}})=2^{\log_2n-1 + 1} \cdot T(1) + (2^{\log_2n-1+1} - 1)n=\\
+& = 2^{\log_2n} + (2^{\log_2n} - 1)n \simeq 2n \cdot (2n-1)n = 4n^2-2n
 \end{split}
 \end{equation}
 \begin{center}
-Por tanto, podemos concluir que la ecuación $T(n)$ es del orden de $O(n \cdot
-2^{n})$ en notación \textbf{O}.
-\end{center}
-\section{Gráficas}
-\subsection{Ejercicio 1}
-\begin{figure}[H]
-\centering
-\includegraphics[scale=0.55]{ej1.png}
-\caption{Representación de $2^{n}$ y $2^{n}-1$}
-\end{figure}
-
-\begin{figure}[H]
-\centering
-\includegraphics[scale=0.75]{ej1_zoom.png}
-\caption{Ampliación de $2^{n}$ y $2^{n}-1$}
-\end{figure}
-
-\subsection{Ejercicio 2}
-
-\begin{figure}[H]
-\centering
-\includegraphics[scale=0.75]{ej2.png}
-\caption{Representación de $n \cdot 2^{n}$ y $(2^{n-1}-1)n +2^{n-1}$}
-\end{figure}
-
-\begin{center}
-Como podemos ver, en ambos casos las funciones son acotadas por su \textbf{O(f(n))} correspondiente.
+Por tanto, podemos concluir que la ecuación $T(n)$ es del orden de $O(n^2)$ en notación \textbf{O}.
 \end{center}
 \end{document}

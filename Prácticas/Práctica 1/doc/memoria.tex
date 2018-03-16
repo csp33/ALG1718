@@ -85,17 +85,17 @@ Hemos ejecutado cada código 25 veces mediante la creación de dos scripts en Sh
 
 if [ $# -eq 3 ]
 then
- & i="0"
- & output="out"
- & tam=$2
- & while [ $i -lt 25 ]
- & do
- &  & ./$1 $tam >> $1.out
- &  & i=$[$i+1]
- &  & tam=$[$tam+$3]
- & done
+    i="0"
+    output="out"
+    tam=$2
+    while [ $i -lt 25 ]
+    do
+        ./$1 $tam >> $1.out
+        i=$[$i+1]
+        tam=$[$tam+$3]
+    done
 else
- & echo "Error de argumentos"
+    echo "Error de argumentos"
 fi
 \end{minted}
 \caption{Script individual}
@@ -137,21 +137,21 @@ all : todos
 todos : burbuja floyd hanoi heapsort insercion mergesort quicksort seleccion
  & cd $(SRC) ; ./todos.sh
 burbuja : 
- & g++ -o ./$(BIN)/burbuja ./$(SRC)/burbuja.cpp
+    g++ -o ./$(BIN)/burbuja ./$(SRC)/burbuja.cpp
 floyd : 
- & g++ -o ./$(BIN)/floyd ./$(SRC)/floyd.cpp
+    g++ -o ./$(BIN)/floyd ./$(SRC)/floyd.cpp
 hanoi : 
- & g++ -o ./$(BIN)/hanoi ./$(SRC)/hanoi.cpp
+    g++ -o ./$(BIN)/hanoi ./$(SRC)/hanoi.cpp
 heapsort : 
- & g++ -o ./$(BIN)/heapsort ./$(SRC)/heapsort.cpp
+    g++ -o ./$(BIN)/heapsort ./$(SRC)/heapsort.cpp
 insercion : 
- & g++ -o ./$(BIN)/insercion ./$(SRC)/insercion.cpp
+    g++ -o ./$(BIN)/insercion ./$(SRC)/insercion.cpp
 mergesort : 
- & g++ -o ./$(BIN)/mergesort ./$(SRC)/mergesort.cpp
+    g++ -o ./$(BIN)/mergesort ./$(SRC)/mergesort.cpp
 quicksort : 
- & g++ -o ./$(BIN)/quicksort ./$(SRC)/quicksort.cpp
+    g++ -o ./$(BIN)/quicksort ./$(SRC)/quicksort.cpp
 seleccion :
- &  & g++ -o ./$(BIN)/seleccion ./$(SRC)/seleccion.cpp
+    g++ -o ./$(BIN)/seleccion ./$(SRC)/seleccion.cpp
 \end{minted}
 \caption{Makefile}
 \end{listing}
@@ -160,13 +160,13 @@ Cada programa ha sido modificado añadiendo las siguientes líneas para que su s
 
 \begin{listing}[H]
 \begin{minted}[linenos]{c++}
- & clock_t tantes;
- & clock_t tdespues;
- & tantes = clock();
- & algoritmo_en_cuestion(T, n);
- & tdespues = clock();
- & cout << ((double)(tdespues - tantes))
- & / CLOCKS_PER_SEC << endl;
+    clock_t tantes;
+    clock_t tdespues;
+    tantes = clock();
+    algoritmo_en_cuestion(T, n);
+    tdespues = clock();
+    cout << ((double)(tdespues - tantes))
+    / CLOCKS_PER_SEC << endl;
 \end{minted}
 \caption{Código fuente modificado}
 \end{listing}
