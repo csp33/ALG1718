@@ -57,6 +57,7 @@
 \tableofcontents
 \thispagestyle{empty}
 \listoftables
+\listoffigures
 \newpage
 \setcounter{page}{1}
 
@@ -90,61 +91,47 @@ Búsqueda Ternaria & & &\\
 \hline
 \textbf{Tamaño del problema} & \textbf{Búsqueda Binaria} & \textbf{Búsqueda Ternaria}\\
 \hline
-100.000.000 & \\
-\hline
-110.000.000 &\\
-\hline
-120.000.000 & \\
-\hline
-130.000.000 & \\
-\hline
-140.000.000 & \\
-\hline
-150.000.000 & \\
-\hline
-160.000.000 & \\
-\hline
-170.000.000 & \\
-\hline
-180.000.000 & \\
-\hline
-190.000.000 & \\
-\hline
-200.000.000 & \\
-\hline
-210.000.000 & \\
-\hline
-220.000.000 & \\
-\hline
-230.000.000 & \\
-\hline
-240.000.000 & \\
-\hline
-250.000.000 & \\
-\hline
-260.000.000 & \\
-\hline
-270.000.000 & \\
-\hline
-280.000.000 & \\
-\hline
-290.000.000 & \\
-\hline
-300.000.000 & \\
-\hline
-310.000.000 & \\
-\hline
-320.000.000 & \\
-\hline
-330.000.000 & \\
-\hline
-340.000.000 & \\
-\hline
+
 \end{tabular}
 \caption{Tiempos obtenidos (seg)}
 \end{table}
 
+\subsection{Cálculo de la constante oculta}
+Realizamos una regresión mediante \emph{gnuplot} para averiguar la constante:
+\begin{table}[H]
+\begin{tabular}{|c|c|c|}
+\hline
+\textbf{Algoritmo} & \textbf{Valor de la constante oculta} & \textbf{Porcentaje de error}\\
+\hline
+Búsqueda Binaria & & \\
+\hline
+Búsqueda Ternaria & & \\
+\hline
+\end{tabular}
+\caption{Bondad del ajuste}
+\end{table}
+
 \subsection{Gráficas}
+
+\begin{figure}[H]
+%\includegraphics[scale=0.75]{empirica_binaria.png}
+\caption{Eficiencia empírica. Búsqueda binaria}
+\end{figure}
+
+\begin{figure}[H]
+%\includegraphics[scale=0.75]{empirica_ternaria.png}
+\caption{Eficiencia empírica. Búsqueda ternaria}
+\end{figure}
+
+\begin{figure}[H]
+%\includegraphics[scale=0.75]{hibrida_binaria.png}
+\caption{Eficiencia híbrida. Búsqueda binaria}
+\end{figure}
+
+\begin{figure}[H]
+%\includegraphics[scale=0.75]{hibrida_ternaria.png}
+\caption{Eficiencia híbrida. Búsqueda ternaria}
+\end{figure}
 
 \subsection{Conclusiones}
 
@@ -166,7 +153,7 @@ Búsqueda Ternaria & & &\\
 
 \inputminted[linenos, fontsize=\footnotesize]{bash}{individual.sh}
 
-\subsubsection{Script de GNUPlot}
+\subsubsection{Script de \emph{gnuplot}}
 
 \inputminted[linenos, fontsize=\footnotesize]{bash}{gnuplot.sh}
 

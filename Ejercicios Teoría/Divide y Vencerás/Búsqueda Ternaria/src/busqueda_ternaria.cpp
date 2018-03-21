@@ -8,7 +8,7 @@
 using namespace std;
 using namespace std::chrono;
 
-int busquedaTernaria(const int *v, const int i, const int j, const int buscado){
+int busquedaTernaria(const int *v, const int i, const int j, const int buscado) {
 	//Caso base: nos cruzamos
 	if (i > j)
 		return -1;
@@ -19,14 +19,14 @@ int busquedaTernaria(const int *v, const int i, const int j, const int buscado){
 		if (v[tercio] == buscado) //Acertamos
 			return tercio;
 		else if (buscado < v[tercio]) //Primer tercio
-			busquedaTernaria(v,i, tercio - 1, buscado);
+			busquedaTernaria(v, i, tercio - 1, buscado);
 		else {
 			if (v[dostercio] == buscado)	//Acertamos
 				return dostercio;
 			else if (buscado > v[dostercio]) //Tercer tercio
-				busquedaTernaria(v,dostercio + 1, j, buscado);
+				busquedaTernaria(v, dostercio + 1, j, buscado);
 			else //Segundo tercio
-				busquedaTernaria(v,tercio + 1, dostercio - 1, buscado);
+				busquedaTernaria(v, tercio + 1, dostercio - 1, buscado);
 		}
 	}
 }
@@ -42,13 +42,14 @@ int main(int argc, char **argv) {
 	high_resolution_clock::time_point tdespues;
 	duration<double> tiempo;
 
-	//Inicializamos vector
+	//Inicializar vector con valores aleatorios
+	srand (time(NULL));
+
 	for (int i = 0; i < tam; i++)
-		v[i] = i;
-	
-	//Peor caso: el buscado no eviste
+		v[i] = rand() ;
+	// Peor caso: no está
 	tantes = high_resolution_clock::now();
-	int pos = busquedaTernaria(v, 0, tam, tam);
+	int pos = busquedaTernaria(v, 0, tam, -1);
 	tdespues = high_resolution_clock::now();
 	tiempo = duration_cast<duration<double>>(tdespues - tantes);
 
@@ -56,4 +57,6 @@ int main(int argc, char **argv) {
 	cout << "Posición: " << pos << endl;
 #endif
 	cout << tam << "\t\t" << tiempo.count() << endl;
+
+	delete []v;
 }

@@ -34,17 +34,20 @@ int main(int argc, char **argv) {
 	high_resolution_clock::time_point tdespues;
 	duration<double> tiempo;
 
-	//Inicializamos vector
+	//Inicializar vector con valores aleatorios
+	srand (time(NULL));
+
 	for (int i = 0; i < tam; i++)
-		v[i] = i;
-	
-	//Peor caso: el elemento no existe
+		v[i] = rand() ;
+	// Peor caso: no está
 	tantes = high_resolution_clock::now();
-	int pos = busquedaBinaria(v, 0, tam, tam);
+	int pos = busquedaBinaria(v, 0, tam, -1);
 	tdespues = high_resolution_clock::now();
 	tiempo = duration_cast<duration<double>>(tdespues - tantes);
 #if TEST
 	cout << "Posición: " << pos << endl;
 #endif
 	cout << tam << "\t\t" << tiempo.count() << endl;
+
+	delete []v;
 }

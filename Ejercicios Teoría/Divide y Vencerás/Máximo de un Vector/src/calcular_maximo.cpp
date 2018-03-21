@@ -63,4 +63,5 @@ int main(int argc, char **argv) {
 	cout << "Algoritmo DyV:\tMáximo: " << max << "\tTiempo: " << ((double)(tdespues - tantes)) / CLOCKS_PER_SEC << endl;
 
 	cout<<"--------------------------------------------------------------------------------------------------------------------------\n";
+	delete []v;
 }
