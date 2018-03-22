@@ -41,6 +41,7 @@ int main(int argc, char **argv) {
 	high_resolution_clock::time_point tantes;
 	high_resolution_clock::time_point tdespues;
 	duration<double> tiempo;
+	double acumulado = 0;
 
 	//Inicializar vector con valores aleatorios
 	srand (time(NULL));
@@ -48,15 +49,21 @@ int main(int argc, char **argv) {
 	for (int i = 0; i < tam; i++)
 		v[i] = rand() ;
 	// Peor caso: no está
-	tantes = high_resolution_clock::now();
-	int pos = busquedaTernaria(v, 0, tam, -1);
-	tdespues = high_resolution_clock::now();
-	tiempo = duration_cast<duration<double>>(tdespues - tantes);
+	//Ejecutamos 1000 veces y obtenemos el tiempo medio
+	for (int i = 0; i < 1000; i++) {
+		tantes = high_resolution_clock::now();
+		int pos = busquedaTernaria(v, 0, tam, rand() + 0.5);
+		tdespues = high_resolution_clock::now();
+		tiempo = duration_cast<duration<double>>(tdespues - tantes);
+		acumulado += tiempo.count();
+	}
+	acumulado /= 1000;
+
 
 #if TEST
 	cout << "Posición: " << pos << endl;
 #endif
-	cout << tam << "\t\t" << tiempo.count() << endl;
+	cout << tam << "\t\t" << acumulado << endl;
 
 	delete []v;
 }
