@@ -58,17 +58,19 @@
 \end{titlepage}
 \tableofcontents
 \thispagestyle{empty}
-\listoftables
 \listoffigures
 \newpage
 \setcounter{page}{1}
 %%%%%%%%%%%%%%%%%%%%%%%%Comienzo del documento%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Descripción de la práctica}
 
-El objetivo de esta práctica es diseñar un algoritmo para resolver el problema del \textit{elemento en su posición}. Este algoritmo consiste en los siguiente:\\
+El objetivo de esta práctica es diseñar un algoritmo para resolver el problema del \textit{elemento en su posición}. Este algoritmo consiste en lo siguiente:
+\begin{center}
 Dado un vector $v$, determinar si $\exists i : v[i]=i $
+\end{center}
 Se implementarán dos versiones de este algoritmo: una siguiendo el algoritmo obvio y otra empleando la estrategia \emph{Divide y Vencerás}. \\
 
+Para calcular el tiempo de ejecución, cada algoritmo se ejecutará mil veces y nos quedaremos con el tiempo promedio para rebajar el impacto sobre el tiempo de factores externos como la carga del sistema. Para estudiar la eficiencia, ejecutaremos cada código 25 veces con tamaños variables dependiendo de su orden de eficiencia. \\
 Para generar los vectores, utilizaremos el generador disponible en \textit{decsai.ugr.es}.
 
 \section{Algoritmos diseñados}
@@ -95,7 +97,7 @@ int elementoEnSuPosicion(const vector<int> v, const int ini, const int fin) {
 		else
 			return -1;
 	}
-	else {	//Partimos en dos el vector y llamamos recursivamente
+	else {	//Dividimos en dos el vector y llamamos recursivamente
 		int mitad = (ini + fin) / 2;
 		int pos_izq = elementoEnSuPosicion(v, ini, mitad);
 		int pos_dcha = elementoEnSuPosicion(v, mitad + 1, fin);
@@ -110,6 +112,22 @@ int elementoEnSuPosicion(const vector<int> v, const int ini, const int fin) {
 \label{alg:dyv}
 \end{figure}
 
+\begin{figure}[H]
+\begin{minted}[linenos]{c++}
+	int pos;
+	for (int i = 0; i < 1000; i++) {
+		tantes = high_resolution_clock::now();
+		pos = elementoEnSuPosicion(myvector);
+		tdespues = high_resolution_clock::now();
+		tiempo = duration_cast<duration<double>>
+		         (tdespues - tantes);
+		acumulado += tiempo.count();
+	}
+	acumulado /= 1000;
+\end{minted}
+\caption{Medición de tiempos}
+\end{figure}
+
 \newpage
 
 \section{Estudio de eficiencia}
@@ -120,9 +138,9 @@ En esta sección procederemos a estudiar la eficiencia de los algoritmos en cues
 
 Como podemos ver en \textcolor{blue!60}{\hyperref[alg:clasico]{el algoritmo clásico}}, iteramos por el bucle hasta encontrar un elemento en el que se cumpla la condición ($v[i]=i$). Por tanto, en el peor de los casos recorreremos el bucle completo, siendo la eficiencia de \textbf{O(n)}.\\
 
-En cuanto al \textcolor{blue!60}{\hyperref[alg:clasico]{algoritmo Divide y Vencerás}}, nuestro algoritmo es recursivo y la metodología es la siguiente:
+En cuanto al \textcolor{blue!60}{\hyperref[alg:clasico]{algoritmo Divide y Vencerás}}, nuestro algoritmo es recursivo y la metodología que sigue es la siguiente:
 \begin{itemize}
-	\item \textbf{Caso base}. El vector consta de un solo elemento.
+	\item \textbf{Caso base}. El vector consta de un solo elemento. Si se cumple que $v[i]=i$, devolvemos \textcolor{blue!90}{la posición}. En caso contrario, devolvemos \textcolor{blue!90}{-1}.
 	\item Calculamos la posición del elemento mitad del vector.
 	\item Llamamos recursivamente a la función desde el tamaño inicial hasta la mitad y desde la mitad + 1 hasta el final.
 	\item Comprobamos si el elemento se encuentra en la mitad izquierda. En caso afirmativo, devolvemos \textcolor{blue!90}{su posición}.
@@ -131,7 +149,7 @@ En cuanto al \textcolor{blue!60}{\hyperref[alg:clasico]{algoritmo Divide y Vence
 
 Como podemos ver, aun así en el peor de los casos tendremos que recorrer el vector en su totalidad, por lo que la eficiencia del algoritmo empleando la estrategia \textit{Divide y Vencerás} es \textbf{O(n)}.\\
 
-Por tanto, podemos adelantar que debido a los costes físicos de la recursión el algoritmo \emph{clásico} será mejor que el \emph{Divide y Vencerás}.
+Por tanto, podemos adelantar que debido a los costes físicos de la recursión, el algoritmo \emph{clásico} será mejor que el \emph{Divide y Vencerás}.
 
 \subsection{Eficiencia empírica}
 
@@ -160,55 +178,55 @@ Divide y Vencerás & 1.000 & 3.400 & 100\\
 \hline
 \textbf{Tamaño} & \textbf{Tiempo (s)} \\
 \hline
-1000000 & 0.000819706\\
+1.000.000 & 0,000819706\\
 \hline
-1020000 & 0.000842275\\
+1.020.000 & 0,000842275\\
 \hline
-1040000 & 0.00085518\\
+1.040.000 & 0,00085518\\
 \hline
-1060000 & 0.000869587\\
+1.060.000 & 0,000869587\\
 \hline
-1080000 & 0.000885716\\
+1.080.000 & 0,000885716\\
 \hline
-1100000 & 0.000899005\\
+1.100.000 & 0,000899005\\
 \hline
-1120000 & 0.000922726\\
+1.120.000 & 0,000922726\\
 \hline
-1140000 & 0.000934545\\
+1.140.000 & 0,000934545\\
 \hline
-1160000 & 0.000951469\\
+1.160.000 & 0,000951469\\
 \hline
-1180000 & 0.00096667\\
+1.180.000 & 0,00096667\\
 \hline
-1200000 & 0.000988998\\
+1.200.000 & 0,000988998\\
 \hline
-1220000 & 0.000997361\\
+1.220.000 & 0,000997361\\
 \hline
-1240000 & 0.00101367\\
+1240000 & 0,00101367\\
 \hline
-1260000 & 0.0010278\\
+1.260.000 & 0,0010278\\
 \hline
-1280000 & 0.00104895\\
+1.280.000 & 0,00104895\\
 \hline
-1300000 & 0.00106148\\
+1.300.000 & 0,00106148\\
 \hline
-1320000 & 0.00108836\\
+1.320.000 & 0,00108836\\
 \hline
-1340000 & 0.00110376\\
+1.340.000 & 0,00110376\\
 \hline
-1360000 & 0.00113126\\
+1.360.000 & 0,00113126\\
 \hline
-1380000 & 0.00110421\\
+1.380.000 & 0,00110421\\
 \hline
-1400000 & 0.00114935\\
+1.400.000 & 0,00114935\\
 \hline
-1420000 & 0.00116467\\
+1.420.000 & 0,00116467\\
 \hline
-1440000 & 0.0011756\\
+1.440.000 & 0,0011756\\
 \hline
-1460000 & 0.00118976\\
+1.460.000 & 0,00118976\\
 \hline
-1480000 & 0.00121112\\
+1.480.000 & 0,00121112\\
 \hline
 
 \end{tabular}
@@ -229,55 +247,55 @@ Divide y Vencerás & 1.000 & 3.400 & 100\\
 \hline
 \textbf{Tamaño} & \textbf{Tiempo (s)} \\
 \hline
-1000 & 0.000551096 \\
+1.000 & 0,000551096 \\
 \hline
-1100 & 0.000600369 \\
+1.100 & 0,000600369 \\
 \hline
-1200 & 0.000736414 \\
+1.200 & 0,000736414 \\
 \hline
-1300 & 0.000889537 \\
+1.300 & 0,000889537 \\
 \hline
-1400 & 0.00100999 \\
+1.400 & 0,00100999 \\
 \hline
-1500 & 0.00113876 \\
+1.500 & 0,00113876 \\
 \hline
-1600 & 0.00129452 \\
+1.600 & 0,00129452 \\
 \hline
-1700 & 0.00150525 \\
+1.700 & 0,00150525 \\
 \hline
-1800 & 0.00165492 \\
+1.800 & 0,00165492 \\
 \hline
-1900 & 0.00180961 \\
+1.900 & 0,00180961 \\
 \hline
-2000 & 0.00215437 \\
+2.000 & 0,00215437 \\
 \hline
-2100 & 0.00233609 \\
+2.100 & 0,00233609 \\
 \hline
-2200 & 0.00252987 \\
+2.200 & 0,00252987 \\
 \hline
-2300 & 0.00276466 \\
+2.300 & 0,00276466 \\
 \hline
-2400 & 0.00294883 \\
+2.400 & 0,00294883 \\
 \hline
-2500 & 0.00332321 \\
+2.500 & 0,00332321 \\
 \hline
-2600 & 0.00349556 \\
+2.600 & 0,00349556 \\
 \hline
-2700 & 0.00382512 \\
+2.700 & 0,00382512 \\
 \hline
-2800 & 0.00405147 \\
+2.800 & 0,00405147 \\
 \hline
-2900 & 0.00431329 \\
+2.900 & 0,00431329 \\
 \hline
-3000 & 0.00460976 \\
+3.000 & 0,00460976 \\
 \hline
-3100 & 0.00493946 \\
+3.100 & 0,00493946 \\
 \hline
-3200 & 0.00534553 \\
+3.200 & 0,00534553 \\
 \hline
-3300 & 0.00548893 \\
+3.300 & 0,00548893 \\
 \hline
-3400 & 0.00605759 \\
+3.400 & 0,00605759 \\
 
 \hline
 \end{tabular}
@@ -328,11 +346,12 @@ Divide y Vencerás & O($n^2$) & 5.17311e-10 & 0.3221\% \\
 \caption{Eficiencia híbrida del algoritmo Divide y Vencerás}
 \end{figure}
 
+\newpage
 
 \section{Conclusiones}
 
-
-\section{Anexo: scripts implementados}
+SI HAY ELEMENTOS REPETIDOS AMBOS SIGUEN FUNCIONANDO
+\section{Anexo: scripts auxiliares}
 \label{sec:scripts}
 
 \begin{figure}[H]
