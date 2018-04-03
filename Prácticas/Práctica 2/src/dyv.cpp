@@ -18,7 +18,7 @@ double uniforme() {
 	return (double)t / f;
 }
 
-int elementoEnSuPosicion(const int *v, const int ini, const int fin) {
+int elementoEnSuPosicion(const vector<int> v, const int ini, const int fin) {
 	if (ini == fin) {	//Caso base, vector de un solo elemento
 		if (v[ini] == ini)
 			return ini;
@@ -82,10 +82,10 @@ int main(int argc, char * argv[]) {
 		cout << " " << *it;
 	cout << endl;
 #endif
-
+	int pos;
 	for (int i = 0; i < 1000; i++) {
 		tantes = high_resolution_clock::now();
-		int pos = elementoEnSuPosicion(T, 0, n);
+		pos = elementoEnSuPosicion(myvector, 0, myvector.size());
 		tdespues = high_resolution_clock::now();
 		tiempo = duration_cast<duration<double>>(tdespues - tantes);
 		acumulado += tiempo.count();
@@ -98,4 +98,5 @@ int main(int argc, char * argv[]) {
 #endif
 
 	delete [] aux;
+	delete [] T;
 }

@@ -18,8 +18,8 @@ double uniforme() {
 	return (double)t / f;
 }
 
-int elementoEnSuPosicion(const int *v, const int tam) {
-	for (int i = 0; i < tam ; i++)
+int elementoEnSuPosicion(const vector<int> v) {
+	for (int i = 0; i < v.size() ; i++)
 		if (v[i] == i)
 			return i;
 	return -1;
@@ -44,10 +44,9 @@ int main(int argc, char * argv[]) {
 	high_resolution_clock::time_point tdespues;
 	duration<double> tiempo;
 	double acumulado = 0;
-	//genero todos los enteros entre -(n-1) y n-1
-	for (int j = 0; j < m; j++) aux[j] = j - (n - 1);
+	for (int j = 0; j < m; j++)
+		aux[j] = j - (n - 1);
 
-//algoritmo de random shuffling the Knuth (permutación aleatoria)
 	for (int j = m - 1; j > 0; j--) {
 		double u = uniforme();
 		int k = (int)(j * u);
@@ -57,6 +56,7 @@ int main(int argc, char * argv[]) {
 	}
 	//me quedo con los n primeros del vector
 	for (int j = 0; j < n; j++) T[j] = aux[j];
+
 #if TEST
 	for (int j = 0; j < n; j++) cout << T[j] << " ";
 #endif
@@ -71,12 +71,13 @@ int main(int argc, char * argv[]) {
 		cout << " " << *it;
 	cout << endl;
 #endif
-
+	int pos;
 	for (int i = 0; i < 1000; i++) {
 		tantes = high_resolution_clock::now();
-		int pos = elementoEnSuPosicion(T, n);
+		pos = elementoEnSuPosicion(myvector);
 		tdespues = high_resolution_clock::now();
-		tiempo = duration_cast<duration<double>>(tdespues - tantes);
+		tiempo = duration_cast<duration<double>>
+		         (tdespues - tantes);
 		acumulado += tiempo.count();
 	}
 	acumulado /= 1000;
@@ -87,4 +88,6 @@ int main(int argc, char * argv[]) {
 #endif
 
 	delete [] aux;
+	delete [] T;
+
 }
