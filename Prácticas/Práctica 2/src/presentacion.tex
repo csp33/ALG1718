@@ -44,7 +44,13 @@
 \makeatother
 
 \subject{Algorítmica}
-
+\AtBeginSection[]
+  {
+     \begin{frame}<beamer>
+     \frametitle{Índice}
+     \tableofcontents[currentsection]
+     \end{frame}
+  }
 \AtBeginSubsection[]
 {
   \begin{frame}<beamer>{Índice}
@@ -279,7 +285,6 @@ Divide y Vencerás & O($log(n)$) & 5.61125$\cdot 10^{-9} $ & 0.9174\% \\
 
 \section{Vectores con elementos repetidos}
 
-\subsection{Vectores con elementos repetidos}
 
 \begin{frame}[fragile]{Planteamiento}
 ¿Seguirá funcionando el algoritmo Divide y Vencerás si se repiten elementos en el vector?
