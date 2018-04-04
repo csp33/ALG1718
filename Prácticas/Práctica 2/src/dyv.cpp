@@ -25,7 +25,7 @@ int elementoEnSuPosicion(const vector<int> &v, const int ini, const int fin) {
 		else
 			return -1;
 	}
-	else {	//Partimos en dos el vector y llamamos recursivamente
+	else {	//Buscamos el elemento en la mitad adecuada.
 		int mitad = (ini + fin) / 2;
 		if (v[mitad] == mitad)
 			return mitad;

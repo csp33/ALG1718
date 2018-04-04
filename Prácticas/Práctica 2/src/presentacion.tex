@@ -3,10 +3,11 @@
 \usepackage[skins,minted,breakable]{tcolorbox}
 \usepackage[spanish]{babel}
 \usepackage{subcaption}
+\usetikzlibrary{matrix,backgrounds}
+\usepackage{multirow}
 \usepackage{multicol}
 \graphicspath{ {../img/} {../../LaTeX/img/} {/home/csp98/latex/img/}}
 \selectlanguage{spanish}
-\newtheorem{ppio_invarianza}{Principio de Invarianza}
 \usepackage[utf8]{inputenc}
 \usetheme{PaloAlto}
 \setbeamerfont{section in sidebar}{size=\fontsize{2}{4}\selectfont}
@@ -63,14 +64,74 @@
   % You might wish to add the option [pausesections]
 \end{frame}
 
+\section{Presentación del problema}
 
-\section{Cálculo de la eficiencia empírica}
+\begin{frame}[fragile]{El elemento en su posición}
+Sea $v$ un vector \textbf{ordenado} y sin elementos repetidos, determinar si $\exists i : v[i]=i $
+\end{frame}
 
-\subsection{Diseño de algoritmos}
+\begin{frame}[fragile]{Ejemplos}
+\begin{tikzpicture}[font=\ttfamily,
+array/.style={matrix of nodes,nodes={draw, minimum size=7mm, fill=blue!30},column sep=-\pgflinewidth, row sep=0.5mm, nodes in empty cells,
+row 1/.style={nodes={draw=none, fill=none, minimum size=5mm}}}]
+
+\matrix[array] (array) {
+0 & 1 & 2 & \textcolor{green}{3} & 4 & 5 & 6 & 7 & 8 & 9\\
+  &   &   &   &   &   &   &   &   &   \\};
+%\node[draw, fill=gray, minimum size=4mm] at (array-2-3) (box) {};
+\node at (array-2-1) {-70};
+\node at (array-2-2) {-35};
+\node at (array-2-3) {0};
+\node[draw, fill=green!20] at (array-2-4) {3};
+\node at (array-2-5) {15};
+\node at (array-2-6) {25};
+\node at (array-2-7) {51};
+\node at (array-2-8) {68};
+\node at (array-2-9) {75};
+\node at (array-2-10) {83};
+
+
+\draw[<->]([yshift=-3mm]array-2-1.south west) -- node[below] {Tamaño del vector: 10} ([yshift=-3mm]array-2-10.south east);
+
+\end{tikzpicture}
+\vskip 0.5 cm
+Resultado del algoritmo : \textbf{3}
+\vskip 0.5 cm
+\begin{tikzpicture}[font=\ttfamily,
+array/.style={matrix of nodes,nodes={draw, minimum size=7mm, fill=blue!30},column sep=-\pgflinewidth, row sep=0.5mm, nodes in empty cells,
+row 1/.style={nodes={draw=none, fill=none, minimum size=5mm}}}]
+
+\matrix[array] (array) {
+0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9\\
+  &   &   &   &   &   &   &   &   &   \\};
+%\node[draw, fill=gray, minimum size=4mm] at (array-2-3) (box) {};
+\node at (array-2-1) {-70};
+\node at (array-2-2) {-35};
+\node at (array-2-3) {-2};
+\node at (array-2-4) {1};
+\node at (array-2-5) {15};
+\node at (array-2-6) {25};
+\node at (array-2-7) {51};
+\node at (array-2-8) {68};
+\node at (array-2-9) {75};
+\node at (array-2-10) {83};
+
+\draw[<->]([yshift=-3mm]array-2-1.south west) -- node[below] {Tamaño del vector: 10} ([yshift=-3mm]array-2-10.south east);
+
+\end{tikzpicture}
+
+\vskip 0.5 cm
+Resultado del algoritmo : \textcolor{red}{\textbf{-1}}
+
+\end{frame}
+
+\section{Diseño de algoritmos}
+
+\subsection{Algoritmo clásico}
 
 \begin{frame}[fragile]{Clásico}
 \begin{minted}[fontsize=\small]{c++}
-  int elementoEnSuPosicion(const vector<int> v) {
+  int elementoEnSuPosicion(const vector<int> &v) {
   	for (int i = 0; i < v.size() ; i++)
   		if (v[i] == i)
 			return i;
@@ -79,28 +140,28 @@
 \end{minted}  
 \end{frame}
 
+\subsection{Algoritmo Divide y Vencerás}
+
 \begin{frame}[fragile]{Divide y Vencerás}
 \begin{minted}[fontsize=\footnotesize]{c++}
-int elementoEnSuPosicion(const vector<int> v,
-		 const int ini, const int fin) {
-	if (ini == fin) {	//Caso base
-		if (v[ini] == ini)
-			return ini;
-		else
-			return -1;
-	}
-	else {
-		int mitad = (ini + fin) / 2;
-		int pos_izq = elementoEnSuPosicion
-				(v, ini, mitad);
-		int pos_dcha = elementoEnSuPosicion
-				(v, mitad + 1, fin);
-		if (pos_izq != -1)
-			return pos_izq;
-		else
-			return pos_dcha;
-	}
-}
+int elementoEnSuPosicion(const vector<int> &v, const int ini, 
+		const int fin) {
+  if (ini == fin) {	//Caso base,
+  if (v[ini] == ini)
+    return ini;
+  else
+    return -1;
+  }
+  else { //Buscamos en la mitad adecuada.
+    int mitad = (ini + fin) / 2;
+    if (v[mitad] == mitad)
+      return mitad;
+    else if (v[mitad] > mitad)
+      return elementoEnSuPosicion(v, ini, mitad-1);
+    else
+      return elementoEnSuPosicion(v, mitad + 1, fin);
+    }
+}	
 \end{minted}  
 \end{frame}
 
@@ -126,23 +187,30 @@ int elementoEnSuPosicion(const vector<int> v,
 \end{frame}
 
 
-\subsection{Tamaños de problema}
+
+
+\section{Estudio de eficiencia}
+
+\subsection{Eficiencia empírica}
+
+\subsubsection{Tamaños de problema}
+
 \begin{frame}[fragile]{Tamaños de problema}
 \begin{table}[H]
 \centering
 \resizebox{\textwidth}{!}{%
-\begin{tabular}{|c|c|c|c|}
+\begin{tabular}{|c|c|c|c|c|}
 \hline
-\textbf{Algoritmo}  & \textbf{Tamaño inicial} & \textbf{Tamaño final} & \textbf{Incremento}\\
+\textbf{Algoritmo}  & \textbf{Eficiencia} & \textbf{Tamaño inicial} & \textbf{Tamaño final} & \textbf{Incremento}\\
 \hline
-Clásico & 1.000.000 & 1.480.000 & 20.000 \\
-Divide y Vencerás & 1.000 & 3.400 & 100\\
+Clásico & O(n) & 1.000.000 & 1.480.000 & 20.000 \\
+Divide y Vencerás & O(log(n)) & 1.000.000 & 13.000.000 & 500.000\\
 \hline
 \end{tabular}
 }
 \end{table}
 \end{frame}
-\subsection{Resultados}
+
 
 \begin{frame}[fragile]{Algoritmo clásico}
 \begin{figure}[H]
@@ -158,7 +226,15 @@ Divide y Vencerás & 1.000 & 3.400 & 100\\
 \end{figure}
 \end{frame}
 
-\subsection{Comparación de algoritmos}
+\begin{frame}[fragile]{Algoritmo Divide y Vencerás (zoom)}
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.5]{dyv_zoom.png}
+\end{figure}
+\end{frame}
+
+
+\subsubsection{Comparación entre algoritmos}
 \begin{frame}[fragile]{Comparación entre ambos algoritmos}
 \begin{figure}[H]
 \centering
@@ -166,9 +242,11 @@ Divide y Vencerás & 1.000 & 3.400 & 100\\
 \end{figure}
 \end{frame}
 
-\section{Cálculo de la eficiencia híbrida}
 
-\subsection{Errores en el cálculo de la constante oculta}
+\subsection{Cálculo de la eficiencia híbrida}
+
+\subsubsection{Errores en el cálculo de la constante oculta}
+
 \begin{frame}[fragile]{Errores en el cálculo de la constante oculta}
 \begin{table}[H]
 \centering
@@ -177,15 +255,13 @@ Divide y Vencerás & 1.000 & 3.400 & 100\\
 \hline
 \textbf{Algoritmo} & \textbf{Eficiencia teórica} & \textbf{Valor de la constante oculta} & \textbf{Error} \\
 \hline
-Clásico & O($n$) & 8.19304e-10 &0.1441\% \\
-Divide y Vencerás & O($n^2$) & 5.17311e-10 & 0.3221\% \\
+Clásico & O($n$) & 8.19304 $\cdot 10^{-10} $ &0.1441\% \\
+Divide y Vencerás & O($log(n)$) & 5.61125$\cdot 10^{-9} $ & 0.9174\% \\
 \hline
 \end{tabular}
 }
 \end{table}
 \end{frame}
-
-\subsection{Resultados}
 
 \begin{frame}[fragile]{Algoritmo clásico}
 \begin{figure}[H]
@@ -199,6 +275,178 @@ Divide y Vencerás & O($n^2$) & 5.17311e-10 & 0.3221\% \\
 \centering
 \includegraphics[scale=0.5]{hibrida_dyv.png}
 \end{figure}
+\end{frame}
+
+\section{Vectores con elementos repetidos}
+
+\subsection{Vectores con elementos repetidos}
+
+\begin{frame}[fragile]{Planteamiento}
+¿Seguirá funcionando el algoritmo Divide y Vencerás si se repiten elementos en el vector?
+\end{frame}
+
+\begin{frame}[fragile]{Elementos repetidos (I)}
+\begin{tikzpicture}[font=\ttfamily,
+array/.style={matrix of nodes,nodes={draw, minimum size=7mm, fill=blue!30},column sep=-\pgflinewidth, row sep=0.5mm, nodes in empty cells,
+row 1/.style={nodes={draw=none, fill=none, minimum size=5mm}}}]
+
+\matrix[array] (array) {
+0 & 1 & 2 & 3 & 4 & 5 & 6 \\
+  &   &   &   &   &   &   \\};
+%\node[draw, fill=gray, minimum size=4mm] at (array-2-3) (box) {};
+\node at (array-2-1) {1};
+\node at (array-2-2) {2};
+\node at (array-2-3) {2};
+\node at (array-2-4) {2};
+\node at (array-2-5) {3};
+\node at (array-2-6) {5};
+\node at (array-2-7) {5};
+
+\begin{scope}[on background layer]
+\fill[green!10] (array-1-1.north west) rectangle (array-1-5.south east);
+\end{scope}
+
+\draw[<->]([yshift=-3mm]array-2-1.south west) -- node[below] {Tamaño del vector: 7} ([yshift=-3mm]array-2-7.south east);
+
+\end{tikzpicture}
+\end{frame}
+
+\begin{frame}[fragile]{Elementos repetidos (II)}
+\begin{tikzpicture}[font=\ttfamily,
+array/.style={matrix of nodes,nodes={draw, minimum size=7mm, fill=blue!30},column sep=-\pgflinewidth, row sep=0.5mm, nodes in empty cells,
+row 1/.style={nodes={draw=none, fill=none, minimum size=5mm}}}]
+
+\matrix[array] (array) {
+0 & 1 & \textcolor{green}{2} & 3 & 4 & 5 & 6 \\
+  &   &   &   &   &   &   \\};
+%\node[draw, fill=gray, minimum size=4mm] at (array-2-3) (box) {};
+\node at (array-2-1) {1};
+\node at (array-2-2) {2};
+\node[draw, fill=green!20] at (array-2-3) {2};
+\node at (array-2-4) {2};
+\node at (array-2-5) {3};
+\node at (array-2-6) {5};
+\node at (array-2-7) {5};
+
+\begin{scope}[on background layer]
+\fill[green!10] (array-1-1.north west) rectangle (array-1-5.south east);
+\end{scope}
+
+\draw[<->]([yshift=-3mm]array-2-1.south west) -- node[below] {Tamaño del vector: 7} ([yshift=-3mm]array-2-7.south east);
+
+\end{tikzpicture}
+\end{frame}
+
+\begin{frame}[fragile]{Elementos repetidos (III)}
+\begin{tikzpicture}[font=\ttfamily,
+array/.style={matrix of nodes,nodes={draw, minimum size=7mm, fill=blue!30},column sep=-\pgflinewidth, row sep=0.5mm, nodes in empty cells,
+row 1/.style={nodes={draw=none, fill=none, minimum size=5mm}}}]
+
+\matrix[array] (array) {
+0 & 1 & \textcolor{green}{2} & 3 & 4 & 5 & 6 \\
+  &   &   &   &   &   &   \\};
+%\node[draw, fill=gray, minimum size=4mm] at (array-2-3) (box) {};
+\node at (array-2-1) {1};
+\node at (array-2-2) {2};
+\node[draw, fill=green!20] at (array-2-3) {2};
+\node[draw,fill=red!50] at (array-2-4) {2};
+\node at (array-2-5) {3};
+\node at (array-2-6) {5};
+\node at (array-2-7) {5};
+
+\begin{scope}[on background layer]
+\fill[green!10] (array-1-1.north west) rectangle (array-1-5.south east);
+\end{scope}
+
+\draw[<->]([yshift=-3mm]array-2-1.south west) -- node[below] {Tamaño del vector: 7} ([yshift=-3mm]array-2-7.south east);
+
+\end{tikzpicture}
+\vskip 0.5 cm
+Calculamos el centro del vector.\\
+$mitad=\frac{7}{2}=$\textcolor{red}{3} (división entera)
+
+\end{frame}
+
+\begin{frame}[fragile]{Elementos repetidos (IV)}
+\begin{tikzpicture}[font=\ttfamily,
+array/.style={matrix of nodes,nodes={draw, minimum size=7mm, fill=blue!30},column sep=-\pgflinewidth, row sep=0.5mm, nodes in empty cells,
+row 1/.style={nodes={draw=none, fill=none, minimum size=5mm}}}]
+
+\matrix[array] (array) {
+0 & 1 & \textcolor{green}{2} & 3 & 4 & 5 & 6 \\
+  &   &   &   &   &   &   \\};
+%\node[draw, fill=gray, minimum size=4mm] at (array-2-3) (box) {};
+\node at (array-2-1) {1};
+\node at (array-2-2) {2};
+\node[draw, fill=green!20] at (array-2-3) {2};
+\node[draw,fill=red!50] at (array-2-4) {2};
+\node at (array-2-5) {3};
+\node at (array-2-6) {5};
+\node at (array-2-7) {5};
+
+\begin{scope}[on background layer]
+\fill[green!10] (array-1-1.north west) rectangle (array-1-5.south east);
+\end{scope}
+
+\draw[<->]([yshift=-3mm]array-2-1.south west) -- node[below] {Tamaño del vector: 7} ([yshift=-3mm]array-2-7.south east);
+
+\end{tikzpicture}
+\vskip 0.5 cm
+$mitad=\frac{7}{2}=$\textcolor{red}{3} (división entera)
+\vskip 0.5cm
+¿$v[3]=3$? \textcolor{red}{NO} \\
+¿$v[3]=2<3]$? \textcolor{green}{SÍ} $\rightarrow$ exploramos desde $mitad+1=4$ a $fin=6$
+\end{frame}
+
+\begin{frame}[fragile]{Elementos repetidos (V)}
+\begin{tikzpicture}[font=\ttfamily,
+array/.style={matrix of nodes,nodes={draw, minimum size=7mm, fill=blue!30},column sep=-\pgflinewidth, row sep=0.5mm, nodes in empty cells,
+row 1/.style={nodes={draw=none, fill=none, minimum size=5mm}}}]
+
+\matrix[array] (array) {
+0 & 1 & \textcolor{green}{2} & 3 & 4 & 5 & 6 \\
+  &   &   &   &   &   &   \\};
+%\node[draw, fill=gray, minimum size=4mm] at (array-2-3) (box) {};
+\node at (array-2-1) {1};
+\node at (array-2-2) {2};
+\node[draw, fill=green!20] at (array-2-3) {2};
+\node[draw,fill=red!50] at (array-2-4) {2};
+\node at (array-2-5) {3};
+\node at (array-2-6) {5};
+\node at (array-2-7) {5};
+
+\begin{scope}[on background layer]
+\fill[green!10] (array-1-1.north west) rectangle (array-1-5.south east);
+\end{scope}
+
+\draw[<->]([yshift=-3mm]array-2-1.south west) -- node[below] {Tamaño del vector: 7} ([yshift=-3mm]array-2-7.south east);
+
+\end{tikzpicture}
+\vskip 0.5 cm
+$mitad=\frac{7}{2}=$\textcolor{red}{3} (división entera)
+
+\begin{tikzpicture}[font=\ttfamily,
+array/.style={matrix of nodes,nodes={draw, minimum size=7mm, fill=blue!30},column sep=-\pgflinewidth, row sep=0.5mm, nodes in empty cells,
+row 1/.style={nodes={draw=none, fill=none, minimum size=5mm}}}]
+
+\matrix[array] (array) {
+4 & 5 & 6 \\
+ &   &   \\};
+%\node[draw, fill=gray, minimum size=4mm] at (array-2-3) (box) {};
+
+\node at (array-2-1) {3};
+\node at (array-2-2) {5};
+\node at (array-2-3) {5};
+
+\begin{scope}[on background layer]
+\fill[green!10] (array-1-1.north west) rectangle (array-1-5.south east);
+\end{scope}
+
+\draw[<->]([yshift=-3mm]array-2-1.south west) -- node[below] {Tamaño del vector: 3} ([yshift=-3mm]array-2-3.south east);
+
+\end{tikzpicture}
+
+Al repetirse elementos, destruimos el axioma principal de la estrategia Divide y Vencerás $\rightarrow$ El algoritmo \textcolor{red}{no} es válido.
 \end{frame}
 
 \section*{Fin de la presentación}

@@ -18,7 +18,7 @@ double uniforme() {
 	return (double)t / f;
 }
 
-int elementoEnSuPosicion(const vector<int> v) {
+int elementoEnSuPosicion(const vector<int> &v) {
 	for (int i = 0; i < v.size() ; i++)
 		if (v[i] == i)
 			return i;

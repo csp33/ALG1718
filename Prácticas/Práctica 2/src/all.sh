@@ -5,8 +5,8 @@
 	rm -f ./clasico.dat ;
 	rm -f ./dyv.dat ;
 	echo "Ejecutando algoritmo clásico..." ;
-	./individual.sh clasico 1000000 20000;
+	./individual.sh clasico 100000 50000;
 	echo "Ejecutando algoritmo DyV..." ;
-	./individual.sh dyv 1000000 1000000;
+	./individual.sh dyv 1000000 500000;
 	echo "Generando gráficas..." ;
 	./gnuplot.sh ;
