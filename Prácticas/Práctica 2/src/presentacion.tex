@@ -153,10 +153,10 @@ Resultado del algoritmo : \textcolor{red}{\textbf{-1}}
 int elementoEnSuPosicion(const vector<int> &v, const int ini, 
 		const int fin) {
   if (ini == fin) {	//Caso base
-  if (v[ini] == ini)
-    return ini;
-  else
-    return -1;
+    if (v[ini] == ini)
+      return ini;
+    else
+      return -1;
   }
   else { //Buscamos en la mitad adecuada.
     int mitad = (ini + fin) / 2;
@@ -304,7 +304,7 @@ row 1/.style={nodes={draw=none, fill=none, minimum size=5mm}}}]
 \node at (array-2-3) {2};
 \node at (array-2-4) {2};
 \node at (array-2-5) {3};
-\node at (array-2-6) {5};
+\node at (array-2-6) {4};
 \node at (array-2-7) {5};
 
 \begin{scope}[on background layer]
@@ -330,7 +330,7 @@ row 1/.style={nodes={draw=none, fill=none, minimum size=5mm}}}]
 \node[draw, fill=green!20] at (array-2-3) {2};
 \node at (array-2-4) {2};
 \node at (array-2-5) {3};
-\node at (array-2-6) {5};
+\node at (array-2-6) {4};
 \node at (array-2-7) {5};
 
 \begin{scope}[on background layer]
@@ -356,7 +356,7 @@ row 1/.style={nodes={draw=none, fill=none, minimum size=5mm}}}]
 \node[draw, fill=green!20] at (array-2-3) {2};
 \node[draw,fill=red!50] at (array-2-4) {2};
 \node at (array-2-5) {3};
-\node at (array-2-6) {5};
+\node at (array-2-6) {4};
 \node at (array-2-7) {5};
 
 \begin{scope}[on background layer]
@@ -386,7 +386,7 @@ row 1/.style={nodes={draw=none, fill=none, minimum size=5mm}}}]
 \node[draw, fill=green!20] at (array-2-3) {2};
 \node[draw,fill=red!50] at (array-2-4) {2};
 \node at (array-2-5) {3};
-\node at (array-2-6) {5};
+\node at (array-2-6) {4};
 \node at (array-2-7) {5};
 
 \begin{scope}[on background layer]
@@ -417,7 +417,7 @@ row 1/.style={nodes={draw=none, fill=none, minimum size=5mm}}}]
 \node[draw, fill=green!20] at (array-2-3) {2};
 \node[draw,fill=red!50] at (array-2-4) {2};
 \node at (array-2-5) {3};
-\node at (array-2-6) {5};
+\node at (array-2-6) {4};
 \node at (array-2-7) {5};
 
 \begin{scope}[on background layer]
@@ -440,7 +440,7 @@ row 1/.style={nodes={draw=none, fill=none, minimum size=5mm}}}]
 %\node[draw, fill=gray, minimum size=4mm] at (array-2-3) (box) {};
 
 \node at (array-2-1) {3};
-\node at (array-2-2) {5};
+\node at (array-2-2) {4};
 \node at (array-2-3) {5};
 
 \begin{scope}[on background layer]
@@ -452,6 +452,57 @@ row 1/.style={nodes={draw=none, fill=none, minimum size=5mm}}}]
 \end{tikzpicture}
 
 Al repetirse elementos, destruimos el axioma principal de la estrategia Divide y Vencerás $\rightarrow$ El algoritmo \textcolor{red}{no} es válido.
+\end{frame}
+
+\begin{frame}[fragile]{Sin embargo...}
+Hay un caso en el que puede funcionar: si en alguna iteración $v[mitad]=mitad$.\\
+\begin{tikzpicture}[font=\ttfamily,
+array/.style={matrix of nodes,nodes={draw, minimum size=7mm, fill=blue!30},column sep=-\pgflinewidth, row sep=0.5mm, nodes in empty cells,
+row 1/.style={nodes={draw=none, fill=none, minimum size=5mm}}}]
+
+\matrix[array] (array) {
+0 & 1 & \textcolor{green}{2} & 3 & 4 & \textcolor{green}{5} & 6 \\
+  &   &   &   &   &   &   \\};
+%\node[draw, fill=gray, minimum size=4mm] at (array-2-3) (box) {};
+\node at (array-2-1) {1};
+\node at (array-2-2) {2};
+\node[draw, fill=green!20] at (array-2-3) {2};
+\node[draw,fill=red!50] at (array-2-4) {2};
+\node at (array-2-5) {3};
+\node[draw, fill=green!20] at (array-2-6) {5};
+\node at (array-2-7) {5};
+
+\begin{scope}[on background layer]
+\fill[green!10] (array-1-1.north west) rectangle (array-1-5.south east);
+\end{scope}
+
+\draw[<->]([yshift=-3mm]array-2-1.south west) -- node[below] {Tamaño del vector: 7} ([yshift=-3mm]array-2-7.south east);
+
+\end{tikzpicture}
+
+\vskip 0.5cm
+
+\begin{tikzpicture}[font=\ttfamily,
+array/.style={matrix of nodes,nodes={draw, minimum size=7mm, fill=blue!30},column sep=-\pgflinewidth, row sep=0.5mm, nodes in empty cells,
+row 1/.style={nodes={draw=none, fill=none, minimum size=5mm}}}]
+
+\matrix[array] (array) {
+4 &  \textcolor{green}{5} & 6 \\
+ &   &   \\};
+%\node[draw, fill=gray, minimum size=4mm] at (array-2-3) (box) {};
+
+\node at (array-2-1) {3};
+\node[draw, fill=green!20] at (array-2-2) {5};
+\node at (array-2-3) {5};
+
+\begin{scope}[on background layer]
+\fill[green!10] (array-1-1.north west) rectangle (array-1-5.south east);
+\end{scope}
+
+\draw[<->]([yshift=-3mm]array-2-1.south west) -- node[below] {Tamaño del vector: 3} ([yshift=-3mm]array-2-3.south east);
+
+\end{tikzpicture}
+
 \end{frame}
 
 \section*{Fin de la presentación}
