@@ -7,6 +7,6 @@
 	echo "Ejecutando algoritmo clásico..." ;
 	./individual.sh clasico 1000000 20000;
 	echo "Ejecutando algoritmo DyV..." ;
-	./individual.sh dyv 1000 100;
+	./individual.sh dyv 1000000 1000000;
 	echo "Generando gráficas..." ;
 	./gnuplot.sh ;

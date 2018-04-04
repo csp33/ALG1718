@@ -18,7 +18,7 @@ double uniforme() {
 	return (double)t / f;
 }
 
-int elementoEnSuPosicion(const vector<int> v, const int ini, const int fin) {
+int elementoEnSuPosicion(const vector<int> &v, const int ini, const int fin) {
 	if (ini == fin) {	//Caso base, vector de un solo elemento
 		if (v[ini] == ini)
 			return ini;
@@ -27,12 +27,12 @@ int elementoEnSuPosicion(const vector<int> v, const int ini, const int fin) {
 	}
 	else {	//Partimos en dos el vector y llamamos recursivamente
 		int mitad = (ini + fin) / 2;
-		int pos_izq = elementoEnSuPosicion(v, ini, mitad);
-		int pos_dcha = elementoEnSuPosicion(v, mitad + 1, fin);
-		if (pos_izq != -1)
-			return pos_izq;
+		if (v[mitad] == mitad)
+			return mitad;
+		else if (v[mitad] > mitad)
+			return elementoEnSuPosicion(v, ini, mitad-1);
 		else
-			return pos_dcha;
+			return elementoEnSuPosicion(v, mitad + 1, fin);
 	}
 }
 int main(int argc, char * argv[]) {
@@ -67,10 +67,9 @@ int main(int argc, char * argv[]) {
 		aux[k] = tmp;
 	}
 	//me quedo con los n primeros del vector
-	for (int j = 0; j < n; j++) T[j] = aux[j];
-#if TEST
-	for (int j = 0; j < n; j++) cout << T[j] << " ";
-#endif
+	for (int j = 0; j < n; j++)
+		T[j] = aux[j];
+
 	//Y ahora ordeno el vector T
 	vector<int> myvector (T, T + n);
 	vector<int>::iterator it;
@@ -82,6 +81,7 @@ int main(int argc, char * argv[]) {
 		cout << " " << *it;
 	cout << endl;
 #endif
+	
 	int pos;
 	for (int i = 0; i < 1000; i++) {
 		tantes = high_resolution_clock::now();
@@ -93,10 +93,10 @@ int main(int argc, char * argv[]) {
 	acumulado /= 1000;
 
 	cout << n << "\t" << acumulado << endl;
-#if TEST
+	#if TEST
 	cout << "Posición : " << pos << endl;
-#endif
-
+	#endif
+	
 	delete [] aux;
 	delete [] T;
 }
