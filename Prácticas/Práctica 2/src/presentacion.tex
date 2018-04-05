@@ -146,6 +146,102 @@ Resultado del algoritmo : \textcolor{red}{\textbf{-1}}
 \end{minted}  
 \end{frame}
 
+\begin{frame}[fragile]{Ejemplo}
+\begin{tikzpicture}[font=\ttfamily,
+array/.style={matrix of nodes,nodes={draw, minimum size=7mm, fill=blue!30},column sep=-\pgflinewidth, row sep=0.5mm, nodes in empty cells,
+row 1/.style={nodes={draw=none, fill=none, minimum size=5mm}}}]
+
+\matrix[array] (array) {
+0 & 1 & 2 & 3 & 4 & 5 & 6 \\
+  &   &   &   &   &   &   \\};
+%\node[draw, fill=gray, minimum size=4mm] at (array-2-3) (box) {};
+\node at (array-2-1) {-1};
+\node at (array-2-2) {0};
+\node at (array-2-3) {2};
+\node at (array-2-4) {9};
+\node at (array-2-5) {15};
+\node at (array-2-6) {21};
+\node at (array-2-7) {66};
+
+
+\draw[<->]([yshift=-3mm]array-2-1.south west) -- node[below] {Tamaño del vector: 7} ([yshift=-3mm]array-2-7.south east);
+
+\end{tikzpicture}
+\end{frame}
+
+\begin{frame}[fragile]{Ejemplo. Paso 1}
+\begin{tikzpicture}[font=\ttfamily,
+array/.style={matrix of nodes,nodes={draw, minimum size=7mm, fill=blue!30},column sep=-\pgflinewidth, row sep=0.5mm, nodes in empty cells,
+row 1/.style={nodes={draw=none, fill=none, minimum size=5mm}}}]
+
+\matrix[array] (array) {
+\textcolor{red}{0} & 1 & 2 & 3 & 4 & 5 & 6 \\
+  &   &   &   &   &   &   \\};
+\node[draw,fill=red!50] at (array-2-1) {-1};
+\node at (array-2-2) {0};
+\node at (array-2-3) {2};
+\node at (array-2-4) {9};
+\node at (array-2-5) {15};
+\node at (array-2-6) {21};
+\node at (array-2-7) {66};
+
+
+\draw[<->]([yshift=-3mm]array-2-1.south west) -- node[below] {Tamaño del vector: 7} ([yshift=-3mm]array-2-7.south east);
+
+\end{tikzpicture}
+\vskip 0.5 cm
+¿$v[0]=0$? \textcolor{red}{NO} $\rightarrow$ Continuamos.
+\end{frame}
+
+\begin{frame}[fragile]{Ejemplo. Paso 2}
+\begin{tikzpicture}[font=\ttfamily,
+array/.style={matrix of nodes,nodes={draw, minimum size=7mm, fill=blue!30},column sep=-\pgflinewidth, row sep=0.5mm, nodes in empty cells,
+row 1/.style={nodes={draw=none, fill=none, minimum size=5mm}}}]
+
+\matrix[array] (array) {
+0 & \textcolor{red}{1} & 2 & 3 & 4 & 5 & 6 \\
+  &   &   &   &   &   &   \\};
+\node at (array-2-1) {-1};
+\node[draw,fill=red!50] at (array-2-2) {0};
+\node at (array-2-3) {2};
+\node at (array-2-4) {9};
+\node at (array-2-5) {15};
+\node at (array-2-6) {21};
+\node at (array-2-7) {66};
+
+
+\draw[<->]([yshift=-3mm]array-2-1.south west) -- node[below] {Tamaño del vector: 7} ([yshift=-3mm]array-2-7.south east);
+
+\end{tikzpicture}
+\vskip 0.5 cm
+¿$v[1]=1$? \textcolor{red}{NO} $\rightarrow$ Continuamos.
+\end{frame}
+
+\begin{frame}[fragile]{Ejemplo. Paso 3}
+\begin{tikzpicture}[font=\ttfamily,
+array/.style={matrix of nodes,nodes={draw, minimum size=7mm, fill=blue!30},column sep=-\pgflinewidth, row sep=0.5mm, nodes in empty cells,
+row 1/.style={nodes={draw=none, fill=none, minimum size=5mm}}}]
+
+\matrix[array] (array) {
+0 & 1 & \textcolor{red}{2} & 3 & 4 & 5 & 6 \\
+  &   &   &   &   &   &   \\};
+\node at (array-2-1) {-1};
+\node at (array-2-2) {0};
+\node[draw,fill=red!50] at (array-2-3) {2};
+\node at (array-2-4) {9};
+\node at (array-2-5) {15};
+\node at (array-2-6) {21};
+\node at (array-2-7) {66};
+
+
+\draw[<->]([yshift=-3mm]array-2-1.south west) -- node[below] {Tamaño del vector: 7} ([yshift=-3mm]array-2-7.south east);
+
+\end{tikzpicture}
+\vskip 0.5 cm
+¿$v[2]=2$? \textcolor{green}{SÍ} $\rightarrow$ \textit{return \textbf{2}}.
+\end{frame}
+
+
 \subsection{Algoritmo Divide y Vencerás}
 
 \begin{frame}[fragile]{Divide y Vencerás}
@@ -170,6 +266,227 @@ int elementoEnSuPosicion(const vector<int> &v, const int ini,
 }	
 \end{minted}  
 \end{frame}
+
+
+\begin{frame}[fragile]{Ejemplo}
+\begin{tikzpicture}[font=\ttfamily,
+array/.style={matrix of nodes,nodes={draw, minimum size=7mm, fill=blue!30},column sep=-\pgflinewidth, row sep=0.5mm, nodes in empty cells,
+row 1/.style={nodes={draw=none, fill=none, minimum size=5mm}}}]
+
+\matrix[array] (array) {
+0 & 1 & 2 & 3 & 4 & 5 & 6 \\
+  &   &   &   &   &   &   \\};
+%\node[draw, fill=gray, minimum size=4mm] at (array-2-3) (box) {};
+\node at (array-2-1) {-15};
+\node at (array-2-2) {0};
+\node at (array-2-3) {2};
+\node at (array-2-4) {9};
+\node at (array-2-5) {15};
+\node at (array-2-6) {21};
+\node at (array-2-7) {66};
+
+\draw[<->]([yshift=-3mm]array-2-1.south west) -- node[below] {Tamaño del vector: 7} ([yshift=-3mm]array-2-7.south east);
+
+\end{tikzpicture}
+\end{frame}
+
+
+\begin{frame}[fragile]{Ejemplo. Paso 1}
+\begin{tikzpicture}[font=\ttfamily,
+array/.style={matrix of nodes,nodes={draw, minimum size=7mm, fill=blue!30},column sep=-\pgflinewidth, row sep=0.5mm, nodes in empty cells,
+row 1/.style={nodes={draw=none, fill=none, minimum size=5mm}}}]
+
+\matrix[array] (array) {
+0 & 1 & 2 & \textcolor{red}{3} & 4 & 5 & 6 \\
+  &   &   &   &   &   &   \\};
+%\node[draw, fill=gray, minimum size=4mm] at (array-2-3) (box) {};
+\node at (array-2-1) {-15};
+\node at (array-2-2) {0};
+\node at (array-2-3) {2};
+\node[draw,fill=red!50] at (array-2-4) {9};
+\node at (array-2-5) {15};
+\node at (array-2-6) {21};
+\node at (array-2-7) {66};
+
+\draw[<->]([yshift=-3mm]array-2-1.south west) -- node[below] {Tamaño del vector: 7} ([yshift=-3mm]array-2-7.south east);
+
+\end{tikzpicture}
+\vskip 0.5 cm
+Calculamos el centro del vector.\\
+$mitad=\frac{ini+fin=6}{2}=$\textcolor{red}{3}
+
+\end{frame}
+
+\begin{frame}[fragile]{Ejemplo. Paso 2}
+\begin{tikzpicture}[font=\ttfamily,
+array/.style={matrix of nodes,nodes={draw, minimum size=7mm, fill=blue!30},column sep=-\pgflinewidth, row sep=0.5mm, nodes in empty cells,
+row 1/.style={nodes={draw=none, fill=none, minimum size=5mm}}}]
+
+\matrix[array] (array) {
+0 & 1 & 2 & 3 & 4 & 5 & 6 \\
+  &   &   &   &   &   &   \\};
+%\node[draw, fill=gray, minimum size=4mm] at (array-2-3) (box) {};
+\node at (array-2-1) {-15};
+\node at (array-2-2) {0};
+\node at (array-2-3) {2};
+\node[draw,fill=red!50] at (array-2-4) {9};
+\node at (array-2-5) {15};
+\node at (array-2-6) {21};
+\node at (array-2-7) {66};
+
+
+\draw[<->]([yshift=-3mm]array-2-1.south west) -- node[below] {Tamaño del vector: 7} ([yshift=-3mm]array-2-7.south east);
+
+\end{tikzpicture}
+\vskip 0.5 cm
+$mitad=\frac{ini+fin=6}{2}=$\textcolor{red}{3}
+\vskip 0.2cm
+¿$v[3]=3$? \textcolor{red}{NO} \\
+¿$v[3]=9>3]$? \textcolor{green}{SÍ} $\rightarrow$ exploramos desde $inicio=0$ a $mitad-1=2$
+\end{frame}
+
+\begin{frame}[fragile]{Ejemplo. Paso 3}
+\begin{tikzpicture}[font=\ttfamily,
+array/.style={matrix of nodes,nodes={draw, minimum size=7mm, fill=blue!30},column sep=-\pgflinewidth, row sep=0.5mm, nodes in empty cells,
+row 1/.style={nodes={draw=none, fill=none, minimum size=5mm}}}]
+
+\matrix[array] (array) {
+0 & 1 & 2 & 3 & 4 & 5 & 6 \\
+  &   &   &   &   &   &   \\};
+%\node[draw, fill=gray, minimum size=4mm] at (array-2-3) (box) {};
+\node at (array-2-1) {-15};
+\node at (array-2-2) {0};
+\node at (array-2-3) {2};
+\node[draw,fill=red!50] at (array-2-4) {9};
+\node at (array-2-5) {15};
+\node at (array-2-6) {21};
+\node at (array-2-7) {66};
+
+
+\draw[<->]([yshift=-3mm]array-2-1.south west) -- node[below] {Tamaño del vector: 7} ([yshift=-3mm]array-2-7.south east);
+
+\end{tikzpicture}
+\vskip 0.5 cm
+\begin{tikzpicture}[font=\ttfamily,
+array/.style={matrix of nodes,nodes={draw, minimum size=7mm, fill=blue!30},column sep=-\pgflinewidth, row sep=0.5mm, nodes in empty cells,
+row 1/.style={nodes={draw=none, fill=none, minimum size=5mm}}}]
+
+\matrix[array] (array) {
+0 & 1 & 2 \\
+ &   &   \\};
+%\node[draw, fill=gray, minimum size=4mm] at (array-2-3) (box) {};
+
+\node at (array-2-1) {-15};
+\node at (array-2-2) {0};
+\node at (array-2-3) {2};
+
+\draw[<->]([yshift=-3mm]array-2-1.south west) -- node[below] {Tamaño del vector: 3} ([yshift=-3mm]array-2-3.south east);
+
+\end{tikzpicture}
+
+\end{frame}
+
+\begin{frame}[fragile]{Ejemplo. Paso 4}
+\begin{tikzpicture}[font=\ttfamily,
+array/.style={matrix of nodes,nodes={draw, minimum size=6mm, fill=blue!30},column sep=-\pgflinewidth, row sep=0.5mm, nodes in empty cells,
+row 1/.style={nodes={draw=none, fill=none, minimum size=5mm}}}]
+
+\matrix[array] (array) {
+0 & 1 & 2 & 3 & 4 & 5 & 6 \\
+  &   &   &   &   &   &   \\};
+%\node[draw, fill=gray, minimum size=4mm] at (array-2-3) (box) {};
+\node at (array-2-1) {-15};
+\node at (array-2-2) {0};
+\node at (array-2-3) {2};
+\node[draw,fill=red!50] at (array-2-4) {9};
+\node at (array-2-5) {15};
+\node at (array-2-6) {21};
+\node at (array-2-7) {66};
+
+\draw[<->]([yshift=-3mm]array-2-1.south west) -- node[below] {Tamaño del vector: 7} ([yshift=-3mm]array-2-7.south east);
+
+\end{tikzpicture}
+\vskip 0.2 cm
+\begin{tikzpicture}[font=\ttfamily,
+array/.style={matrix of nodes,nodes={draw, minimum size=7mm, fill=blue!30},column sep=-\pgflinewidth, row sep=0.5mm, nodes in empty cells,
+row 1/.style={nodes={draw=none, fill=none, minimum size=5mm}}}]
+
+\matrix[array] (array) {
+0 & 1 & 2 \\
+ &   &   \\};
+%\node[draw, fill=gray, minimum size=4mm] at (array-2-3) (box) {};
+
+\node at (array-2-1) {-15};
+\node[draw,fill=red!50] at (array-2-2) {0};
+\node at (array-2-3) {2};
+
+\draw[<->]([yshift=-3mm]array-2-1.south west) -- node[below] {Tamaño del vector: 3} ([yshift=-3mm]array-2-3.south east);
+
+\end{tikzpicture}
+\vskip 0.2 cm
+$mitad=\frac{ini+fin=2}{2}=$\textcolor{red}{1}
+\vskip 0.2cm
+¿$v[1]=1$? \textcolor{red}{NO} \\
+¿$v[1]=0<1]$? \textcolor{green}{SÍ} $\rightarrow$ exploramos desde $mitad+1=2$ a $fin=2$
+\end{frame}
+
+\begin{frame}[fragile]{Ejemplo. Paso 5}
+\begin{tikzpicture}[font=\ttfamily,
+array/.style={matrix of nodes,nodes={draw, minimum size=6mm, fill=blue!30},column sep=-\pgflinewidth, row sep=0.5mm, nodes in empty cells,
+row 1/.style={nodes={draw=none, fill=none, minimum size=5mm}}}]
+
+\matrix[array] (array) {
+0 & 1 & 2 & 3 & 4 & 5 & 6 \\
+  &   &   &   &   &   &   \\};
+%\node[draw, fill=gray, minimum size=4mm] at (array-2-3) (box) {};
+\node at (array-2-1) {-15};
+\node at (array-2-2) {0};
+\node at (array-2-3) {2};
+\node[draw,fill=red!50] at (array-2-4) {9};
+\node at (array-2-5) {15};
+\node at (array-2-6) {21};
+\node at (array-2-7) {66};
+
+\draw[<->]([yshift=-3mm]array-2-1.south west) -- node[below] {Tamaño del vector: 7} ([yshift=-3mm]array-2-7.south east);
+
+\end{tikzpicture}
+\vskip 1pt
+\begin{tikzpicture}[font=\ttfamily,
+array/.style={matrix of nodes,nodes={draw, minimum size=6mm, fill=blue!30},column sep=-\pgflinewidth, row sep=0.5mm, nodes in empty cells,
+row 1/.style={nodes={draw=none, fill=none, minimum size=5mm}}}]
+
+\matrix[array] (array) {
+0 & 1 & 2 \\
+ &   &   \\};
+%\node[draw, fill=gray, minimum size=4mm] at (array-2-3) (box) {};
+
+\node at (array-2-1) {-15};
+\node at (array-2-2) {0};
+\node at (array-2-3) {2};
+
+\draw[<->]([yshift=-3mm]array-2-1.south west) -- node[below] {Tamaño del vector: 3} ([yshift=-3mm]array-2-3.south east);
+
+\end{tikzpicture}
+\vskip 1pt
+\begin{tikzpicture}[font=\ttfamily,
+array/.style={matrix of nodes,nodes={draw, minimum size=5mm, fill=blue!30},column sep=-\pgflinewidth, row sep=0.5mm, nodes in empty cells,
+row 1/.style={nodes={draw=none, fill=none, minimum size=4mm}}}]
+
+\matrix[array] (array) {
+2 \\
+\\};
+%\node[draw, fill=gray, minimum size=4mm] at (array-2-3) (box) {};
+
+\node at (array-2-1) {2};
+\draw[<->]([yshift=-3mm]array-2-1.south west) -- node[below] {Tamaño del vector: 1} ([yshift=-3mm]array-2-1.south east);
+
+\end{tikzpicture}
+\vskip 1pt
+Caso base: vector de un elemento.
+¿$v[2]=2$? \textcolor{green}{SÍ} $\rightarrow$ \emph{return \textbf{2}} \\
+\end{frame}
+
+
 
 \subsection{Medición de tiempos}
 
@@ -368,7 +685,7 @@ row 1/.style={nodes={draw=none, fill=none, minimum size=5mm}}}]
 \end{tikzpicture}
 \vskip 0.5 cm
 Calculamos el centro del vector.\\
-$mitad=\frac{7}{2}=$\textcolor{red}{3} (división entera)
+$mitad=\frac{ini+fin=6}{2}=$\textcolor{red}{3}
 
 \end{frame}
 
@@ -397,7 +714,7 @@ row 1/.style={nodes={draw=none, fill=none, minimum size=5mm}}}]
 
 \end{tikzpicture}
 \vskip 0.5 cm
-$mitad=\frac{7}{2}=$\textcolor{red}{3} (división entera)
+$mitad=\frac{6}{2}=$\textcolor{red}{3}
 \vskip 0.5cm
 ¿$v[3]=3$? \textcolor{red}{NO} \\
 ¿$v[3]=2<3]$? \textcolor{green}{SÍ} $\rightarrow$ exploramos desde $mitad+1=4$ a $fin=6$
@@ -428,7 +745,7 @@ row 1/.style={nodes={draw=none, fill=none, minimum size=5mm}}}]
 
 \end{tikzpicture}
 \vskip 0.5 cm
-$mitad=\frac{7}{2}=$\textcolor{red}{3} (división entera)
+$mitad=\frac{6}{2}=$\textcolor{red}{3} 
 
 \begin{tikzpicture}[font=\ttfamily,
 array/.style={matrix of nodes,nodes={draw, minimum size=7mm, fill=blue!30},column sep=-\pgflinewidth, row sep=0.5mm, nodes in empty cells,
