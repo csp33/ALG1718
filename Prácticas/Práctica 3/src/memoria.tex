@@ -1,0 +1,129 @@
+\documentclass[12pt,spanish]{article}
+\usepackage[spanish]{babel}
+\usepackage{tikz}
+\usepackage{graphicx}
+\usetikzlibrary{matrix,backgrounds,babel}
+\usepackage{texdraw}
+\usepackage{subcaption}
+\usepackage{multirow}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage[hidelinks]{hyperref}
+\usepackage{caption}
+\usepackage{multicol}
+\usepackage{forest}
+\usepackage[outputdir=build]{minted}
+\usepackage[skins,minted,breakable]{tcolorbox}
+\usepackage{float}
+\usepackage{array}
+\graphicspath{ {../img/} {../../LaTeX/img/} {/home/csp98/latex/img/}}
+\selectlanguage{spanish}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage[a4paper,left=3cm,right=2cm,top=2.5cm,bottom=2.5cm]{geometry}
+\newtheorem{desc}{Descripción }
+\makeindex
+
+\begin{document}
+\begin{titlepage}
+
+\newlength{\centeroffset}
+\setlength{\centeroffset}{-0.5\oddsidemargin}
+\addtolength{\centeroffset}{0.5\evensidemargin}
+\thispagestyle{empty}
+
+\noindent\hspace*{\centeroffset}
+\begin{minipage}{\textwidth}
+
+\centering
+\includegraphics[width=0.9\textwidth]{logo_ugr.jpg}\\[1.4cm]
+
+\textsc{ \Large Algorítmica\\[0.2cm]}
+\textsc{GRADO EN INGENIERÍA INFORMÁTICA}\\[1cm]
+
+{\Huge\bfseries Práctica 3\\}
+\noindent\rule[-1ex]{\textwidth}{3pt}\\[3.5ex]
+{\large\bfseries El supercomputador}
+\end{minipage}
+
+\vspace{1.5cm}
+\noindent\hspace*{\centeroffset}
+\begin{minipage}{\textwidth}
+\centering
+
+\textbf{Autores}\\ {María Jesús López Salmerón \\ Nazaret Román Guerrero \\ Laura Hernández Muñoz \\ José Baena Cobos  \\ Carlos Sánchez Páez}\\[2.5ex]
+\includegraphics[width=0.3\textwidth]{etsiit_logo.png}\\[0.1cm]
+\vspace{1.5cm}
+\includegraphics[width=0.5\textwidth]{decsai.jpg}\\[0.1cm]
+\vspace{1cm}
+\textsc{Escuela Técnica Superior de Ingenierías Informática y de Telecomunicación}\\
+\vspace{1cm}
+\textsc{Curso 2017-2018}
+\end{minipage}
+\end{titlepage}
+\tableofcontents
+\thispagestyle{empty}
+\listoffigures
+\newpage
+\setcounter{page}{1}
+%%%%%%%%%%%%%%%%%%%%%%%%Comienzo del documento%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Descripción de la práctica}
+
+El objetivo de esta práctica es diseñar un algoritmo para resolver el problema de \textit{el supercomputador}. Este problema consiste en lo siguiente:
+\begin{desc}[Supercomputador]
+Una empresa debe realizar una tarea costosa: para eso tienen un supercomputador y un número ilimitado (a efectos prácticos) de computadores personales.\\ 
+
+Para llevar a cabo la tarea, ésta se divide en \textbf{n} subprocesos que pueden llevarse a cabo de manera independiente. Cada subproceso consta de dos etapas independientes: la primera se lleva a cabo en el supercomputador con un tiempo \textbf{p(i)} segundos y la segunda etapa se lleva a cabo en uno de los computadores independientes con un tiempo de \textbf{f(i)} segundos. \\
+
+Puesto que siempre hay algún computador personal, la segunda etapa puede realizarse en paralelo. Sin embargo, el supercomputador solo puede llevar a cabo una tarea a la vez.
+\end{desc}
+
+Se desea encontrar el orden en el que computar los subprocesos de forma que se minimice el tiempo del proceso global. Para ello se diseñará un algoritmo \emph{voraz}. \\
+\begin{figure}[H]
+\centering
+\begin{equation*}
+  \text{Tiempo de }proceso_i =
+  \begin{cases}
+    p(i) & \text{segundos en el supercomputador} \\
+    	&	+\\
+    f(i) & \text{segundos en un PC}
+  \end{cases}
+\end{equation*}
+\begin{forest}
+for tree={draw,fill=blue!20 , rounded corners , l sep=20pt}
+[Supercomputador 
+    [$PC_1$]
+    [$PC_2$]
+    [$PC_3$]
+    [\ldots,fill=white,draw=white,edge=white]
+    [$PC_{n-1}$]
+    [$PC_n$]
+]
+\end{forest}
+\caption{Descripción del problema}
+\end{figure}
+
+\section{Algoritmo diseñado}
+
+Este algoritmo voraz se compone de:
+\begin{itemize}
+	\item \textbf{Conjunto de candidatos}. Todos los procesos a ejecutar. $\{p_1, p_2, ..., p_n\}$.
+	\item \textbf{Conjunto de seleccionados}. Aquellos procesos que iremos incorporando a la lista final.
+	\item \textbf{Función solución}. $p_i$ completado $\forall i \in \mathbb{N}$.
+	\item \textbf{Función de factibilidad}. El tiempo de ejecución de un proceso debe ser finito.
+	\item \textbf{Función de selección}. Seleccionaremos aquel proceso que tenga un $T_s$ más pequeño.
+	\item \textbf{Función objetivo}. Obtener la solución cuyo tiempo global sea menor, siendo $T_{global} =$máx$\{t_{proceso_1}, t_{proceso_2}, ... , t_{proceso_n}\}$.
+\end{itemize}
+
+%%ESQUEMA DEL EJEMPLO%%%%
+
+\begin{enumerate}
+	\item Elegimos el mejor candidato mediante la \textbf{función de selección}.\\
+					mín$\{T_{s1}, T_{s2}, T_{s3}, T_{s4}\}=T_{S3}=30$.
+	\item Como $T_{S3} \in \mathbb{R}$, el candidato es válido.
+	\item Como no hemos cumplido el objetivo (quedan procesos por ejecutar), elegimos el siguiente candidato de la lista mediante la función de selección. Repetimos el algoritmo hasta incluir todos los procesos.
+\end{enumerate}
+
+%%DIBUJOS PASO A PASO
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%Fin del documento%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\end{document}

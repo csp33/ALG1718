@@ -1,0 +1,745 @@
+\documentclass{beamer}
+\usepackage[outputdir=build]{minted}
+\usepackage[skins,minted,breakable]{tcolorbox}
+\usepackage[spanish]{babel}
+\usepackage{subcaption}
+\usetikzlibrary{chains}
+\usetikzlibrary{matrix,backgrounds}
+\usepackage{multirow}
+\usepackage{multicol}
+\usepackage{subcaption}
+\usepackage{xcolor}
+\usepackage{pgfgantt}
+
+\usepackage{forest}
+\usepackage{color, colortbl}
+\usepackage{pgfgantt}
+\graphicspath{ {../img/} {../../LaTeX/img/} {/home/csp98/latex/img/}}
+\selectlanguage{spanish}
+\usepackage[utf8]{inputenc}
+\usetheme{PaloAlto}
+\setbeamerfont{section in sidebar}{size=\fontsize{2}{4}\selectfont}
+\setbeamerfont{subsection in sidebar}{size=\fontsize{2}{3}\selectfont}
+\setbeamerfont{subsubsection in sidebar}{size=\fontsize{2}{2}\selectfont}
+
+\setbeamerfont{section in toc}{size=\footnotesize}
+\setbeamerfont{subsection in toc}{size=\scriptsize}
+\setbeamerfont{subsubsection in toc}{size=\tiny}
+
+
+\title{Práctica 2}
+\date{6 de abril de 2018}
+\subtitle{Supercomputador}
+
+\author{María Jesús López Salmerón \\ Nazaret Román Guerrero \\ Laura Hernández Muñoz \\ José Baena Cobos  \\ Carlos Sánchez Páez}
+
+\makeatletter
+  \setbeamertemplate{sidebar \beamer@sidebarside}%{sidebar theme}
+  {
+    \beamer@tempdim=\beamer@sidebarwidth%
+    \advance\beamer@tempdim by -6pt%
+    \insertverticalnavigation{\beamer@sidebarwidth}%
+    \vfill
+    \ifx\beamer@sidebarside\beamer@lefttext%
+    \else%
+      \usebeamercolor{normal text}%
+      \llap{\usebeamertemplate***{navigation symbols}\hskip0.1cm}%
+      \vskip2pt%
+    \fi%
+}%
+\makeatother
+
+\subject{Algorítmica}
+\AtBeginSection[]
+  {
+     \begin{frame}<beamer>
+     \frametitle{Índice}
+     \tableofcontents[currentsection]
+     \end{frame}
+  }
+\AtBeginSubsection[]
+{
+  \begin{frame}<beamer>{Índice}
+    \tableofcontents[currentsection,currentsubsection]
+  \end{frame}
+}
+
+% Let's get started
+\begin{document}
+\centering
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}{Índice}
+  \tableofcontents
+  % You might wish to add the option [pausesections]
+\end{frame}
+
+\section{Presentación del problema}
+
+
+\begin{frame}[fragile]{Supercomputador}
+\begin{figure}[H]
+\centering
+\begin{equation*}
+  \text{Tiempo de }proceso_i =
+  \begin{cases}
+    p(i) & \text{segundos en el supercomputador} \\
+    	&	+\\
+    f(i) & \text{segundos en un PC}
+  \end{cases}
+\end{equation*}
+\begin{forest}
+for tree={draw,fill=blue!20 , rounded corners , l sep=20pt}
+[Supercomputador 
+    [$PC_1$]
+    [$PC_2$]
+    [$PC_3$]
+    [\ldots,fill=white,draw=white,edge=white]
+    [$PC_{n-1}$]
+    [$PC_n$]
+]
+\end{forest}
+\end{figure}
+\end{frame}
+
+\begin{frame}[fragile]{Supercomputador}
+\begin{figure}[H]
+\centering
+\begin{equation*}
+  \text{Tiempo de }proceso_i =
+  \begin{cases}
+    p(i) & \text{segundos en el supercomputador} \\
+    	&	+\\
+    f(i) & \text{segundos en un PC}
+  \end{cases}
+\end{equation*}
+\begin{forest}
+for tree={draw,fill=blue!20 , rounded corners , l sep=20pt}
+[Supercomputador,fill=green 
+    [$PC_1$]
+    [$PC_2$]
+    [$PC_3$]
+    [\ldots,fill=white,draw=white,edge=white]
+    [$PC_{n-1}$]
+    [$PC_n$]
+]
+\end{forest}
+\end{figure}
+\end{frame}
+
+\begin{frame}[fragile]{Supercomputador}
+\begin{figure}[H]
+\centering
+\begin{equation*}
+  \text{Tiempo de }proceso_i =
+  \begin{cases}
+    p(i) & \text{segundos en el supercomputador} \\
+    	&	+\\
+    f(i) & \text{segundos en un PC}
+  \end{cases}
+\end{equation*}
+\begin{forest}
+for tree={draw,fill=blue!20 , rounded corners , l sep=20pt}
+[Supercomputador,fill=purple
+    [$PC_1$,fill=green]
+    [$PC_2$]
+    [$PC_3$]
+    [\ldots,fill=white,draw=white,edge=white]
+    [$PC_{n-1}$]
+    [$PC_n$]
+]
+\end{forest}
+\end{figure}
+\end{frame}
+
+\begin{frame}[fragile]{Supercomputador}
+\begin{figure}[H]
+\centering
+\begin{equation*}
+  \text{Tiempo de }proceso_i =
+  \begin{cases}
+    p(i) & \text{segundos en el supercomputador} \\
+    	&	+\\
+    f(i) & \text{segundos en un PC}
+  \end{cases}
+\end{equation*}
+\begin{forest}
+for tree={draw,fill=blue!20 , rounded corners , l sep=20pt}
+[Supercomputador,fill=yellow
+    [$PC_1$,fill=green]
+    [$PC_2$,fill=purple]
+    [$PC_3$]
+    [\ldots,fill=white,draw=white,edge=white]
+    [$PC_{n-1}$]
+    [$PC_n$]
+]
+\end{forest}
+\end{figure}
+\end{frame}
+
+\begin{frame}[fragile]{Ejemplo (I)}
+\begin{table}
+\begin{tabular}{|c|c|c|}
+\hline
+\textbf{Proceso} & \textbf{$T_{S}$} & \textbf{$T_{PC}$} \\
+\hline
+$P_1$ & 4 & 6 \\
+\hline
+$P_2$ & 5 & 5 \\
+\hline
+$P_3$ & 3 & 7 \\
+\hline
+$P_4$ & 8 & 2 \\
+\hline
+\end{tabular}
+\end{table}
+\end{frame}
+
+
+\begin{frame}[fragile]{Ejemplo (II)}
+\begin{figure}[H]
+\centering
+\begin{table}
+\small
+\begin{tabular}{|c|c|c|}
+\hline
+\textbf{Proceso} & \textbf{$p(i)$} & \textbf{$f(i)$} \\
+\hline
+$P_1$ & 4 & 6 \\
+\hline
+$P_2$ & 5 & 5 \\
+\hline
+$P_3$ & 3 & 7 \\
+\hline
+$P_4$ & 8 & 2 \\
+\hline
+\end{tabular}
+\end{table}
+
+\vspace{0.2cm}
+
+\begin{ganttchart}[
+x unit=0.3cm,
+y unit title=0.4cm,
+y unit chart=0.5cm,
+include title in canvas=false,
+title label font=\scriptsize,
+title/.style={draw=none, fill=none}, 
+vgrid, hgrid, link/.style={-latex, red}
+]{1}{23}
+\ganttbar[bar/.append style={fill=blue}]{$P_3$}{1}{3} 
+\ganttbar[bar/.append style={fill=red}]{$P_3$}{4}{10} \\
+
+\ganttbar[bar/.append style={fill=blue}]{$P_1$}{4}{7} 
+\ganttbar[bar/.append style={fill=red}]{$P_1$}{8}{13} \\
+
+\ganttbar[bar/.append style={fill=blue}]{$P_2$}{8}{12} 
+\ganttbar[bar/.append style={fill=red}]{$P_2$}{13}{17} \\
+
+\ganttbar[bar/.append style={fill=blue}]{$P_4$}{13}{20} 
+\ganttbar[bar/.append style={fill=red}]{$P_4$}{21}{22} 
+
+\setganttlinklabel{f-s}{}
+
+\ganttlink[link type=f-s]{elem0}{elem2}
+
+\ganttlink[link type=f-s]{elem2}{elem4}
+
+\ganttlink[link type=f-s]{elem4}{elem6}
+\end{ganttchart}
+
+
+%%%LEYENDA%%%%%
+\fcolorbox{black}{red}{\rule{0pt}{1.5pt}\rule{1.5pt}{0pt}}\quad \scriptsize{Tiempo de PC.}
+\quad 
+\fcolorbox{black}{blue}{\rule{0pt}{1.5pt}\rule{1.5pt}{0pt}}\quad \scriptsize{Tiempo de supercomputador.}
+
+\end{figure}
+
+\end{frame}
+
+\begin{frame}[fragile]{Ejemplo (III)}
+\begin{figure}[H]
+\centering
+\begin{table}
+\tiny
+\begin{tabular}{|c|c|c|}
+\hline
+\textbf{Proceso} & \textbf{$p(i)$} & \textbf{$f(i)$} \\
+\hline
+$P_1$ & 4 & 6 \\
+\hline
+$P_2$ & 5 & 5 \\
+\hline
+$P_3$ & 3 & 7 \\
+\hline
+$P_4$ & 8 & 2 \\
+\hline
+\end{tabular}
+\end{table}
+
+\vspace{0.2cm}
+
+\begin{ganttchart}[
+x unit=0.2cm,
+y unit title=0.25cm,
+y unit chart=0.35cm,
+include title in canvas=false,
+title label font=\scriptsize,
+title/.style={draw=none, fill=none}, 
+vgrid, hgrid, link/.style={-latex, red}
+]{1}{28}
+\ganttbar[bar/.append style={fill=blue}]{$P_3$}{1}{3} 
+\ganttbar[bar/.append style={fill=red}]{$P_3$}{4}{10} \\
+
+\ganttbar[bar/.append style={fill=blue}]{$P_1$}{4}{7} 
+\ganttbar[bar/.append style={fill=red}]{$P_1$}{8}{13} \\
+
+\ganttbar[bar/.append style={fill=blue}]{$P_2$}{8}{12} 
+\ganttbar[bar/.append style={fill=red}]{$P_2$}{13}{17} \\
+
+\ganttbar[bar/.append style={fill=blue}]{$P_4$}{13}{20} 
+\ganttbar[bar/.append style={fill=red}]{$P_4$}{21}{22} 
+
+\setganttlinklabel{f-s}{}
+
+\ganttlink[link type=f-s]{elem0}{elem2}
+
+\ganttlink[link type=f-s]{elem2}{elem4}
+
+\ganttlink[link type=f-s]{elem4}{elem6}
+\end{ganttchart}
+
+\vspace{0.2cm}
+
+\begin{ganttchart}[
+x unit=0.2cm,
+y unit title=0.25cm,
+y unit chart=0.35cm,
+include title in canvas=false,
+title label font=\scriptsize,
+title/.style={draw=none, fill=none}, 
+vgrid, hgrid, link/.style={-latex, red}
+]{1}{28}
+\ganttbar[bar/.append style={fill=blue}]{$P_1$}{1}{5} 
+\ganttbar[bar/.append style={fill=red}]{$P_3$}{5}{10} \\
+
+\ganttbar[bar/.append style={fill=blue}]{$P_2$}{6}{11} 
+\ganttbar[bar/.append style={fill=red}]{$P_1$}{12}{17} \\
+
+\ganttbar[bar/.append style={fill=blue}]{$P_3$}{12}{15} 
+\ganttbar[bar/.append style={fill=red}]{$P_2$}{16}{23} \\
+
+\ganttbar[bar/.append style={fill=blue}]{$P_4$}{16}{24} 
+\ganttbar[bar/.append style={fill=red}]{$P_4$}{25}{27} 
+
+\setganttlinklabel{f-s}{}
+
+\ganttlink[link type=f-s]{elem0}{elem2}
+
+\ganttlink[link type=f-s]{elem2}{elem4}
+
+\ganttlink[link type=f-s]{elem4}{elem6}
+\end{ganttchart}
+
+%%%LEYENDA%%%%%
+\fcolorbox{black}{red}{\rule{0pt}{1.5pt}\rule{1.5pt}{0pt}}\quad \scriptsize{Tiempo de PC.}
+\quad 
+\fcolorbox{black}{blue}{\rule{0pt}{1.5pt}\rule{1.5pt}{0pt}}\quad \scriptsize{Tiempo de supercomputador.}
+\end{figure}
+
+\end{frame}
+
+\begin{frame}[fragile]{Ejemplo (IV)}
+\begin{figure}[H]
+\centering
+\begin{table}
+\tiny
+\begin{tabular}{|c|c|c|}
+\hline
+\textbf{Proceso} & \textbf{$p(i)$} & \textbf{$f(i)$} \\
+\hline
+$P_1$ & 4 & 6 \\
+\hline
+$P_2$ & 5 & 5 \\
+\hline
+$P_3$ & 3 & 7 \\
+\hline
+$P_4$ & 8 & 2 \\
+\hline
+\end{tabular}
+\end{table}
+
+\vspace{0.2cm}
+
+\begin{ganttchart}[
+x unit=0.2cm,
+y unit title=0.25cm,
+y unit chart=0.35cm,
+include title in canvas=false,
+title label font=\scriptsize,
+title/.style={draw=none, fill=none}, 
+vgrid, hgrid, link/.style={-latex, red}
+]{1}{28}
+\ganttbar[bar/.append style={fill=blue}]{$P_3$}{1}{3} 
+\ganttbar[bar/.append style={fill=red}]{$P_3$}{4}{10} \\
+
+\ganttbar[bar/.append style={fill=blue}]{$P_1$}{4}{7} 
+\ganttbar[bar/.append style={fill=red}]{$P_1$}{8}{13} \\
+
+\ganttbar[bar/.append style={fill=blue}]{$P_2$}{8}{12} 
+\ganttbar[bar/.append style={fill=red}]{$P_2$}{13}{17} \\
+
+\ganttbar[bar/.append style={fill=blue}]{$P_4$}{13}{20} 
+\ganttbar[bar/.append style={fill=red}]{$P_4$}{21}{22} 
+
+\setganttlinklabel{f-s}{}
+
+\ganttlink[link type=f-s]{elem0}{elem2}
+
+\ganttlink[link type=f-s]{elem2}{elem4}
+
+\ganttlink[link type=f-s]{elem4}{elem6}
+\end{ganttchart}
+
+\vspace{0.2cm}
+
+\begin{ganttchart}[
+x unit=0.2cm,
+y unit title=0.25cm,
+y unit chart=0.35cm,
+include title in canvas=false,
+title label font=\scriptsize,
+title/.style={draw=none, fill=none}, 
+vgrid, hgrid, link/.style={-latex, red}
+]{1}{28}
+\ganttbar[bar/.append style={fill=blue}]{$P_1$}{1}{5} 
+\ganttbar[bar/.append style={fill=red}]{$P_3$}{5}{10} \\
+
+\ganttbar[bar/.append style={fill=blue}]{$P_2$}{6}{11} 
+\ganttbar[bar/.append style={fill=red}]{$P_1$}{12}{17} \\
+
+\ganttbar[bar/.append style={fill=blue}]{$P_3$}{12}{15} 
+\ganttbar[bar/.append style={fill=red}]{$P_2$}{16}{23} \\
+
+\ganttbar[bar/.append style={fill=blue}]{$P_4$}{16}{24} 
+\ganttbar[bar/.append style={fill=red}]{$P_4$}{25}{27} 
+
+\setganttlinklabel{f-s}{}
+
+\ganttlink[link type=f-s]{elem0}{elem2}
+
+\ganttlink[link type=f-s]{elem2}{elem4}
+
+\ganttlink[link type=f-s]{elem4}{elem6}
+\end{ganttchart}
+
+%%%LEYENDA%%%%%
+\fcolorbox{black}{red}{\rule{0pt}{1.5pt}\rule{1.5pt}{0pt}}\quad \scriptsize{Tiempo de PC.}
+\quad 
+\fcolorbox{black}{blue}{\rule{0pt}{1.5pt}\rule{1.5pt}{0pt}}\quad \scriptsize{Tiempo de supercomputador.}
+
+\end{figure}
+
+\begin{center}
+\large
+Para 4 procesos hay $4!=24$ posibles soluciones.
+\end{center}
+\end{frame}
+
+\section{Metodología del algoritmo.}
+%%Explicación partes algoritmo greedy
+
+\subsection{Ejemplo de uso}
+
+\begin{frame}[fragile]{Ejemplo (I)}
+\begin{table}
+\begin{tabular}{|c|c|c|}
+\hline
+\textbf{Proceso} & \textbf{$T_{S}$} & \textbf{$T_{PC}$} \\
+\hline
+$P_1$ & 4 & 6 \\
+\hline
+$P_2$ & 5 & 5 \\
+\hline
+$P_3$ & 3 & 7 \\
+\hline
+$P_4$ & 8 & 2 \\
+\hline
+\end{tabular}
+\end{table}
+\end{frame}
+
+\begin{frame}[fragile]{Ejemplo (II)}
+\begin{figure}[H]
+\centering
+\begin{table}
+\footnotesize
+\begin{tabular}{|c|c|c|}
+\hline
+\textbf{Proceso} & \textbf{$p(i)$} & \textbf{$f(i)$} \\
+\hline
+$P_1$ & 4 & 6 \\
+\hline
+$P_2$ & 5 & 5 \\
+\hline
+\rowcolor{green!50} $P_3$ & 3 & \textbf{7} \\
+\hline
+$P_4$ & 8 & 2 \\
+\hline
+\end{tabular}
+\end{table}
+
+\vspace{0.2cm}
+
+\begin{ganttchart}[
+x unit=0.4cm,
+y unit title=0.5cm,
+y unit chart=0.7cm,
+include title in canvas=false,
+title label font=\scriptsize,
+title/.style={draw=none, fill=none}, 
+vgrid, hgrid, link/.style={-latex, red}
+]{1}{23}
+\gantttitlelist{1,...,23}{1} \\
+\ganttbar[bar/.append style={fill=blue}]{$P_3$}{1}{3} 
+\ganttbar[bar/.append style={fill=red}]{$P_3$}{4}{10} \\
+\\
+\\	
+%\ganttbar[bar/.append style={fill=blue}]{$P_1$}{4}{7} 
+%\ganttbar[bar/.append style={fill=red}]{$P_1$}{8}{13} \\
+
+%\ganttbar[bar/.append style={fill=blue}]{$P_2$}{8}{12} 
+%\ganttbar[bar/.append style={fill=red}]{$P_2$}{13}{17} \\
+
+%\ganttbar[bar/.append style={fill=blue}]{$P_4$}{13}{20} 
+%\ganttbar[bar/.append style={fill=red}]{$P_4$}{21}{22} 
+
+%\setganttlinklabel{f-s}{}
+
+%\ganttlink[link type=f-s]{elem0}{elem2}
+
+%\ganttlink[link type=f-s]{elem2}{elem4}
+
+%\ganttlink[link type=f-s]{elem4}{elem6}
+\end{ganttchart}
+
+\vspace{0.5cm}
+
+%%%LEYENDA%%%%%
+\fcolorbox{black}{red}{\rule{0pt}{3pt}\rule{3pt}{0pt}}\quad \footnotesize{Tiempo de PC.}
+\quad 
+\fcolorbox{black}{blue}{\rule{0pt}{3pt}\rule{3pt}{0pt}}\quad \footnotesize{Tiempo de supercomputador.}
+\end{figure}
+
+\end{frame}
+
+
+\begin{frame}[fragile]{Ejemplo (III)}
+\begin{figure}[H]
+\centering
+\begin{table}
+\footnotesize
+\begin{tabular}{|c|c|c|}
+\hline
+\textbf{Proceso} & \textbf{$p(i)$} & \textbf{$f(i)$} \\
+\hline
+\rowcolor{green!50}$P_1$ & 4 & \textbf{6} \\
+\hline
+$P_2$ & 5 & 5 \\
+\hline
+\rowcolor{blue!20} $P_3$ & 3 & 7 \\
+\hline
+$P_4$ & 8 & 2 \\
+\hline
+\end{tabular}
+\end{table}
+
+\vspace{0.2cm}
+
+\begin{ganttchart}[
+x unit=0.4cm,
+y unit title=0.5cm,
+y unit chart=0.7cm,
+include title in canvas=false,
+title label font=\scriptsize,
+title/.style={draw=none, fill=none}, 
+vgrid, hgrid, link/.style={-latex, red}
+]{1}{23}
+\gantttitlelist{1,...,23}{1} \\
+\ganttbar[bar/.append style={fill=blue}]{$P_3$}{1}{3} 
+\ganttbar[bar/.append style={fill=red}]{$P_3$}{4}{10} \\
+
+\ganttbar[bar/.append style={fill=blue}]{$P_1$}{4}{7} 
+\ganttbar[bar/.append style={fill=red}]{$P_1$}{8}{13} \\
+\\
+%\ganttbar[bar/.append style={fill=blue}]{$P_2$}{8}{12} 
+%\ganttbar[bar/.append style={fill=red}]{$P_2$}{13}{17} \\
+
+%\ganttbar[bar/.append style={fill=blue}]{$P_4$}{13}{20} 
+%\ganttbar[bar/.append style={fill=red}]{$P_4$}{21}{22} 
+
+\setganttlinklabel{f-s}{}
+
+\ganttlink[link type=f-s]{elem0}{elem2}
+
+%\ganttlink[link type=f-s]{elem2}{elem4}
+
+%\ganttlink[link type=f-s]{elem4}{elem6}
+\end{ganttchart}
+
+\vspace{0.5cm}
+%%%LEYENDA%%%%%
+\fcolorbox{black}{red}{\rule{0pt}{3pt}\rule{3pt}{0pt}}\quad \footnotesize{Tiempo de PC.}
+\quad 
+\fcolorbox{black}{blue}{\rule{0pt}{3pt}\rule{3pt}{0pt}}\quad \footnotesize{Tiempo de supercomputador.}
+\end{figure}
+
+\end{frame}
+
+\begin{frame}[fragile]{Ejemplo (IV)}
+\begin{figure}[H]
+\centering
+\begin{table}
+\footnotesize
+\begin{tabular}{|c|c|c|}
+\hline
+\textbf{Proceso} & \textbf{$p(i)$} & \textbf{$f(i)$} \\
+\hline
+\rowcolor{blue!20}$P_1$ & 4 & 6 \\
+\hline
+\rowcolor{green!50}$P_2$ & 5 & \textbf{5} \\
+\hline
+\rowcolor{blue!20} $P_3$ & 3 & 7 \\
+\hline
+$P_4$ & 8 & 2 \\
+\hline
+\end{tabular}
+\end{table}
+
+\vspace{0.2cm}
+
+\begin{ganttchart}[
+x unit=0.4cm,
+y unit title=0.5cm,
+y unit chart=0.7cm,
+include title in canvas=false,
+title label font=\scriptsize,
+title/.style={draw=none, fill=none}, 
+vgrid, hgrid, link/.style={-latex, red}
+]{1}{23}
+\gantttitlelist{1,...,23}{1} \\
+\ganttbar[bar/.append style={fill=blue}]{$P_3$}{1}{3} 
+\ganttbar[bar/.append style={fill=red}]{$P_3$}{4}{10} \\
+
+\ganttbar[bar/.append style={fill=blue}]{$P_1$}{4}{7} 
+\ganttbar[bar/.append style={fill=red}]{$P_1$}{8}{13} \\
+
+\ganttbar[bar/.append style={fill=blue}]{$P_2$}{8}{12} 
+\ganttbar[bar/.append style={fill=red}]{$P_2$}{13}{17} \\
+
+%\ganttbar[bar/.append style={fill=blue}]{$P_4$}{13}{20} 
+%\ganttbar[bar/.append style={fill=red}]{$P_4$}{21}{22} 
+
+\setganttlinklabel{f-s}{}
+
+\ganttlink[link type=f-s]{elem0}{elem2}
+
+\ganttlink[link type=f-s]{elem2}{elem4}
+
+%\ganttlink[link type=f-s]{elem4}{elem6}
+\end{ganttchart}
+
+\vspace{0.5cm}
+
+%%%LEYENDA%%%%%
+\fcolorbox{black}{red}{\rule{0pt}{3pt}\rule{3pt}{0pt}}\quad \footnotesize{Tiempo de PC.}
+\quad 
+\fcolorbox{black}{blue}{\rule{0pt}{3pt}\rule{3pt}{0pt}}\quad \footnotesize{Tiempo de supercomputador.}
+
+\end{figure}
+
+\end{frame}
+
+
+\begin{frame}[fragile]{Ejemplo (V)}
+\begin{figure}[H]
+\centering
+\begin{table}
+\footnotesize
+\begin{tabular}{|c|c|c|}
+\hline
+\textbf{Proceso} & \textbf{$p(i)$} & \textbf{$f(i)$} \\
+\hline
+\rowcolor{blue!20}$P_1$ & 4 & 6 \\
+\hline
+\rowcolor{blue!20}$P_2$ & 5 & 5 \\
+\hline
+\rowcolor{blue!20} $P_3$ & 3 & 7 \\
+\hline
+\rowcolor{green!50}$P_4$ & 8 & \textbf{2} \\
+\hline
+\end{tabular}
+\end{table}
+
+\vspace{0.2cm}
+
+\begin{ganttchart}[
+x unit=0.4cm,
+y unit title=0.5cm,
+y unit chart=0.7cm,
+include title in canvas=false,
+title label font=\scriptsize,
+title/.style={draw=none, fill=none}, 
+vgrid, hgrid, link/.style={-latex, red}
+]{1}{23}
+\gantttitlelist{1,...,23}{1} \\
+\ganttbar[bar/.append style={fill=blue}]{$P_3$}{1}{3} 
+\ganttbar[bar/.append style={fill=red}]{$P_3$}{4}{10} \\
+
+\ganttbar[bar/.append style={fill=blue}]{$P_1$}{4}{7} 
+\ganttbar[bar/.append style={fill=red}]{$P_1$}{8}{13} \\
+
+\ganttbar[bar/.append style={fill=blue}]{$P_2$}{8}{12} 
+\ganttbar[bar/.append style={fill=red}]{$P_2$}{13}{17} \\
+
+\ganttbar[bar/.append style={fill=blue}]{$P_4$}{13}{20} 
+\ganttbar[bar/.append style={fill=red}]{$P_4$}{21}{22} 
+
+\setganttlinklabel{f-s}{}
+
+\ganttlink[link type=f-s]{elem0}{elem2}
+
+\ganttlink[link type=f-s]{elem2}{elem4}
+
+\ganttlink[link type=f-s]{elem4}{elem6}
+\end{ganttchart}
+
+\vspace{0.5cm}
+%%%LEYENDA%%%%%
+\fcolorbox{black}{red}{\rule{0pt}{3pt}\rule{3pt}{0pt}}\quad \footnotesize{Tiempo de PC.}
+\quad 
+\fcolorbox{black}{blue}{\rule{0pt}{3pt}\rule{3pt}{0pt}}\quad \footnotesize{Tiempo de supercomputador.}
+\end{figure}
+
+\end{frame}
+
+
+
+\section{Demostración de optimalidad}
+
+
+\section*{Fin de la presentación}
+
+\begin{frame}{Fin}
+\begin{center}
+\huge{Fin de la presentación}
+\end{center}
+\end{frame}
+
+
+\end{document}
+
+
