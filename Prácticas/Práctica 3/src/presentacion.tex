@@ -192,7 +192,7 @@ for tree={draw,fill=blue!20 , rounded corners , l sep=20pt}
 \end{equation*}
 \begin{forest}
 for tree={draw,fill=blue!20 , rounded corners , l sep=20pt}
-[Supercomputador,fill=yellow
+[Supercomputador
     [$PC_1$,fill=green]
     [$PC_2$,fill=purple]
     [$PC_3$]
@@ -204,11 +204,36 @@ for tree={draw,fill=blue!20 , rounded corners , l sep=20pt}
 \end{figure}
 \end{frame}
 
+\begin{frame}[fragile]{Supercomputador}
+\begin{figure}[H]
+\centering
+\begin{equation*}
+  \text{Tiempo de }proceso_i =
+  \begin{cases}
+    p(i) & \text{segundos en el supercomputador} \\
+    	&	+\\
+    f(i) & \text{segundos en un PC}
+  \end{cases}
+\end{equation*}
+\begin{forest}
+for tree={draw,fill=blue!20 , rounded corners , l sep=20pt}
+[Supercomputador
+    [$PC_1$,fill=green]
+    [$PC_2$,fill=purple]
+    [$PC_3$ ,fill=yellow]
+    [\ldots,fill=white,draw=white,edge=white]
+    [$PC_{n-1}$, fill=brown!40]
+    [$PC_n$, fill=black!20]
+]
+\end{forest}
+\end{figure}
+\end{frame}
+
 \begin{frame}[fragile]{Ejemplo}
 \begin{table}
 \begin{tabular}{|c|c|c|}
 \hline
-\textbf{Proceso} & \textbf{$T_{S}$} & \textbf{$T_{PC}$} \\
+\textbf{Proceso} & \textbf{$p(i)$} & \textbf{$f(i)$} \\
 \hline
 $P_1$ & 4 & 6 \\
 \hline
@@ -549,7 +574,7 @@ Para 4 procesos hay $4!=24$ posibles soluciones.
 	\item \textbf{Función solución}. $p_i$ completado $\forall i \in [1,\#P]$.
 	\item \textbf{Función de factibilidad}. El tiempo de ejecución de un proceso debe ser finito.
 	\item \textbf{Función de selección}. Seleccionaremos aquel proceso que tenga un $f(i)$ mayor.
-	\item \textbf{Función objetivo}. Obtener la solución cuyo tiempo global sea menor, siendo $T_{fin_{global}} = \sum_{i=1}^{n} p(i) + $máx$\{T_{restante}(p_1),...,T_{restante}(p_n)\}$.
+	\item \textbf{Función objetivo}. Obtener la solución cuyo tiempo global sea menor, siendo $t_{fin_{global}} = \sum_{i=1}^{n} p(i) + $máx$\{t_{restante}(p_1),...,t_{restante}(p_n)\}$.
 \end{itemize}
 \end{frame}
 
@@ -562,7 +587,7 @@ Para 4 procesos hay $4!=24$ posibles soluciones.
 
 \begin{frame}[fragile]{Metodología del algoritmo voraz}
 \begin{enumerate}
-	\item Ordenar el vector de procesos de forma decreciente según su $f(i)$.
+	\item Ordenar el vector de procesos de forma decreciente según su $f(i)\rightarrow $ \emph{Quicksort}.
 \end{enumerate}
 \vspace{2cm}
 \Huge{$O(n\cdot log(n))$}
@@ -574,7 +599,7 @@ Para 4 procesos hay $4!=24$ posibles soluciones.
 \begin{table}
 \begin{tabular}{|c|c|c|}
 \hline
-\textbf{Proceso} & \textbf{$T_{S}$} & \textbf{$T_{PC}$} \\
+\textbf{Proceso} & \textbf{$p(i)$} & \textbf{$f(i)$} \\
 \hline
 $P_1$ & 4 & 6 \\
 \hline
@@ -848,7 +873,7 @@ vgrid, hgrid, link/.style={-latex, red}
 
 \begin{itemize}
 	\item $P=\{p_1,p_2,...,p_n\} \rightarrow $ conjunto de procesos candidatos.
-	\item $T_{fin_{global}} = \sum_{i=1}^{n} p(i) + $máx$\{T_{restante}(p_1),...,T_{restante}(p_n)\}$
+	\item $t_{fin_{global}} = \sum_{i=1}^{n} p(i) + $máx$\{t_{restante}(p_1),...,t_{restante}(p_n)\}$
 	\item $p_x \in P$ un proceso tal que $f(p_x)\geq f(p_i) \forall i \in [1,\#P]$.
 \end{itemize}
 
@@ -864,7 +889,7 @@ Si $p_x$ se ejecuta el primero:
 
 \vspace{0.2cm}
 
-Sea $t_{fin}(p_x)=t_0 + \sum^{n}_{i=1}p(i)$ el momento en el que han finalizado todos los cómputos del superordenador. Entonces:
+Sea $t_{fin}(p)=t_0 + \sum^{n}_{i=1}p(i)$ el momento en el que han finalizado todos los cómputos del superordenador. Entonces:
 \begin{equation*}
 	t_{restante}(p_x)=t_{fin}(p_x) - t_{fin}(p)
 \end{equation*}
@@ -923,7 +948,7 @@ Por tanto, como $t_{restante}p(x)^{\prime}$ es mayor:
 \begin{center}
 máx$^{\prime}\{t_{restante}(p_1),...,t_{restante}(p_x),...,t_{restante}(p_n)\} > $ \\máx$\{t_{restante}(p_1),...,t_{restante}(p_x),...,t_{restante}(p_n)\}$
 \end{center}
-Por tanto, $T_{fin_{global}}^{\prime}> T_{fin_{global}}  $
+Por tanto, $t_{fin_{global}}^{\prime}> t_{fin_{global}}  $
 \end{frame}
 
 \begin{frame}[fragile]{Demostración de optimalidad}
@@ -941,7 +966,7 @@ Por tanto, como $t_{restante}p(x)^{\prime}$ es mayor:
 \begin{center}
 máx$^{\prime}\{t_{restante}(p_1),...,t_{restante}(p_x),...,t_{restante}(p_n)\} > $ \\máx$\{t_{restante}(p_1),...,t_{restante}(p_x),...,t_{restante}(p_n)\}$
 \end{center}
-Por tanto, $T_{fin_{global}}^{\prime}> T_{fin_{global}} \rightarrow $ Solución no óptima
+Por tanto, $t_{fin_{global}}^{\prime}> t_{fin_{global}} \rightarrow $ Solución no óptima
 \end{frame}
 
 \begin{frame}[fragile]{Demostración de optimalidad}
@@ -959,7 +984,7 @@ Por tanto, como $t_{restante}p(x)^{\prime}$ es mayor:
 \begin{center}
 máx$^{\prime}\{t_{restante}(p_1),...,t_{restante}(p_x),...,t_{restante}(p_n)\} > $ \\máx$\{t_{restante}(p_1),...,t_{restante}(p_x),...,t_{restante}(p_n)\}$
 \end{center}
-Por tanto, $T_{fin_{global}}^{\prime}> T_{fin_{global}} \rightarrow $ Solución no óptima $\rightarrow$\\ \textcolor{red}{contradicción} $\rightarrow$ nuestra hipótesis es correcta.
+Por tanto, $t_{fin_{global}}^{\prime}> t_{fin_{global}} \rightarrow $ Solución no óptima $\rightarrow$\\ \textcolor{red}{contradicción} $\rightarrow$ nuestra hipótesis es correcta.
 \end{frame}
 
 
