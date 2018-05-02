@@ -25,6 +25,13 @@ linenos=true,
 breaklines=true,
 tabsize=2,
 }
+
+\newmintedfile[script]{bash}{
+linenos=true,
+breaklines=true,
+tabsize=2,
+}
+
 \makeindex
 
 \begin{document}
@@ -591,6 +598,19 @@ Para abarcar más posibilidades, ejecutaremos el algoritmo voraz teniendo en cue
 \captionof{figure}{Programa que calcula el orden según las distintas heurísticas}
 
 \cppcode{calcular_distancia.cpp}
-\captionof{figure}{Programa que calcula la distancia del circuito a partir de un fichero con coordenadas y una lista ordenada de ciudades.}
+\captionof{figure}{Programa que calcula la distancia del circuito a partir de un fichero con coordenadas y una lista ordenada de ciudades con sus respectivas coordenadas.}
+
+\script{ejecucion_mejor_opcion.sh}
+\captionof{figure}{Script que genera archivos de coordenadas a partir de la mejor opción dada como lista.}
+
+\script{ejecucion_tres_heuristicas.sh}
+\captionof{figure}{Script que genera archivos de coordenadas a partir de las tres heurísticas desarrolladas.}
+
+\script{gnuplot.sh}
+\captionof{figure}{Script que genera las gráficas de los problemas a partir de archivos de coordenadas.}
+
+\script{practica.sh}
+\captionof{figure}{Script genera todo lo necesario para la práctica.}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%Fin del documento%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \end{document}

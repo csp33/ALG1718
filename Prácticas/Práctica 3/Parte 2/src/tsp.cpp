@@ -31,7 +31,6 @@ ostream& operator<<(ostream &flujo, const vector<ciudad> &v) {
 	return flujo;
 }
 
-
 class TSP {
 
 private:
@@ -192,7 +191,7 @@ public:
 		if (salida.is_open()) {
 			salida << "DIMENSION: ";
 			salida << ciudades.size() << endl;
-			salida << "DISTANCIA: "<<distancia_total<<endl;
+			salida << "DISTANCIA: " << distancia_total << endl;
 			for (auto it = camino.begin(); it != camino.end(); ++it) {
 				salida << it->n + 1 << " " << it->x << " " << it->y << endl;
 			}
@@ -212,7 +211,7 @@ int main(int argc, char **argv) {
 		exit(-1);
 	}
 
-	string nombre="";
+	string nombre = "";
 
 	/*********** Vecino más cercano*******************/
 	TSP vecino_mas_cercano(argv[1]);
@@ -234,10 +233,11 @@ int main(int argc, char **argv) {
 	insercion_mas_economica.InsercionMasEconomica();
 	insercion_mas_economica.imprimirResultado();
 
-	/*nombre = "ime_";
-	nombre += argv[1];
+	nombre = "ime";
+	nombre += to_string(insercion_mas_economica.GetTamanio());
+	nombre += ".tsp";
 	insercion_mas_economica.Exportar(nombre.c_str());
-	cout << "Exportado archivo " << nombre << endl;*/
+	cout << "Exportado archivo " << nombre << endl;
 
 
 	/*********** Derivado de Kruskal*******************/
@@ -248,10 +248,10 @@ int main(int argc, char **argv) {
 	derivado_kruskal.DerivadoKruskal();
 	derivado_kruskal.imprimirResultado();
 
-	/*nombre = "kruskal_";
-	nombre += argv[1];
-
+	nombre = "kruskal";
+	nombre += to_string(derivado_kruskal.GetTamanio());
+	nombre += ".tsp";
 	derivado_kruskal.Exportar(nombre.c_str());
-	cout << "Exportado archivo " << nombre << endl;*/
+	cout << "Exportado archivo " << nombre << endl;
 
 }

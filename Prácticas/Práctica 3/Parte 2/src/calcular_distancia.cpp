@@ -72,7 +72,7 @@ public:
 	}
 
 
-	void MismoOrden(char *archivo) {
+	void SegunOrden(char *archivo) {
 		camino.clear();
 		ifstream datos;
 		string s;
@@ -160,7 +160,7 @@ int main(int argc, char **argv) {
 
 
 
-	instancia.MismoOrden(argv[2]);
+	instancia.SegunOrden(argv[2]);
 
 	nombre = "mejor_";
 	nombre += to_string(instancia.GetTamanio());
