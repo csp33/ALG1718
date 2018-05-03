@@ -75,6 +75,7 @@
 
 \section{Presentación del problema}
 
+
 \begin{frame}[fragile]{El viajante de comercio}
 
 \begin{tikzpicture}[-,>=latex,shorten >=1pt,auto,node distance=6cm, main node/.style={circle,draw},scale=0.4]
@@ -98,7 +99,32 @@
 
 \end{tikzpicture}
 
-Una solución: $\{1,2,3,5,4,1\}$.
+\end{frame}
+
+\begin{frame}[fragile]{El viajante de comercio}
+
+\begin{tikzpicture}[-,>=latex,shorten >=1pt,auto,node distance=6cm, main node/.style={circle,draw},scale=0.4]
+	\tikzstyle{every node}=[font=\tiny]
+	\draw (3,19) node(a) [circle, draw,fill=yellow!45] {1}
+          	 (-6,13) node(b) [circle, draw,fill=red!45] {2}
+          	 (-2,5) node(c) [circle, draw,fill=red!45] {3}
+          	 (12,13) node(d) [circle, draw,fill=red!45] {4}
+          	 (8,5) node(e) [circle, draw,fill=red!45] {5};
+	%\draw[draw=blue] (a) to (b);
+	\path[draw=blue,thick] (a) edge node {$c_1$} (b);
+	\path[draw,thick] (a) edge node {$c_2$} (c);
+	\path[draw=blue!40,thick] (a) edge node {$c_3$} (d);
+	\path[draw,thick] (a) edge node {$c_4$} (e);
+	\path[draw=blue,thick] (b) edge node {$c_5$} (c);
+	\path[draw,thick] (b) edge node {$c_6$} (d);
+	\path[draw,thick] (b) edge node {$c_7$} (e);
+	\path[draw,thick] (c) edge node {$c_8$} (d);
+	\path[draw=blue,thick] (c) edge node {$c_9$} (e);
+	\path[draw=blue,thick] (d) edge node {$c_{10}$} (e);
+
+\end{tikzpicture}
+
+Una solución: $\{1,2,3,5,4,1\}$. Coste = $c_1+c_5+c_9+c_{10}+c_3$.
 \end{frame}
 
 \section{Heurísticas empleadas}
@@ -159,7 +185,7 @@ Una solución: $\{1,2,3,5,4,1\}$.
 
 \begin{tikzpicture}[-,>=latex,shorten >=1pt,auto,node distance=6cm, main node/.style={circle,draw},scale=0.4]
 	\tikzstyle{every node}=[font=\tiny]
-	\draw (3,19) node(a) [circle, draw,fill=red!45] {1}
+	\draw (3,19) node(a) [circle, draw,fill=yellow!45] {1}
           	 (-6,13) node(b) [circle, draw,fill=red!45] {2}
           	 (-2,5) node(c) [circle, draw,fill=red!45] {3}
           	 (12,13) node(d) [circle, draw,fill=red!45] {4}
@@ -186,7 +212,7 @@ Comenzamos en la ciudad 1.
 
 \begin{tikzpicture}[-,>=latex,shorten >=1pt,auto,node distance=6cm, main node/.style={circle,draw},scale=0.4]
 	\tikzstyle{every node}=[font=\tiny]
-	\draw (3,19) node(a) [circle, draw,fill=red!45] {1}
+	\draw (3,19) node(a) [circle, draw,fill=yellow!45] {1}
           	 (-6,13) node(b) [circle, draw,fill=red!45] {2}
           	 (-2,5) node(c) [circle, draw,fill=red!45] {3}
           	 (12,13) node(d) [circle, draw,fill=red!45] {4}
@@ -213,7 +239,7 @@ Añadimos la más cercana: ciudad 2.
 
 \begin{tikzpicture}[-,>=latex,shorten >=1pt,auto,node distance=6cm, main node/.style={circle,draw},scale=0.4]
 	\tikzstyle{every node}=[font=\tiny]
-	\draw (3,19) node(a) [circle, draw,fill=red!45] {1}
+	\draw (3,19) node(a) [circle, draw,fill=yellow!45] {1}
           	 (-6,13) node(b) [circle, draw,fill=red!45] {2}
           	 (-2,5) node(c) [circle, draw,fill=red!45] {3}
           	 (12,13) node(d) [circle, draw,fill=red!45] {4}
@@ -240,7 +266,7 @@ Añadimos la más cercana: ciudad 3.
 
 \begin{tikzpicture}[-,>=latex,shorten >=1pt,auto,node distance=6cm, main node/.style={circle,draw},scale=0.4]
 	\tikzstyle{every node}=[font=\tiny]
-	\draw (3,19) node(a) [circle, draw,fill=red!45] {1}
+	\draw (3,19) node(a) [circle, draw,fill=yellow!45] {1}
           	 (-6,13) node(b) [circle, draw,fill=red!45] {2}
           	 (-2,5) node(c) [circle, draw,fill=red!45] {3}
           	 (12,13) node(d) [circle, draw,fill=red!45] {4}
@@ -249,7 +275,7 @@ Añadimos la más cercana: ciudad 3.
 	\path[draw=blue,thick] (a) edge node {$1$} (b);
 	\path[thick] (a) edge node {$2$} (c);
 	\path[thick] (a) edge node {$3$} (d);
-	\path[thick,draw=green] (a) edge node {$4$} (e);
+	\path[thick,draw=blue!40] (a) edge node {$4$} (e);
 	\path[draw=blue,thick] (b) edge node {$5$} (c);
 	\path[thick] (b) edge node {$6$} (d);
 	\path[thick] (b) edge node {$7$} (e);
@@ -339,7 +365,7 @@ Para obtener soluciones más óptimas, probamos con todas las posibles ciudades 
 
 \begin{tikzpicture}[-,>=latex,shorten >=1pt,auto,node distance=6cm, main node/.style={circle,draw},scale=0.4]
 	\tikzstyle{every node}=[font=\tiny]
-	\draw (3,19) node(a) [circle, draw,fill=red!45] {1}
+	\draw (3,19) node(a) [circle, draw,fill=yellow!45] {1}
           	 (-6,13) node(b) [circle, draw,fill=red!45] {2}
           	 (-2,5) node(c) [circle, draw,fill=red!45] {3}
           	 (12,13) node(d) [circle, draw,fill=red!45] {4}
@@ -357,7 +383,34 @@ Para obtener soluciones más óptimas, probamos con todas las posibles ciudades 
 	\path[thick] (d) edge node {$10$} (e);
 
 \end{tikzpicture}
+
 Conjunto inicial.
+\end{frame}
+
+\begin{frame}[fragile]{Inserción más económica}
+
+\begin{tikzpicture}[-,>=latex,shorten >=1pt,auto,node distance=6cm, main node/.style={circle,draw},scale=0.4]
+	\tikzstyle{every node}=[font=\tiny]
+	\draw (3,19) node(a) [circle, draw,fill=red!45] {1}
+          	 (-6,13) node(b) [circle, draw,fill=red!45] {2}
+          	 (-2,5) node(c) [circle, draw,fill=yellow!45] {3}
+          	 (12,13) node(d) [circle, draw,fill=red!45] {4}
+          	 (8,5) node(e) [circle, draw,fill=red!45] {5};
+	%\draw[draw=blue] (a) to (b);
+	\path[draw=green,thick] (a) edge node {$1$} (b);
+	\path[draw=blue,thick] (a) edge node {$2$} (c);
+	\path[thick] (a) edge node {$3$} (d);
+	\path[thick] (a) edge node {$4$} (e);
+	\path[thick] (b) edge node {$5$} (c);
+	\path[thick,draw=green] (b) edge node {$6$} (d);
+	\path[thick] (b) edge node {$7$} (e);
+	\path[thick,draw=blue] (c) edge node {$8$} (d);
+	\path[thick] (c) edge node {$9$} (e);
+	\path[thick] (d) edge node {$10$} (e);
+
+\end{tikzpicture}
+
+Ciudad que causa menor impacto: ciudad 3 al principio.
 \end{frame}
 
 \begin{frame}[fragile]{Inserción más económica}
@@ -368,21 +421,22 @@ Conjunto inicial.
           	 (-6,13) node(b) [circle, draw,fill=red!45] {2}
           	 (-2,5) node(c) [circle, draw,fill=red!45] {3}
           	 (12,13) node(d) [circle, draw,fill=red!45] {4}
-          	 (8,5) node(e) [circle, draw,fill=red!45] {5};
+          	 (8,5) node(e) [circle, draw,fill=yellow!45] {5};
 	%\draw[draw=blue] (a) to (b);
 	\path[draw=green,thick] (a) edge node {$1$} (b);
-	\path[thick] (a) edge node {$2$} (c);
-	\path[thick,draw=green] (a) edge node {$3$} (d);
+	\path[draw=blue,thick] (a) edge node {$2$} (c);
+	\path[thick] (a) edge node {$3$} (d);
 	\path[thick] (a) edge node {$4$} (e);
 	\path[thick] (b) edge node {$5$} (c);
 	\path[thick,draw=green] (b) edge node {$6$} (d);
 	\path[thick] (b) edge node {$7$} (e);
 	\path[thick] (c) edge node {$8$} (d);
-	\path[thick] (c) edge node {$9$} (e);
-	\path[thick] (d) edge node {$10$} (e);
+	\path[thick,draw=blue] (c) edge node {$9$} (e);
+	\path[thick,draw=blue!40] (d) edge node {$10$} (e);
 
 \end{tikzpicture}
-Ciudad que causa menor impacto: ciudad 3 entre ciudad 1 y ciudad 2.
+
+Solución final: $\{5,3,1,2,4,5\}$. Coste = 21.
 \end{frame}
 
 \subsection{Derivado de Kruskal}
@@ -441,24 +495,107 @@ Ciudad que causa menor impacto: ciudad 3 entre ciudad 1 y ciudad 2.
 
 \begin{tikzpicture}[-,>=latex,shorten >=1pt,auto,node distance=6cm, main node/.style={circle,draw},scale=0.4]
 	\tikzstyle{every node}=[font=\tiny]
-	\draw (3,19) node(a) [circle, draw,fill=red!45] {1}
+	\draw (3,19) node(a) [circle, draw,fill=yellow!45] {1}
           	 (-6,13) node(b) [circle, draw,fill=red!45] {2}
           	 (-2,5) node(c) [circle, draw,fill=red!45] {3}
           	 (12,13) node(d) [circle, draw,fill=red!45] {4}
           	 (8,5) node(e) [circle, draw,fill=red!45] {5};
 	%\draw[draw=blue] (a) to (b);
-	\path[draw=green,thick] (a) edge node {$1$} (b);
+	\path[thick,draw=blue] (a) edge node {$1$} (b);
 	\path[thick] (a) edge node {$2$} (c);
-	\path[thick,draw=green] (a) edge node {$3$} (d);
+	\path[thick] (a) edge node {$3$} (d);
 	\path[thick] (a) edge node {$4$} (e);
 	\path[thick] (b) edge node {$5$} (c);
-	\path[thick,draw=green] (b) edge node {$6$} (d);
+	\path[thick] (b) edge node {$6$} (d);
 	\path[thick] (b) edge node {$7$} (e);
 	\path[thick] (c) edge node {$8$} (d);
 	\path[thick] (c) edge node {$9$} (e);
 	\path[thick] (d) edge node {$10$} (e);
 
 \end{tikzpicture}
+
+Elegimos la arista más pequeña: 1 $\rightarrow$ 2. CS=$\{1,2\}$.
+
+\end{frame}
+
+\begin{frame}[fragile]{Derivado de Kruskal}
+
+\begin{tikzpicture}[-,>=latex,shorten >=1pt,auto,node distance=6cm, main node/.style={circle,draw},scale=0.4]
+	\tikzstyle{every node}=[font=\tiny]
+	\draw (3,19) node(a) [circle, draw,fill=yellow!45] {1}
+          	 (-6,13) node(b) [circle, draw,fill=red!45] {2}
+          	 (-2,5) node(c) [circle, draw,fill=red!45] {3}
+          	 (12,13) node(d) [circle, draw,fill=red!45] {4}
+          	 (8,5) node(e) [circle, draw,fill=red!45] {5};
+	%\draw[draw=blue] (a) to (b);
+	\path[thick,draw=blue] (a) edge node {$1$} (b);
+	\path[thick] (a) edge node {$2$} (c);
+	\path[thick] (a) edge node {$3$} (d);
+	\path[thick] (a) edge node {$4$} (e);
+	\path[thick,draw=blue] (b) edge node {$5$} (c);
+	\path[thick] (b) edge node {$6$} (d);
+	\path[thick] (b) edge node {$7$} (e);
+	\path[thick,draw=blue] (c) edge node {$8$} (d);
+	\path[thick] (c) edge node {$9$} (e);
+	\path[thick] (d) edge node {$10$} (e);
+
+\end{tikzpicture}
+
+Elegimos la siguiente arista : 3 $\rightarrow$ 4. CS=$\{1,2,3,4\}$.
+
+\end{frame}
+
+\begin{frame}[fragile]{Derivado de Kruskal}
+
+\begin{tikzpicture}[-,>=latex,shorten >=1pt,auto,node distance=6cm, main node/.style={circle,draw},scale=0.4]
+	\tikzstyle{every node}=[font=\tiny]
+	\draw (3,19) node(a) [circle, draw,fill=yellow!45] {1}
+          	 (-6,13) node(b) [circle, draw,fill=red!45] {2}
+          	 (-2,5) node(c) [circle, draw,fill=red!45] {3}
+          	 (12,13) node(d) [circle, draw,fill=red!45] {4}
+          	 (8,5) node(e) [circle, draw,fill=red!45] {5};
+	%\draw[draw=blue] (a) to (b);
+	\path[thick,draw=blue] (a) edge node {$1$} (b);
+	\path[thick] (a) edge node {$2$} (c);
+	\path[thick] (a) edge node {$3$} (d);
+	\path[thick] (a) edge node {$4$} (e);
+	\path[thick,draw=blue] (b) edge node {$5$} (c);
+	\path[thick] (b) edge node {$6$} (d);
+	\path[thick] (b) edge node {$7$} (e);
+	\path[thick,draw=blue] (c) edge node {$8$} (d);
+	\path[thick] (c) edge node {$9$} (e);
+	\path[thick,draw=blue] (d) edge node {$10$} (e);
+
+\end{tikzpicture}
+
+Como queda una ciudad sin visitar y no hay candidato, la añadimos al final. CS=$\{1,2,3,4,5\}$.
+
+\end{frame}
+
+\begin{frame}[fragile]{Derivado de Kruskal}
+
+\begin{tikzpicture}[-,>=latex,shorten >=1pt,auto,node distance=6cm, main node/.style={circle,draw},scale=0.4]
+	\tikzstyle{every node}=[font=\tiny]
+	\draw (3,19) node(a) [circle, draw,fill=yellow!45] {1}
+          	 (-6,13) node(b) [circle, draw,fill=red!45] {2}
+          	 (-2,5) node(c) [circle, draw,fill=red!45] {3}
+          	 (12,13) node(d) [circle, draw,fill=red!45] {4}
+          	 (8,5) node(e) [circle, draw,fill=red!45] {5};
+	%\draw[draw=blue] (a) to (b);
+	\path[thick,draw=blue] (a) edge node {$1$} (b);
+	\path[thick] (a) edge node {$2$} (c);
+	\path[thick] (a) edge node {$3$} (d);
+	\path[thick,draw=blue!40] (a) edge node {$4$} (e);
+	\path[thick,draw=blue] (b) edge node {$5$} (c);
+	\path[thick] (b) edge node {$6$} (d);
+	\path[thick] (b) edge node {$7$} (e);
+	\path[thick,draw=blue] (c) edge node {$8$} (d);
+	\path[thick] (c) edge node {$9$} (e);
+	\path[thick,draw=blue] (d) edge node {$10$} (e);
+
+\end{tikzpicture}
+
+Por último, cerramos el ciclo. CS=$\{1,2,3,4,5,1\}$.
 
 \end{frame}
 

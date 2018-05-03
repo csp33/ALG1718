@@ -14,6 +14,7 @@ struct ciudad {
 	int n;
 	double x;
 	double y;
+	int grado = 0;
 };
 
 bool operator==(const ciudad &una, const ciudad &otra) {
@@ -161,12 +162,12 @@ private:
 		visitados[a_insertar.n] = true;
 	}
 
-	bool existe(const vector<ciudad> &v,const ciudad &elemento){
-		bool encontrado=false;
+	bool existe(const vector<ciudad> &v, const ciudad &elemento) {
+		bool encontrado = false;
 
-		for(auto it=v.begin();it != v.end() && !encontrado;++it)
-			if(*it == elemento)
-				encontrado=true;
+		for (auto it = v.begin(); it != v.end() && !encontrado; ++it)
+			if (*it == elemento)
+				encontrado = true;
 		return encontrado;
 	}
 
@@ -185,9 +186,146 @@ private:
 			}
 		}
 
-		visitados[resultado.first]=true;
-		visitados[resultado.second]=true;
+		visitados[resultado.first] = true;
+		visitados[resultado.second] = true;
 		return resultado;
+	}
+
+	pair< pair<ciudad, ciudad>, double> calularMinimo(pair< pair<ciudad, ciudad>, double> &min, vector<vector <double> > &matrizDistancias_copia, vector<vector <bool> > &matrizVisitados, vector<list<ciudad>> &conex, vector<bool> &aniadida) {
+
+		int x = 0;
+		int y = 0;
+		pair< pair<ciudad, ciudad>, double> resultado;
+		resultado.second = INFINITY;
+
+		for (int i = 0; i < matrizDistancias_copia.size(); i++) {
+
+			for (int j = i + 1; j < matrizDistancias_copia.size(); j++) {
+
+				if (ciudades[i].grado < 2 and ciudades[j].grado < 2) {
+
+					if (matrizDistancias_copia[i][j] >= min.second and
+					        matrizDistancias_copia[i][j] < resultado.second and
+					        matrizDistancias_copia[i][j] != 0 and
+					        not matrizVisitados[i][j] and
+					        !hay_ciclo (conex, ciudades[i], ciudades[j], matrizVisitados)) {
+
+						resultado.second = matrizDistancias_copia[i][j];
+						(resultado.first).first = ciudades[i];
+						(resultado.first).second = ciudades[j];
+						x = i;
+						y = j;
+					}
+				}
+			}
+		}
+
+		if (!conex[x].empty() and !aniadida[y] and not (conex[x].size() == ciudades.size() || conex[y].size() == ciudades.size())) {
+
+			if (conex[y].size() > 1) {
+
+				for (auto it = conex[y].begin(); it != conex[y].end(); ++it) {
+
+					conex[x].push_back(*it);
+				}
+			}
+			else {
+
+				conex[x].push_back(ciudades[y]);
+			}
+			aniadida[y] = true;
+			conex[y].clear();
+		}
+		else if (!conex[x].empty() and aniadida[y] and not (conex[x].size() == ciudades.size() || conex[y].size() == ciudades.size())) {
+
+			for (int k = 0; k < conex.size(); k++) {
+				for (auto it = conex[k].begin(); it != conex[k].end(); ++it) {
+
+					if (*it == ciudades[y]) {
+						if (conex[x].size() > 1) {
+
+							for (auto it = conex[x].begin(); it != conex[x].end(); ++it) {
+
+								conex[k].push_back(*it);
+							}
+						}
+						else {
+
+							conex[k].push_back(ciudades[x]);
+						}
+
+						aniadida[x] = true;
+						conex[x].clear();
+					}
+				}
+			}
+		}
+		else if (conex[x].empty() and !aniadida[y] and not (conex[x].size() == ciudades.size() || conex[y].size() == ciudades.size())) {
+
+			for (int k = 0; k < conex.size(); k++) {
+				for (auto it = conex[k].begin(); it != conex[k].end(); ++it) {
+
+					if (*it == ciudades[x]) {
+						if (conex[y].size() > 1) {
+
+							for (auto it = conex[y].begin(); it != conex[y].end(); ++it) {
+
+								conex[k].push_back(*it);
+							}
+						}
+						else {
+
+							conex[k].push_back(ciudades[y]);
+						}
+						aniadida[y] = true;
+						conex[y].clear();
+					}
+				}
+			}
+		}
+
+		matrizVisitados[x][y] = true;
+		ciudades[x].grado += 1;
+		ciudades[y].grado += 1;
+
+		return resultado;
+	}
+
+	bool hay_ciclo(vector<list<ciudad>> &conex, ciudad primera, ciudad segunda, vector<vector <bool> > &matrizVisitados) {
+
+		bool primera_enc = false;
+		bool hay = false;
+		ciudad restante;
+		bool primera_vez = true;
+
+		for (int i = 0; i < conex.size(); i++) {
+			for (auto it = conex[i].begin(); it != conex[i].end() && !hay; ++it) {
+
+				if (*it == primera || *it == segunda && primera_vez) {
+
+					primera_enc = true;
+					primera_vez = false;
+
+					if (*it == primera) {
+
+						restante = segunda;
+					}
+					else {
+
+						restante = primera;
+					}
+				}
+
+				if (primera_enc && *it == restante) {
+
+					hay = true;
+					matrizVisitados[primera.n][segunda.n] = true;
+				}
+			}
+
+			primera_vez = true;
+		}
+		return (hay);
 	}
 
 public:
@@ -233,6 +371,9 @@ public:
 			camino.push_back(ciudades[arcoMenor.first]);
 			camino.push_back(ciudades[arcoMenor.second]);
 		}
+		for (int i = 0; i < ciudades.size(); i++)
+			if (!visitados[i])
+				camino.push_back(ciudades[i]);		//Si queda alguna por visitar. Pasa cuando NCIUDADES es impar
 		camino.push_back(camino[0]);
 		distancia_total = calcularDistanciaCamino(camino);
 
@@ -307,10 +448,62 @@ public:
 		//Voy eligiendo la siguiente
 		while (camino.size() != ciudades.size())		//Mientras no recorramos todas las ciudades
 			seleccionarNuevaCiudad();
-		//Añado el inicio
-		//camino.push_back(camino[0]);
+
 		distancia_total = calcularDistanciaCamino(camino);
 
+	}
+
+	void algoritmo_de_laura_y_jose() {
+		vector< pair<ciudad, ciudad> > aristas;
+		pair< pair<ciudad, ciudad>, double> arista_minima;
+		vector<vector <double> > matrizDistancias_copia = matriz_distancias;
+		ciudad ciudad_actual;
+		vector<vector <bool> > matrizVisitados (matriz_distancias.size(), vector<bool>(matriz_distancias.size(), false));
+		vector<list<ciudad>> ciudades_conex;
+		vector<bool> aniadida (ciudades.size(), false);
+
+		ciudades_conex.resize (ciudades.size());
+
+		for (int in = 0; in < ciudades_conex.size(); in++) {
+
+			ciudades_conex[in].push_back (ciudades[in]);
+		}
+
+		arista_minima.second = 0;
+
+		for (int i = 0; i < ciudades.size(); i++) {
+
+			arista_minima = calularMinimo(arista_minima, matrizDistancias_copia, matrizVisitados, ciudades_conex, aniadida);
+
+			aristas.push_back(arista_minima.first);
+			distancia_total += arista_minima.second;
+		}
+
+		vector<bool> arista_leida (aristas.size(), false);
+
+		camino.push_back(aristas[0].first);
+		camino.push_back(aristas[0].second);
+		ciudad_actual = aristas[0].second;
+		arista_leida[0] = true;
+
+		while (camino.size() < ciudades.size()) {
+
+			for (int i = 1; i < aristas.size(); i++) {
+
+				if (ciudad_actual == aristas[i].first && !arista_leida[i]) {
+
+					ciudad_actual = aristas[i].second;
+					camino.push_back(ciudad_actual);
+					arista_leida[i] = true;
+				}
+				else if (ciudad_actual == aristas[i].second && !arista_leida[i]) {
+
+					ciudad_actual = aristas[i].first;
+					camino.push_back(ciudad_actual);
+					arista_leida[i] = true;
+				}
+			}
+		}
 	}
 
 };
@@ -336,7 +529,8 @@ int main(int argc, char **argv) {
 	TSP derivado_kruskal(argv[1]);
 
 	cout << "Heurística derivada de Kruskal." << endl;
-	derivado_kruskal.DerivadoKruskal();
+	//derivado_kruskal.DerivadoKruskal();
+	derivado_kruskal.algoritmo_de_laura_y_jose();
 	derivado_kruskal.imprimirResultado();
 
 	nombre = "kruskal";

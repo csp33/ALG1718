@@ -1,0 +1,22 @@
+\frametitle{Resultados obtenidos}
+\begin{figure}[H]
+\centering
+
+\adjustbox{max height=\dimexpr\textheight-5.5cm\relax,
+           max width=\textwidth}{
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+ & \textit{gr96.tsp} & \textit{a280.tsp} & \textit{tsp225.tsp} & \textit{st70.tsp}\\
+ \hline
+ \small{\textbf{Vecino más cercano}} & 603.302 & 3094.28 & 4633.2 & 761.689 \\
+ \hline
+ \small{\textbf{Inserción más económica}} & 620.367 & 3192.42 & 4734.51 & 824.228 \\
+ \hline
+ \small{\textbf{Derivado de Kruskal}} & & & &\\
+ \hline
+ \small{\textbf{Solución óptima}} & 512.309 & 2586.77 & 3859 & 678.597 \\
+ \hline
+\end{tabular}
+}
+\end{figure}
+
