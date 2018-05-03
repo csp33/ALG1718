@@ -12,8 +12,8 @@ plot 'vmc280.tsp' using 2:3 with lines
 set output 'a280_ime.png'
 plot 'ime280.tsp' using 2:3 with lines
 
-#set output 'a280_kruskal.png'
-#plot 'kruskal280.tsp' using 2:3 with lines
+set output 'a280_kruskal.png'
+plot 'kruskal280.tsp' using 2:3 with lines
 
 
 
@@ -27,8 +27,8 @@ plot 'vmc48.tsp' using 2:3 with lines
 set output 'att48_ime.png'
 plot 'ime48.tsp' using 2:3 with lines
 
-#set output 'att48_kruskal.png'
-#plot 'kruskal48.tsp' using 2:3 with lines
+set output 'att48_kruskal.png'
+plot 'kruskal48.tsp' using 2:3 with lines
 
 
 
@@ -41,8 +41,8 @@ plot 'vmc52.tsp' using 2:3 with lines
 set output 'berlin52_ime.png'
 plot 'ime52.tsp' using 2:3 with lines
 
-#set output 'berlin52_kruskal.png'
-#plot 'kruskal52.tsp' using 2:3 with lines
+set output 'berlin52_kruskal.png'
+plot 'kruskal52.tsp' using 2:3 with lines
 
 
 
@@ -55,8 +55,8 @@ plot 'vmc130.tsp' using 2:3 with lines
 set output 'ch130_ime.png'
 plot 'ime130.tsp' using 2:3 with lines
 
-#set output 'ch130_kruskal.png'
-#plot 'kruskal130.tsp' using 2:3 with lines
+set output 'ch130_kruskal.png'
+plot 'kruskal130.tsp' using 2:3 with lines
 
 
 
@@ -69,8 +69,8 @@ plot 'vmc96.tsp' using 2:3 with lines
 set output 'gr96_ime.png'
 plot 'ime96.tsp' using 2:3 with lines
 
-#set output 'gr96_kruskal.png'
-#plot 'kruskal96.tsp' using 2:3 with lines
+set output 'gr96_kruskal.png'
+plot 'kruskal96.tsp' using 2:3 with lines
 
 
 
@@ -84,8 +84,8 @@ plot 'vmc105.tsp' using 2:3 with lines
 set output 'lin105_ime.png'
 plot 'ime105.tsp' using 2:3 with lines
 
-#set output 'lin105_kruskal.png'
-#plot 'kruskal105.tsp' using 2:3 with lines
+set output 'lin105_kruskal.png'
+plot 'kruskal105.tsp' using 2:3 with lines
 
 
 
@@ -100,23 +100,23 @@ plot 'vmc561.tsp' using 2:3 with lines
 set output 'pa561_ime.png'
 plot 'ime561.tsp' using 2:3 with lines
 
-#set output 'pa561_kruskal.png'
-#plot 'kruskal561.tsp' using 2:3 with lines
+set output 'pa561_kruskal.png'
+plot 'kruskal561.tsp' using 2:3 with lines
 
 
 
 
-#set output 'st70_mejor.png'
-#plot 'mejor_70.tsp' using 2:3 with lines
+set output 'st70_mejor.png'
+plot 'mejor_70.tsp' using 2:3 with lines
 
-#set output 'st70_vmc.png'
-#plot 'vmc70.tsp' using 2:3 with lines
+set output 'st70_vmc.png'
+plot 'vmc70.tsp' using 2:3 with lines
 
-#set output 'st70_ime.png'
-#plot 'ime70.tsp' using 2:3 with lines
+set output 'st70_ime.png'
+plot 'ime70.tsp' using 2:3 with lines
 
-#set output 'st70_kruskal.png'
-#plot 'kruskal70.tsp' using 2:3 with lines
+set output 'st70_kruskal.png'
+plot 'kruskal70.tsp' using 2:3 with lines
 
 
 
@@ -129,8 +129,8 @@ plot 'vmc76.tsp' using 2:3 with lines
 set output 'pr76_ime.png'
 plot 'ime76.tsp' using 2:3 with lines
 
-#set output 'pr76_kruskal.png'
-#plot 'kruskal76.tsp' using 2:3 with lines
+set output 'pr76_kruskal.png'
+plot 'kruskal76.tsp' using 2:3 with lines
 
 
 
@@ -143,8 +143,8 @@ plot 'vmc100.tsp' using 2:3 with lines
 set output 'rd100_ime.png'
 plot 'ime100.tsp' using 2:3 with lines
 
-#set output 'rd100_kruskal.png'
-#plot 'kruskal100.tsp' using 2:3 with lines
+set output 'rd100_kruskal.png'
+plot 'kruskal100.tsp' using 2:3 with lines
 
 
 
@@ -157,8 +157,8 @@ plot 'vmc225.tsp' using 2:3 with lines
 set output 'tsp225_ime.png'
 plot 'ime225.tsp' using 2:3 with lines
 
-#set output 'tsp225_kruskal.png'
-#plot 'kruskal225.tsp' using 2:3 with lines
+set output 'tsp225_kruskal.png'
+plot 'kruskal225.tsp' using 2:3 with lines
 
 
 
@@ -172,5 +172,5 @@ plot 'vmc16.tsp' using 2:3 with lines
 set output 'ulysses16_ime.png'
 plot 'ime16.tsp' using 2:3 with lines
 
-#set output 'ulysses16_kruskal.png'
-#plot 'kruskal16.tsp' using 2:3 with lines
+set output 'ulysses16_kruskal.png'
+plot 'kruskal16.tsp' using 2:3 with lines

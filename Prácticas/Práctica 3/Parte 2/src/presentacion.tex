@@ -60,6 +60,12 @@
     \tableofcontents[currentsection,currentsubsection]
   \end{frame}
 }
+\AtBeginSubsubsection[]
+{
+  \begin{frame}<beamer>{Índice}
+    \tableofcontents[currentsection,currentsubsection]
+  \end{frame}
+}
 
 % Let's get started
 \begin{document}
@@ -441,6 +447,8 @@ Solución final: $\{5,3,1,2,4,5\}$. Coste = 21.
 
 \subsection{Derivado de Kruskal}
 
+
+
 \begin{frame}[fragile]{Derivado de Kruskal}
 
 \begin{itemize}
@@ -486,11 +494,184 @@ Solución final: $\{5,3,1,2,4,5\}$. Coste = 21.
 	\item \textbf{Conjunto de seleccionados}. Ciudades que vayamos incorporando al circuito. Comienza con un triángulo formado por las ciudades más al norte, este y oeste.
 	\item \textbf{Función solución}. Todas las ciudades han sido visitadas y hemos vuelto a la primera.
 	\item \textbf{Función de factibilidad}. La ciudad no ha sido visitada aún.
-	\item \textbf{Función de selección}. Elegiremos aquella arista cuyo coste sea menor y cuyas ciudades no hayan sido visitadas aún.
+	\item \textbf{Función de selección}. Elegiremos aquella arista cuyo coste sea menor.
 \end{itemize}
 
 \end{frame}
 
+\subsubsection{Nuestra intención}
+
+\begin{frame}[fragile]{Derivado de Kruskal}
+
+\begin{tikzpicture}[-,>=latex,shorten >=1pt,auto,node distance=6cm, main node/.style={circle,draw},scale=0.4]
+	\tikzstyle{every node}=[font=\tiny]
+	\draw (3,19) node(a) [circle, draw,fill=red!45] {1}
+          	 (-6,13) node(b) [circle, draw,fill=red!45] {2}
+          	 (-2,5) node(c) [circle, draw,fill=red!45] {3}
+          	 (12,13) node(d) [circle, draw,fill=red!45] {4}
+          	 (8,5) node(e) [circle, draw,fill=red!45] {5};
+	%\draw[draw=blue] (a) to (b);
+	\path[thick,draw=blue] (a) edge node {$1$} (b);
+	\path[thick] (a) edge node {$2$} (c);
+	\path[thick] (a) edge node {$3$} (d);
+	\path[thick] (a) edge node {$4$} (e);
+	\path[thick] (b) edge node {$5$} (c);
+	\path[thick] (b) edge node {$6$} (d);
+	\path[thick] (b) edge node {$7$} (e);
+	\path[thick] (c) edge node {$8$} (d);
+	\path[thick] (c) edge node {$9$} (e);
+	\path[thick] (d) edge node {$10$} (e);
+
+\end{tikzpicture}
+
+Elegimos la arista más pequeña: 1 $\rightarrow$ 2.
+$ARISTAS=\{(1,2)\}$
+
+\end{frame}
+
+\begin{frame}[fragile]{Derivado de Kruskal}
+
+\begin{tikzpicture}[-,>=latex,shorten >=1pt,auto,node distance=6cm, main node/.style={circle,draw},scale=0.4]
+	\tikzstyle{every node}=[font=\tiny]
+	\draw (3,19) node(a) [circle, draw,fill=red!45] {1}
+          	 (-6,13) node(b) [circle, draw,fill=red!45] {2}
+          	 (-2,5) node(c) [circle, draw,fill=red!45] {3}
+          	 (12,13) node(d) [circle, draw,fill=red!45] {4}
+          	 (8,5) node(e) [circle, draw,fill=red!45] {5};
+	%\draw[draw=blue] (a) to (b);
+	\path[thick,draw=blue] (a) edge node {$1$} (b);
+	\path[thick,draw=blue] (a) edge node {$2$} (c);
+	\path[thick] (a) edge node {$3$} (d);
+	\path[thick] (a) edge node {$4$} (e);
+	\path[thick] (b) edge node {$5$} (c);
+	\path[thick] (b) edge node {$6$} (d);
+	\path[thick] (b) edge node {$7$} (e);
+	\path[thick] (c) edge node {$8$} (d);
+	\path[thick] (c) edge node {$9$} (e);
+	\path[thick] (d) edge node {$10$} (e);
+
+\end{tikzpicture}
+
+Elegimos la siguiente arista más pequeña: 1 $\rightarrow$ 3.
+$ARISTAS=\{(1,2),(1,3)\}$
+
+\end{frame}
+
+\begin{frame}[fragile]{Derivado de Kruskal}
+
+\begin{tikzpicture}[-,>=latex,shorten >=1pt,auto,node distance=6cm, main node/.style={circle,draw},scale=0.4]
+	\tikzstyle{every node}=[font=\tiny]
+	\draw (3,19) node(a) [circle, draw,fill=red!45] {1}
+          	 (-6,13) node(b) [circle, draw,fill=red!45] {2}
+          	 (-2,5) node(c) [circle, draw,fill=red!45] {3}
+          	 (12,13) node(d) [circle, draw,fill=red!45] {4}
+          	 (8,5) node(e) [circle, draw,fill=red!45] {5};
+	%\draw[draw=blue] (a) to (b);
+	\path[thick,draw=blue] (a) edge node {$1$} (b);
+	\path[thick,draw=blue] (a) edge node {$2$} (c);
+	\path[thick] (a) edge node {$3$} (d);
+	\path[thick] (a) edge node {$4$} (e);
+	\path[thick] (b) edge node {$5$} (c);
+	\path[thick,draw=blue] (b) edge node {$6$} (d);
+	\path[thick] (b) edge node {$7$} (e);
+	\path[thick] (c) edge node {$8$} (d);
+	\path[thick] (c) edge node {$9$} (e);
+	\path[thick] (d) edge node {$10$} (e);
+
+\end{tikzpicture}
+
+Elegimos la siguiente arista más pequeña: 2 $\rightarrow$ 4.
+$ARISTAS=\{(1,2),(1,3),(2,4)\}$
+
+\end{frame}
+
+\begin{frame}[fragile]{Derivado de Kruskal}
+
+\begin{tikzpicture}[-,>=latex,shorten >=1pt,auto,node distance=6cm, main node/.style={circle,draw},scale=0.4]
+	\tikzstyle{every node}=[font=\tiny]
+	\draw (3,19) node(a) [circle, draw,fill=red!45] {1}
+          	 (-6,13) node(b) [circle, draw,fill=red!45] {2}
+          	 (-2,5) node(c) [circle, draw,fill=red!45] {3}
+          	 (12,13) node(d) [circle, draw,fill=red!45] {4}
+          	 (8,5) node(e) [circle, draw,fill=red!45] {5};
+	%\draw[draw=blue] (a) to (b);
+	\path[thick,draw=blue] (a) edge node {$1$} (b);
+	\path[thick,draw=blue] (a) edge node {$2$} (c);
+	\path[thick] (a) edge node {$3$} (d);
+	\path[thick] (a) edge node {$4$} (e);
+	\path[thick] (b) edge node {$5$} (c);
+	\path[thick,draw=blue] (b) edge node {$6$} (d);
+	\path[thick] (b) edge node {$7$} (e);
+	\path[thick] (c) edge node {$8$} (d);
+	\path[thick,draw=blue] (c) edge node {$9$} (e);
+	\path[thick] (d) edge node {$10$} (e);
+
+\end{tikzpicture}
+
+Elegimos la siguiente arista más pequeña: 3 $\rightarrow$ 5.
+$ARISTAS=\{(1,2),(1,3),(2,4),(3,5)\}$
+
+\end{frame}
+
+
+\begin{frame}[fragile]{Derivado de Kruskal}
+
+\begin{tikzpicture}[-,>=latex,shorten >=1pt,auto,node distance=6cm, main node/.style={circle,draw},scale=0.4]
+	\tikzstyle{every node}=[font=\tiny]
+	\draw (3,19) node(a) [circle, draw,fill=red!45] {1}
+          	 (-6,13) node(b) [circle, draw,fill=red!45] {2}
+          	 (-2,5) node(c) [circle, draw,fill=red!45] {3}
+          	 (12,13) node(d) [circle, draw,fill=red!45] {4}
+          	 (8,5) node(e) [circle, draw,fill=red!45] {5};
+	%\draw[draw=blue] (a) to (b);
+	\path[thick,draw=blue] (a) edge node {$1$} (b);
+	\path[thick,draw=blue] (a) edge node {$2$} (c);
+	\path[thick] (a) edge node {$3$} (d);
+	\path[thick] (a) edge node {$4$} (e);
+	\path[thick] (b) edge node {$5$} (c);
+	\path[thick,draw=blue] (b) edge node {$6$} (d);
+	\path[thick] (b) edge node {$7$} (e);
+	\path[thick] (c) edge node {$8$} (d);
+	\path[thick,draw=blue] (c) edge node {$9$} (e);
+	\path[thick,draw=blue] (d) edge node {$10$} (e);
+
+\end{tikzpicture}
+
+Elegimos la siguiente arista más pequeña: 3 $\rightarrow$ 5.
+$ARISTAS=\{(1,2),(1,3),(2,4),(3,5),(5,4)\}$
+
+
+\end{frame}
+
+\begin{frame}[fragile]{Derivado de Kruskal}
+
+\begin{tikzpicture}[-,>=latex,shorten >=1pt,auto,node distance=6cm, main node/.style={circle,draw},scale=0.4]
+	\tikzstyle{every node}=[font=\tiny]
+	\draw (3,19) node(a) [circle, draw,fill=red!45] {1}
+          	 (-6,13) node(b) [circle, draw,fill=red!45] {2}
+          	 (-2,5) node(c) [circle, draw,fill=red!45] {3}
+          	 (12,13) node(d) [circle, draw,fill=red!45] {4}
+          	 (8,5) node(e) [circle, draw,fill=red!45] {5};
+	%\draw[draw=blue] (a) to (b);
+	\path[thick,draw=blue] (a) edge node {$1$} (b);
+	\path[thick,draw=blue] (a) edge node {$2$} (c);
+	\path[thick] (a) edge node {$3$} (d);
+	\path[thick] (a) edge node {$4$} (e);
+	\path[thick] (b) edge node {$5$} (c);
+	\path[thick,draw=blue] (b) edge node {$6$} (d);
+	\path[thick] (b) edge node {$7$} (e);
+	\path[thick] (c) edge node {$8$} (d);
+	\path[thick,draw=blue] (c) edge node {$9$} (e);
+	\path[thick,draw=blue] (d) edge node {$10$} (e);
+
+\end{tikzpicture}
+
+El camino estaría listo. Podemos comenzar en el nodo que queramos.
+
+\end{frame}
+
+
+\subsubsection{Lo implementado}
 \begin{frame}[fragile]{Derivado de Kruskal}
 
 \begin{tikzpicture}[-,>=latex,shorten >=1pt,auto,node distance=6cm, main node/.style={circle,draw},scale=0.4]
@@ -617,7 +798,7 @@ Por último, cerramos el ciclo. CS=$\{1,2,3,4,5,1\}$.
 \vspace{0.25cm}
 
 \begin{subfigure}[b]{0.36\textwidth}
-\includegraphics[width=\textwidth]{gr96_ime.png}
+\includegraphics[width=\textwidth]{gr96_kruskal.png}
 \caption*{\small{Derivado de Kruskal}}
 \end{subfigure}
 \quad
@@ -645,7 +826,7 @@ Por último, cerramos el ciclo. CS=$\{1,2,3,4,5,1\}$.
 \vspace{0.25cm}
 
 \begin{subfigure}[b]{0.36\textwidth}
-\includegraphics[width=\textwidth]{a280_ime.png}
+\includegraphics[width=\textwidth]{a280_kruskal.png}
 \caption*{\small{Derivado de Kruskal}}
 \end{subfigure}
 \quad
@@ -658,33 +839,7 @@ Por último, cerramos el ciclo. CS=$\{1,2,3,4,5,1\}$.
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%
-\begin{frame}[fragile]{\textit{tsp225.tsp}}
-\begin{figure}[H]
-\centering
-\begin{subfigure}[b]{0.36\textwidth}
-\includegraphics[width=\textwidth]{tsp225_vmc.png}
-\caption*{\small{Vecino más cercano}}
-\end{subfigure}
-\quad
-\begin{subfigure}[b]{0.36\textwidth}
-\includegraphics[width=\textwidth]{tsp225_ime.png}
-\caption*{\small{Inserción más económica}}
-\end{subfigure}
 
-\vspace{0.25cm}
-
-\begin{subfigure}[b]{0.36\textwidth}
-\includegraphics[width=\textwidth]{tsp225_ime.png}
-\caption*{\small{Derivado de Kruskal}}
-\end{subfigure}
-\quad
-\begin{subfigure}[b]{0.36\textwidth}
-\includegraphics[width=\textwidth]{tsp225_mejor.png}
-\caption*{\small{Versión óptima}}
-\end{subfigure}
-\end{figure}
-
-\end{frame}
 
 
 %%%%%%%%%%%%%%%%%%
@@ -704,7 +859,7 @@ Por último, cerramos el ciclo. CS=$\{1,2,3,4,5,1\}$.
 \vspace{0.25cm}
 
 \begin{subfigure}[b]{0.36\textwidth}
-\includegraphics[width=\textwidth]{st70_ime.png}
+\includegraphics[width=\textwidth]{st70_kruskal.png}
 \caption*{\small{Derivado de Kruskal}}
 \end{subfigure}
 \quad
@@ -731,7 +886,7 @@ Por último, cerramos el ciclo. CS=$\{1,2,3,4,5,1\}$.
  \hline
  \small{\textbf{Inserción más económica}} & 620.367 & 3192.42 & 4734.51 & 824.228 \\
  \hline
- \small{\textbf{Derivado de Kruskal}} & & & &\\
+ \small{\textbf{Derivado de Kruskal}} & 2026.4 & 6298.26 & - & 2096.12\\
  \hline
  \small{\textbf{Solución óptima}} & 512.309 & 2586.77 & 3859 & 678.597 \\
  \hline
