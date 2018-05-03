@@ -87,13 +87,19 @@ El objetivo de esta práctica es abarcar el problema del viajante de comercio (T
 	\item \textbf{Derivado de Kruskal}.
 \end{enumerate}
 
-\section{Vecino más cercano}
-
+Todas las heurísticas desarrolladas tienen varias características en común:
 \begin{itemize}
 	\item \textbf{Conjunto de candidatos}. Ciudades a visitar.
 	\item \textbf{Conjunto de seleccionados}. Aquellas ciudades que vayamos incorporando al circuito.
 	\item \textbf{Función solución}. Todas las ciudades han sido visitadas y hemos vuelto a la primera.
 	\item \textbf{Función de factibilidad}. La ciudad no ha sido visitada aún.
+\end{itemize}
+
+Por tanto, será la función de selección la que diferencie una de otra.
+
+\section{Vecino más cercano}
+
+\begin{itemize}
 	\item \textbf{Función de selección}. Seleccionaremos aquella ciudad cuya distancia euclídea sea menor con respecto a la última ciudad añadida al conjunto de seleccionados.
 \end{itemize}
 
@@ -102,21 +108,13 @@ Para abarcar más posibilidades, ejecutaremos el algoritmo voraz teniendo en cue
 \section{Inserción más económica}
 
 \begin{itemize}
-	\item \textbf{Conjunto de candidatos}. Ciudades por visitar.
-	\item \textbf{Conjunto de seleccionados}. Inicialmente está formador por el triángulo de las ciudades más al norte, este y oeste. 
-	\item \textbf{Función solución}. Todas las ciudades han sido visitadas y hemos vuelto a la primera. 
-	\item \textbf{Función de factibilidad}. La ciudad no ha sido visitada aún.
-	\item \textbf{Función de selección}. Seleccionamos la ciudad que incrementa minimamente la distancia total del circuito.
+	\item \textbf{Función de selección}. Seleccionamos la ciudad que incremente mínimamente la distancia total del circuito.
 \end{itemize}
 
 \section{Derivado de Kruskal}
 
 \begin{itemize}
-	\item \textbf{Conjunto de candidatos}. 
-	\item \textbf{Conjunto de seleccionados}. 
-	\item \textbf{Función solución}. 
-	\item \textbf{Función de factibilidad}. 
-	\item \textbf{Función de selección}. 
+	\item \textbf{Función de selección}. Elegiremos aquella arista cuyo coste sea menor y cuyas ciudades no hayan sido visitadas aún.
 \end{itemize}
 
 
@@ -131,9 +129,9 @@ Para abarcar más posibilidades, ejecutaremos el algoritmo voraz teniendo en cue
 \multicolumn{2}{|c|}{\textit{ulysses16.tsp}}\\
 \hline
 \textbf{Vecino más cercano} & 77.1269\\
-\textbf{Inserción más económica} & \\
+\textbf{Inserción más económica} & 51.9733\\
 \textbf{Derivado de Kruskal} & \\
-\textbf{Solución más óptima} & 74\\
+\textbf{Solución más óptima} & 74.1087\\
 \hline
 \end{tabular}
 \vspace{0.5cm}
@@ -143,9 +141,9 @@ Para abarcar más posibilidades, ejecutaremos el algoritmo voraz teniendo en cue
 \multicolumn{2}{|c|}{\textit{gr96.tsp}}\\
 \hline
 \textbf{Vecino más cercano} & 603.302\\
-\textbf{Inserción más económica} & \\
+\textbf{Inserción más económica} & 620.367\\
 \textbf{Derivado de Kruskal} & \\
-\textbf{Solución más óptima} & 512\\
+\textbf{Solución más óptima} & 512.309\\
 \hline	
 \end{tabular}
 \vspace{0.5cm}
@@ -155,9 +153,9 @@ Para abarcar más posibilidades, ejecutaremos el algoritmo voraz teniendo en cue
 \multicolumn{2}{|c|}{\textit{a280.tsp}}\\
 \hline
 \textbf{Vecino más cercano} & 3094.28\\
-\textbf{Inserción más económica} & \\
+\textbf{Inserción más económica} & 3192.42\\
 \textbf{Derivado de Kruskal} & \\
-\textbf{Solución más óptima} & 2586\\
+\textbf{Solución más óptima} & 2586.77\\
 \hline	
 \end{tabular}
 \vspace{0.5cm}
@@ -167,9 +165,9 @@ Para abarcar más posibilidades, ejecutaremos el algoritmo voraz teniendo en cue
 \multicolumn{2}{|c|}{\textit{att48.tsp}}\\
 \hline
 \textbf{Vecino más cercano} & 39236.9\\
-\textbf{Inserción más económica} & \\
+\textbf{Inserción más económica} & 40341.7\\
 \textbf{Derivado de Kruskal} & \\
-\textbf{Solución más óptima} & 33523\\
+\textbf{Solución más óptima} & 33523.7\\
 \hline	
 \end{tabular}
 \vspace{0.5cm}
@@ -179,9 +177,9 @@ Para abarcar más posibilidades, ejecutaremos el algoritmo voraz teniendo en cue
 \multicolumn{2}{|c|}{\textit{pa561.tsp}}\\
 \hline
 \textbf{Vecino más cercano} & 18347\\
-\textbf{Inserción más económica} & \\
+\textbf{Inserción más económica} & 17688.4 \\
 \textbf{Derivado de Kruskal} & \\
-\textbf{Solución más óptima} & 19330\\
+\textbf{Solución más óptima} & 19330.8\\
 \hline	
 \end{tabular}
 \vspace{0.5cm}
@@ -191,9 +189,9 @@ Para abarcar más posibilidades, ejecutaremos el algoritmo voraz teniendo en cue
 \multicolumn{2}{|c|}{\textit{lin105.tsp}}\\
 \hline
 \textbf{Vecino más cercano} & 16939.4\\
-\textbf{Inserción más económica} & \\
+\textbf{Inserción más económica} & 19063.7\\
 \textbf{Derivado de Kruskal} & \\
-\textbf{Solución más óptima} & 14382\\
+\textbf{Solución más óptima} & 14383\\
 \hline	
 \end{tabular}
 \vspace{0.5cm}
@@ -203,7 +201,7 @@ Para abarcar más posibilidades, ejecutaremos el algoritmo voraz teniendo en cue
 \multicolumn{2}{|c|}{\textit{pr76.tsp}}\\
 \hline
 \textbf{Vecino más cercano} & 130921\\
-\textbf{Inserción más económica} & \\
+\textbf{Inserción más económica} & 136636\\
 \textbf{Derivado de Kruskal} & \\
 \textbf{Solución más óptima} & 108159\\
 \hline	
@@ -215,9 +213,9 @@ Para abarcar más posibilidades, ejecutaremos el algoritmo voraz teniendo en cue
 \multicolumn{2}{|c|}{\textit{tsp225.tsp}}\\
 \hline
 \textbf{Vecino más cercano} & 4633.2\\
-\textbf{Inserción más económica} & \\
+\textbf{Inserción más económica} & 4734.51\\
 \textbf{Derivado de Kruskal} & \\
-\textbf{Solución más óptima} & 14806 \\
+\textbf{Solución más óptima} & 3859 \\
 \hline	
 \end{tabular}
 \vspace{0.5cm}
@@ -227,9 +225,9 @@ Para abarcar más posibilidades, ejecutaremos el algoritmo voraz teniendo en cue
 \multicolumn{2}{|c|}{\textit{ch130.tsp}}\\
 \hline
 \textbf{Vecino más cercano} & 7198.74\\
-\textbf{Inserción más económica} & \\
+\textbf{Inserción más económica} & 7455.72\\
 \textbf{Derivado de Kruskal} & \\
-\textbf{Solución más óptima} & 6110\\
+\textbf{Solución más óptima} & 6110.86\\
 \hline	
 \end{tabular}
 \vspace{0.5cm}
@@ -239,9 +237,9 @@ Para abarcar más posibilidades, ejecutaremos el algoritmo voraz teniendo en cue
 \multicolumn{2}{|c|}{\textit{berlin52.tsp}}\\
 \hline
 \textbf{Vecino más cercano} & 8182.19\\
-\textbf{Inserción más económica} & \\
+\textbf{Inserción más económica} & 9064.04\\
 \textbf{Derivado de Kruskal} & \\
-\textbf{Solución más óptima} & 7544\\
+\textbf{Solución más óptima} & 7544.37\\
 \hline	
 \end{tabular}
 \vspace{0.5cm}
@@ -251,21 +249,21 @@ Para abarcar más posibilidades, ejecutaremos el algoritmo voraz teniendo en cue
 \multicolumn{2}{|c|}{\textit{rd100.tsp}}\\
 \hline
 \textbf{Vecino más cercano} & 9427.33\\
-\textbf{Inserción más económica} & \\
+\textbf{Inserción más económica} & 9655.6\\
 \textbf{Derivado de Kruskal} & \\
-\textbf{Solución más óptima} & 9724\\
+\textbf{Solución más óptima} & 9724.75\\
 \hline	
 \end{tabular}
 \vspace{0.5cm}
 \quad
 \begin{tabular}{|c|c|}
 \hline	
-\multicolumn{2}{|c|}{\textit{pr2392.tsp}}\\
+\multicolumn{2}{|c|}{\textit{st70.tsp}}\\
 \hline
-\textbf{Vecino más cercano} & 458790\\
-\textbf{Inserción más económica} & \\
+\textbf{Vecino más cercano} & 761.689\\
+\textbf{Inserción más económica} & 824.228\\
 \textbf{Derivado de Kruskal} & \\
-\textbf{Solución más óptima} & 50560\\
+\textbf{Solución más óptima} & 678.597 \\
 \hline	
 \end{tabular}
 \caption{Comparación de resultados.}
@@ -281,14 +279,14 @@ Para abarcar más posibilidades, ejecutaremos el algoritmo voraz teniendo en cue
 \end{subfigure}
 \quad
 \begin{subfigure}[b]{0.36\textwidth}
-\includegraphics[width=\textwidth]{ulysses16_vmc.png}
+\includegraphics[width=\textwidth]{ulysses16_ime.png}
 \caption{Inserción más económica}
 \end{subfigure}
 
 \vspace{1cm}
 
 \begin{subfigure}[b]{0.36\textwidth}
-\includegraphics[width=\textwidth]{ulysses16_vmc.png}
+%\includegraphics[width=\textwidth]{ulysses16_kruskal.png}
 \caption{Derivado de Kruskal}
 \end{subfigure}
 \quad
@@ -307,14 +305,14 @@ Para abarcar más posibilidades, ejecutaremos el algoritmo voraz teniendo en cue
 \end{subfigure}
 \quad
 \begin{subfigure}[b]{0.36\textwidth}
-\includegraphics[width=\textwidth]{gr96_vmc.png}
+\includegraphics[width=\textwidth]{gr96_ime.png}
 \caption{Inserción más económica}
 \end{subfigure}
 
 \vspace{1cm}
 
 \begin{subfigure}[b]{0.36\textwidth}
-\includegraphics[width=\textwidth]{gr96_vmc.png}
+%\includegraphics[width=\textwidth]{gr96_kruskal.png}
 \caption{Derivado de Kruskal}
 \end{subfigure}
 \quad
@@ -332,15 +330,16 @@ Para abarcar más posibilidades, ejecutaremos el algoritmo voraz teniendo en cue
 \caption{Vecino más cercano}
 \end{subfigure}
 \quad
+
 \begin{subfigure}[b]{0.36\textwidth}
-\includegraphics[width=\textwidth]{a280_vmc.png}
+\includegraphics[width=\textwidth]{a280_ime.png}
 \caption{Inserción más económica}
 \end{subfigure}
 
 \vspace{1cm}
 
 \begin{subfigure}[b]{0.36\textwidth}
-\includegraphics[width=\textwidth]{a280_vmc.png}
+%\includegraphics[width=\textwidth]{a280_kruskal.png}
 \caption{Derivado de Kruskal}
 \end{subfigure}
 \quad
@@ -358,15 +357,16 @@ Para abarcar más posibilidades, ejecutaremos el algoritmo voraz teniendo en cue
 \caption{Vecino más cercano}
 \end{subfigure}
 \quad
+
 \begin{subfigure}[b]{0.36\textwidth}
-\includegraphics[width=\textwidth]{att48_vmc.png}
+\includegraphics[width=\textwidth]{att48_ime.png}
 \caption{Inserción más económica}
 \end{subfigure}
 
 \vspace{1cm}
 
 \begin{subfigure}[b]{0.36\textwidth}
-\includegraphics[width=\textwidth]{att48_vmc.png}
+%\includegraphics[width=\textwidth]{att48_kruskal.png}
 \caption{Derivado de Kruskal}
 \end{subfigure}
 \quad
@@ -386,14 +386,14 @@ Para abarcar más posibilidades, ejecutaremos el algoritmo voraz teniendo en cue
 \end{subfigure}
 \quad
 \begin{subfigure}[b]{0.36\textwidth}
-\includegraphics[width=\textwidth]{pa561_vmc.png}
+\includegraphics[width=\textwidth]{pa561_ime.png}
 \caption{Inserción más económica}
 \end{subfigure}
 
 \vspace{1cm}
 
 \begin{subfigure}[b]{0.36\textwidth}
-\includegraphics[width=\textwidth]{pa561_vmc.png}
+%\includegraphics[width=\textwidth]{pa561_kruskal.png}
 \caption{Derivado de Kruskal}
 \end{subfigure}
 \quad
@@ -413,14 +413,14 @@ Para abarcar más posibilidades, ejecutaremos el algoritmo voraz teniendo en cue
 \end{subfigure}
 \quad
 \begin{subfigure}[b]{0.36\textwidth}
-\includegraphics[width=\textwidth]{lin105_vmc.png}
+\includegraphics[width=\textwidth]{lin105_ime.png}
 \caption{Inserción más económica}
 \end{subfigure}
 
 \vspace{1cm}
 
 \begin{subfigure}[b]{0.36\textwidth}
-\includegraphics[width=\textwidth]{lin105_vmc.png}
+%\includegraphics[width=\textwidth]{lin105_kruskal.png}
 \caption{Derivado de Kruskal}
 \end{subfigure}
 \quad
@@ -439,14 +439,14 @@ Para abarcar más posibilidades, ejecutaremos el algoritmo voraz teniendo en cue
 \end{subfigure}
 \quad
 \begin{subfigure}[b]{0.36\textwidth}
-\includegraphics[width=\textwidth]{pr76_vmc.png}
+\includegraphics[width=\textwidth]{pr76_ime.png}
 \caption{Inserción más económica}
 \end{subfigure}
 
 \vspace{1cm}
 
 \begin{subfigure}[b]{0.36\textwidth}
-\includegraphics[width=\textwidth]{pr76_vmc.png}
+%\includegraphics[width=\textwidth]{pr76_kruskal.png}
 \caption{Derivado de Kruskal}
 \end{subfigure}
 \quad
@@ -466,14 +466,14 @@ Para abarcar más posibilidades, ejecutaremos el algoritmo voraz teniendo en cue
 \end{subfigure}
 \quad
 \begin{subfigure}[b]{0.36\textwidth}
-\includegraphics[width=\textwidth]{tsp225_vmc.png}
+\includegraphics[width=\textwidth]{tsp225_ime.png}
 \caption{Inserción más económica}
 \end{subfigure}
 
 \vspace{1cm}
 
 \begin{subfigure}[b]{0.36\textwidth}
-\includegraphics[width=\textwidth]{tsp225_vmc.png}
+%\includegraphics[width=\textwidth]{tsp225_kruskal.png}
 \caption{Derivado de Kruskal}
 \end{subfigure}
 \quad
@@ -493,14 +493,14 @@ Para abarcar más posibilidades, ejecutaremos el algoritmo voraz teniendo en cue
 \end{subfigure}
 \quad
 \begin{subfigure}[b]{0.36\textwidth}
-\includegraphics[width=\textwidth]{ch130_vmc.png}
+\includegraphics[width=\textwidth]{ch130_ime.png}
 \caption{Inserción más económica}
 \end{subfigure}
 
 \vspace{1cm}
 
 \begin{subfigure}[b]{0.36\textwidth}
-\includegraphics[width=\textwidth]{ch130_vmc.png}
+%\includegraphics[width=\textwidth]{ch130_kruskal.png}
 \caption{Derivado de Kruskal}
 \end{subfigure}
 \quad
@@ -520,14 +520,14 @@ Para abarcar más posibilidades, ejecutaremos el algoritmo voraz teniendo en cue
 \end{subfigure}
 \quad
 \begin{subfigure}[b]{0.36\textwidth}
-\includegraphics[width=\textwidth]{berlin52_vmc.png}
+\includegraphics[width=\textwidth]{berlin52_ime.png}
 \caption{Inserción más económica}
 \end{subfigure}
 
 \vspace{1cm}
 
 \begin{subfigure}[b]{0.36\textwidth}
-\includegraphics[width=\textwidth]{berlin52_vmc.png}
+%\includegraphics[width=\textwidth]{berlin52_kruskal.png}
 \caption{Derivado de Kruskal}
 \end{subfigure}
 \quad
@@ -547,14 +547,14 @@ Para abarcar más posibilidades, ejecutaremos el algoritmo voraz teniendo en cue
 \end{subfigure}
 \quad
 \begin{subfigure}[b]{0.36\textwidth}
-\includegraphics[width=\textwidth]{rd100_vmc.png}
+\includegraphics[width=\textwidth]{rd100_ime.png}
 \caption{Inserción más económica}
 \end{subfigure}
 
 \vspace{1cm}
 
 \begin{subfigure}[b]{0.36\textwidth}
-\includegraphics[width=\textwidth]{rd100_vmc.png}
+%\includegraphics[width=\textwidth]{rd100_kruskal.png}
 \caption{Derivado de Kruskal}
 \end{subfigure}
 \quad
@@ -569,27 +569,27 @@ Para abarcar más posibilidades, ejecutaremos el algoritmo voraz teniendo en cue
 \begin{figure}[H]
 \centering
 \begin{subfigure}[b]{0.36\textwidth}
-\includegraphics[width=\textwidth]{pr2392_vmc.png}
+\includegraphics[width=\textwidth]{st70_vmc.png}
 \caption{Vecino más cercano}
 \end{subfigure}
 \quad
 \begin{subfigure}[b]{0.36\textwidth}
-\includegraphics[width=\textwidth]{pr2392_vmc.png}
+\includegraphics[width=\textwidth]{st70_ime.png}
 \caption{Inserción más económica}
 \end{subfigure}
 
 \vspace{1cm}
 
 \begin{subfigure}[b]{0.36\textwidth}
-\includegraphics[width=\textwidth]{pr2392_vmc.png}
+%\includegraphics[width=\textwidth]{st70_kruskal.png}
 \caption{Derivado de Kruskal}
 \end{subfigure}
 \quad
 \begin{subfigure}[b]{0.36\textwidth}
-\includegraphics[width=\textwidth]{pr2392_mejor.png}
+\includegraphics[width=\textwidth]{st70_mejor.png}
 \caption{Versión óptima}
 \end{subfigure}
-\caption{\textit{pr2392.tsp}}
+\caption{\textit{st70.tsp}}
 \end{figure}
 \newpage
 \section{Anexo: código fuente}

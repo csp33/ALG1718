@@ -4,7 +4,7 @@
 #include <climits>
 #include <cmath>
 #include <string>
-
+#include <limits>
 using namespace std;
 
 #define TEST 0
@@ -111,6 +111,55 @@ private:
 			*it = false;
 	}
 
+	void Triangularizar(ciudad & norte, ciudad & este,
+	                    ciudad & oeste) {
+
+		double x_max, x_min, y_max;
+		x_max = numeric_limits<double>::min();
+		y_max = numeric_limits<double>::min();
+		x_min = numeric_limits<double>::max();
+
+		for (int i = 0; i < ciudades.size(); i++) {
+			if (ciudades[i].x > x_max) {	//Más al este
+				x_max = ciudades[i].x;
+				este = ciudades[i];
+			}
+			if (ciudades[i].x < x_min) {	//Más al oeste
+				x_min = ciudades[i].x;
+				oeste = ciudades[i];
+			}
+			if (ciudades[i].y > y_max) {	//Más al norte
+				y_max = ciudades[i].y;
+				norte = ciudades[i];
+			}
+		}
+	}
+
+	void seleccionarNuevaCiudad() {
+		ciudad actual;
+		ciudad a_insertar;
+		int indice;
+		double dist_minima = numeric_limits<double>::max();
+		double d_aux;
+		for (int i = 0; i < ciudades.size(); i++) {		//Itero por todas las posibles ciudades
+			actual = ciudades[i];
+			if (!visitados[actual.n]) {				//Si no la he visitado
+				for (int j = 1; j < camino.size() - 1; j++) {		//Veo en que posición podría insertarla
+					vector<ciudad> aux = camino;
+					aux.insert(aux.begin() + j, actual);
+					d_aux = calcularDistanciaCamino(aux);
+					if (d_aux < dist_minima) {		//Me quedo con la que menos incrementa la distancia
+						dist_minima = d_aux;
+						a_insertar = actual;
+						indice = j;
+					}
+				}
+			}
+		}
+		camino.insert(camino.begin() + indice, a_insertar);
+		visitados[a_insertar.n] = true;
+	}
+
 public:
 	TSP() {
 		distancia_total = 0;
@@ -142,9 +191,6 @@ public:
 		distancia_total = minimo.second;
 	}
 
-	void InsercionMasEconomica() {
-
-	}
 
 	int GetTamanio() {
 		return ciudades.size();
@@ -201,6 +247,34 @@ public:
 			cout << "Error al exportar." << endl;
 	}
 
+	void InsercionMasEconomica() {
+		camino.clear();
+		ciudad norte, este, oeste;
+		//Hallo triángulo inicial
+		Triangularizar(norte, este, oeste);
+		//Añado al camino
+		camino.push_back(oeste);
+		camino.push_back(norte);
+		camino.push_back(este);
+		camino.push_back(oeste);
+
+		visitados[norte.n] = true;
+		visitados[este.n] = true;
+		visitados[oeste.n] = true;
+
+		cout << "Circuito Parcial:" << endl;
+		imprimirResultado();
+
+
+		//Voy eligiendo la siguiente
+		while (camino.size() != ciudades.size())		//Mientras no recorramos todas las ciudades
+			seleccionarNuevaCiudad();
+		//Añado el inicio
+		//camino.push_back(camino[0]);
+		distancia_total = calcularDistanciaCamino(camino);
+
+	}
+
 };
 
 
@@ -214,6 +288,8 @@ int main(int argc, char **argv) {
 	string nombre = "";
 
 	/*********** Vecino más cercano*******************/
+	cout << "**********************************************" << endl;
+
 	TSP vecino_mas_cercano(argv[1]);
 	cout << "Heurística del Vecino más cercano." << endl;
 	vecino_mas_cercano.VecinoMasCercano();
@@ -225,7 +301,13 @@ int main(int argc, char **argv) {
 	vecino_mas_cercano.Exportar(nombre.c_str());
 	cout << "Exportado archivo " << nombre << endl;
 
+	cout << "**********************************************" << endl;
+
+
 	/*********** Inserción más económica*******************/
+
+	cout << "**********************************************" << endl;
+
 
 	TSP insercion_mas_economica(argv[1]);
 
@@ -239,8 +321,14 @@ int main(int argc, char **argv) {
 	insercion_mas_economica.Exportar(nombre.c_str());
 	cout << "Exportado archivo " << nombre << endl;
 
+	cout << "**********************************************" << endl;
+
+
 
 	/*********** Derivado de Kruskal*******************/
+
+	cout << "**********************************************" << endl;
+
 
 	TSP derivado_kruskal(argv[1]);
 
@@ -253,5 +341,8 @@ int main(int argc, char **argv) {
 	nombre += ".tsp";
 	derivado_kruskal.Exportar(nombre.c_str());
 	cout << "Exportado archivo " << nombre << endl;
+
+	cout << "**********************************************" << endl;
+
 
 }
