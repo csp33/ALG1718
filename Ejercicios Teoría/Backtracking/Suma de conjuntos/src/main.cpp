@@ -8,7 +8,7 @@
 using namespace std;
 using namespace std::chrono;
 
-#define DEBUG 0
+#define DEBUG 1
 
 ostream &operator<<(ostream &flujo, const vector<int> &v) {
   for (auto it = v.begin(); it != v.end(); ++it)
