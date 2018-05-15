@@ -96,11 +96,6 @@ void Solucion::reset(int i) {
   }
 }
 
-/******************************************************************************/
-//
-/*                 ALGORTIMOS (FUERZA BRUTA Y BACKTRACKING)                   */
-//
-/******************************************************************************/
 
 void Backtracking_info(Solucion &sol, int i) {
   if (i != sol.size()) {       // Si no nos hemos pasado

@@ -68,12 +68,6 @@ int Solucion::GetSuma() const {
 
 void Solucion::Aniadir() { lista.push_back(tuplas); }
 
-/******************************************************************************/
-//
-/*                 ALGORTIMOS (FUERZA BRUTA Y BACKTRACKING)                   */
-//
-/******************************************************************************/
-
 void FuerzaBruta(Solucion &sol, int i) {
   if (i == sol.size()) {          // Si he llegado al final
     if (sol.SolucionEncontrada()) // Si es solución

@@ -25,6 +25,17 @@
 \usepackage{graphicx}
 \usepackage[a4paper,left=3cm,right=2cm,top=2.5cm,bottom=2.5cm]{geometry}
 \newtheorem{desc}{Descripción }
+\newmintedfile[cppcode]{c++}{
+linenos=true,
+breaklines=true,
+tabsize=2,
+}
+
+\newmintedfile[script]{bash}{
+linenos=true,
+breaklines=true,
+tabsize=2,
+}
 \makeindex
 
 \begin{document}
@@ -157,6 +168,25 @@ Como hemos podido observar en las figuras anteriores, el algortimo fuerza bruta 
 Sin embargo con backtracking, conseguimos órdenes de eficiencia mucho menores por el simple hecho de realizar una comprobación de factibilidad. \\
 
 Pero podemos afinar aún más; si almacenamos los datos que se evalúan en la función de factibilidad evitamos tener que calcularlos en cada iteración, transformando una función de orden de eficiencia lineal en una función de orden constante.
+
+\section{Anexo: código fuente}
+\cppcode{fuerzaBruta.cpp}
+\captionof{figure}{Fuerza bruta}
+
+\cppcode{backtracking1.cpp}
+\captionof{figure}{Backtracking sin información}
+
+\cppcode{backtracking2.cpp}
+\captionof{figure}{Backtracking con información}
+
+\script{all.sh}
+\captionof{figure}{Ejecución de la práctica}
+
+\script{individual.sh}
+\captionof{figure}{Ejecución individual}
+
+\script{gnuplot.sh}
+\captionof{figure}{Generación de gráficas}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%Fin del documento%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \end{document}
