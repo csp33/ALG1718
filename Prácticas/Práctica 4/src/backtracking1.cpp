@@ -93,52 +93,9 @@ bool Solucion::Factibilidad(int indice) {
          (suma_parcial == M);
 }
 
-/*
-bool Solucion::Factibilidad(int indice) {
-  bool fact = false;
-  int sumActual = 0, sumRestante = 0;
 
-  for (int i = 0; i <= indice; i++)
-      sumActual += tuplas[i] * v[i];
-
-  for (int i = indice + 1; i < v.size(); i++)
-      sumRestante += v[i];
-
-  if (((sumActual + v[indice + 1] <= M) && (sumActual + sumRestante >= M))
-          || (sumActual == M))
-      fact = true;
-
-  return fact;
-}
-*/
 void Solucion::Aniadir() { lista.push_back(tuplas); }
 
-/******************************************************************************/
-//
-/*                 ALGORTIMOS (FUERZA BRUTA Y BACKTRACKING)                   */
-//
-/******************************************************************************/
-/*
-void Backtracking_sin_info(Solucion &sol, int i) {
-  if (i != sol.size()) {       // Si no nos hemos pasado
-    sol.InicializaElemento(i); // Pongo tuplas[i]=NULO
-    sol.DecrementaElemento(i); // tuplas[i]--
-
-    while (!sol.TodosGenerados(i)) { // Mientas no llegue al final y sea
-factible
-                                  //  if (sol.SolucionEncontrada())
-      //  sol.Aniadir();
-      if (sol.Factibilidad(i)) {
-        Backtracking_sin_info(
-            sol, i + 1); // Llamo recursirvamente con el próximo elemento
-        sol.DecrementaElemento(i); // tuplas[i]-- (END)
-      }
-    }
-  } else {
-    sol.Aniadir();
-  }
-}
-*/
 
 void Backtracking_sin_info(Solucion &sol, int i) {
   if (i != sol.size()) {       // Si no nos hemos pasado

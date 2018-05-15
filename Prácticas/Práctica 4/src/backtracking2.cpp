@@ -107,8 +107,6 @@ void Backtracking_info(Solucion &sol, int i) {
     sol.InicializaElemento(i); // Pongo tuplas[i]=NULO
     sol.DecrementaElemento(i); // tuplas[i]--
     while (!sol.TodosGenerados(i)) {
-      if (sol.SolucionEncontrada())
-        sol.Aniadir();
       if (sol.Factibilidad(i)) {
         Backtracking_info(
             sol, i + 1); // Llamo recursirvamente con el próximo elemento
@@ -116,7 +114,8 @@ void Backtracking_info(Solucion &sol, int i) {
       }
       sol.DecrementaElemento(i); // tuplas[i]-- (END)
     }
-  }
+  } else
+    sol.Aniadir();
 }
 
 ostream &operator<<(ostream &f, const vector<int> &v) {
