@@ -1,6 +1,7 @@
 #!/bin/bash
 if [ $# -eq 2 ]
 then
+rm ./backtracking1.dat;
 i="0"
 n=$1
 #Primer argumento: Tamaño

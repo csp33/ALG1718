@@ -2,13 +2,13 @@
 if [ $# -eq 2 ]
 then
 i="0"
-rm ./FuerzaBruta.dat
+rm ./fuerzaBruta.dat;
 n=$1
 #Primer argumento: Tamaño
-#Tercer argumento : incremento
+#Segundo argumento : incremento
 while [ $i -lt 25 ]
 do
-	./FuerzaBruta $n >> ./FuerzaBruta.dat
+	./fuerzaBruta $n >> ./fuerzaBruta.dat
 	i=$[$i+1]
 	n=$[$n+$2]
 done
