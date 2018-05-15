@@ -9,7 +9,7 @@ using namespace chrono;
 
 #define NULO 2
 #define END -1
-#define DEBUG 1
+#define DEBUG 0
 
 list<vector<int>> lista;
 

@@ -9,7 +9,7 @@ using namespace chrono;
 
 #define NULO 2
 #define END -1
-#define DEBUG 1
+#define DEBUG 0
 
 list<vector<int>> lista;
 
@@ -116,15 +116,21 @@ int main(int argc, char **argv) {
   int num = atoi(argv[1]);
 
   Solucion sol(num, num);
+  int veces = 100;
+  double media=0.0;
 
-  high_resolution_clock::time_point tantes = high_resolution_clock::now();
+  for (int i = 0; i < veces; i++) {
+    high_resolution_clock::time_point tantes = high_resolution_clock::now();
 
-  Backtracking_sin_info(sol, 0);
+    Backtracking_sin_info(sol, 0);
 
-  high_resolution_clock::time_point tdespues = high_resolution_clock::now();
-  duration<double> total = duration_cast<duration<double>>(tdespues - tantes);
+    high_resolution_clock::time_point tdespues = high_resolution_clock::now();
+    duration<double> total = duration_cast<duration<double>>(tdespues - tantes);
+    media+=total.count();
+  }
+  media/=veces;
 
-  cout << num << "\t" << total.count() << endl;
+  cout << num << "\t" << media << endl;
 
 #if DEBUG
   cout << "Soluciones:" << endl;

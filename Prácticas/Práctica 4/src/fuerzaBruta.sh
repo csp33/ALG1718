@@ -1,16 +1,16 @@
 #!/bin/bash
-if [ $# -eq 3 ]
+if [ $# -eq 2 ]
 then
 i="0"
-n=$2
-#Primer argumento: programa a ejecutar
-#Segundo argumento: Tamaño
+rm ./FuerzaBruta.dat
+n=$1
+#Primer argumento: Tamaño
 #Tercer argumento : incremento
 while [ $i -lt 25 ]
 do
-	./$1 $n >> ./$1.dat
+	./FuerzaBruta $n >> ./FuerzaBruta.dat
 	i=$[$i+1]
-	n=$[$n+$3]
+	n=$[$n+$2]
 done
 else
 echo "Error de argumentos"

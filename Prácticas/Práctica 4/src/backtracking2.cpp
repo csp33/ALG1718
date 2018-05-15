@@ -9,7 +9,7 @@ using namespace chrono;
 
 #define NULO 2
 #define END -1
-#define DEBUG 1
+#define DEBUG 0
 
 list<vector<int>> lista;
 
@@ -81,8 +81,8 @@ int Solucion::GetSuma() const {
 }
 
 bool Solucion::Factibilidad(int i) {
-  return (suma_parcial + v[i + 1] <= M && suma_parcial +
-     suma_restantes >= M) || suma_parcial == M;
+  return (suma_parcial + v[i + 1] <= M && suma_parcial + suma_restantes >= M) ||
+         suma_parcial == M;
 }
 
 void Solucion::Aniadir() { lista.push_back(tuplas); }
@@ -100,7 +100,8 @@ void Backtracking_info(Solucion &sol, int i) {
     while (!sol.TodosGenerados(i) && sol.Factibilidad(i)) {
       if (sol.SolucionEncontrada())
         sol.Aniadir();
-      Backtracking_info(sol, i + 1); // Llamo recursirvamente con el próximo elemento
+      Backtracking_info(sol,
+                        i + 1); // Llamo recursirvamente con el próximo elemento
       sol.DecrementaElemento(i); // tuplas[i]-- (END)
     }
   }
@@ -130,15 +131,21 @@ int main(int argc, char **argv) {
   int num = atoi(argv[1]);
 
   Solucion sol(num, num);
+  int veces = 50;
+  double media=0.0;
 
-  high_resolution_clock::time_point tantes = high_resolution_clock::now();
+  for (int i = 0; i < 50; i++) {
+    high_resolution_clock::time_point tantes = high_resolution_clock::now();
 
-  Backtracking_info(sol, 0);
+    Backtracking_info(sol, 0);
 
-  high_resolution_clock::time_point tdespues = high_resolution_clock::now();
-  duration<double> total = duration_cast<duration<double>>(tdespues - tantes);
+    high_resolution_clock::time_point tdespues = high_resolution_clock::now();
+    duration<double> total = duration_cast<duration<double>>(tdespues - tantes);
+    media+=total.count();
+  }
+  media/=veces;
 
-  cout << num << "\t" << total.count() << endl;
+  cout << num << "\t" << media << endl;
 
 #if DEBUG
   cout << "Soluciones:" << endl;
