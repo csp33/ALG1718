@@ -18,6 +18,8 @@ private:
   vector<int> tuplas;
   vector<int> v;
   int M;
+  int suma_parcial;
+  int suma_restantes;
   int GetSuma() const;
 
 public:
@@ -31,16 +33,20 @@ public:
   void DecrementaElemento(int i);
   void Aniadir();
   bool SolucionEncontrada();
-  bool Factibilidad();
+  bool Factibilidad(int i);
 };
 
 Solucion::Solucion(int tam, int num_m) {
   tuplas.resize(tam);
   v.resize(tam);
   M = num_m;
+  suma_parcial = 0;
+  suma_restantes = 0;
 
-  for (int i = 0; i < tam; i++)
+  for (int i = 0; i < tam; i++) {
     v[i] = i + 1;
+    suma_restantes += v[i];
+  }
 }
 
 Solucion::~Solucion(){};
@@ -55,7 +61,14 @@ bool Solucion::TodosGenerados(int i) const { return tuplas[i] == END; }
 
 void Solucion::InicializaElemento(int i) { tuplas[i] = NULO; }
 
-void Solucion::DecrementaElemento(int i) { tuplas[i]--; }
+void Solucion::DecrementaElemento(int i) {
+  tuplas[i]--;
+  if (tuplas[i]) { // Si el elemento vale 1 (aún aparece)
+    suma_parcial += v[i];
+    suma_restantes -= v[i];
+  } else // Si vale 0 (no aparece)
+    suma_parcial -= v[i];
+}
 
 bool Solucion::SolucionEncontrada() { return GetSuma() == M; }
 int Solucion::GetSuma() const {
@@ -67,7 +80,10 @@ int Solucion::GetSuma() const {
   return sum_aux;
 }
 
-bool Solucion::Factibilidad() { return GetSuma() <= M; }
+bool Solucion::Factibilidad(int i) {
+  return (suma_parcial + v[i + 1] <= M && suma_parcial +
+     suma_restantes >= M) || suma_parcial == M;
+}
 
 void Solucion::Aniadir() { lista.push_back(tuplas); }
 
@@ -77,16 +93,14 @@ void Solucion::Aniadir() { lista.push_back(tuplas); }
 //
 /******************************************************************************/
 
-void Backtracking_sin_info(Solucion &sol, int i) {
+void Backtracking_info(Solucion &sol, int i) {
   if (i != sol.size()) {       // Si no nos hemos pasado
     sol.InicializaElemento(i); // Pongo tuplas[i]=NULO
     sol.DecrementaElemento(i); // tuplas[i]--
-
-    while (!sol.TodosGenerados(i) &&
-           sol.Factibilidad()) { // Mientas no llegue al final y sea factible
+    while (!sol.TodosGenerados(i) && sol.Factibilidad(i)) {
       if (sol.SolucionEncontrada())
         sol.Aniadir();
-      Backtracking_sin_info(sol, i + 1); // Llamo recursirvamente con el próximo elemento
+      Backtracking_info(sol, i + 1); // Llamo recursirvamente con el próximo elemento
       sol.DecrementaElemento(i); // tuplas[i]-- (END)
     }
   }
@@ -119,7 +133,7 @@ int main(int argc, char **argv) {
 
   high_resolution_clock::time_point tantes = high_resolution_clock::now();
 
-  Backtracking_sin_info(sol, 0);
+  Backtracking_info(sol, 0);
 
   high_resolution_clock::time_point tdespues = high_resolution_clock::now();
   duration<double> total = duration_cast<duration<double>>(tdespues - tantes);

@@ -108,14 +108,14 @@ ostream &operator<<(ostream &f, const list<vector<int>> &lista) {
 int main(int argc, char **argv) {
   lista.clear();
 
-  if (argc != 3) {
-    cerr << "Uso: " << argv[0] << " <tam vector> <número>" << endl << endl;
+  if (argc != 2) {
+    cerr << "Uso: " << argv[0] << " <número>" << endl << endl;
     exit(1);
   }
 
-  int tam = atoi(argv[1]), num = atoi(argv[2]);
+  int num = atoi(argv[1]);
 
-  Solucion sol(tam, num);
+  Solucion sol(num, num);
 
   high_resolution_clock::time_point tantes = high_resolution_clock::now();
 
@@ -124,10 +124,12 @@ int main(int argc, char **argv) {
   high_resolution_clock::time_point tdespues = high_resolution_clock::now();
   duration<double> total = duration_cast<duration<double>>(tdespues - tantes);
 
-  cout << tam << "\t" << total.count() << endl;
+  cout << num << "\t" << total.count() << endl;
+
 #if DEBUG
   cout << "Soluciones:" << endl;
   cout << lista << endl;
 #endif
+
   return 0;
 }
