@@ -1,9 +1,13 @@
 #!/bin/bash
+echo "Compilando..."
+g++ -o fuerzaBruta fuerzaBruta.cpp -O3
+g++ -o backtracking1 backtracking1.cpp -O3
+g++ -o backtracking2 backtracking2.cpp -O3
 echo "Ejecutando fuerza bruta..."
-./fuerzaBruta.sh 1 1
+./individual.sh fuerzaBruta 1 1
 echo "Ejecutando backtracking sin información..."
-./backtracking_noinfo.sh 1000 500
+./individual.sh backtracking1 1 1
 echo "Ejecutando backtracking con información..."
-./backtracking_info.sh 1000 500
+./individual.sh backtracking2 1 1
 echo "Generando gráficas..."
 ./gnuplot.sh

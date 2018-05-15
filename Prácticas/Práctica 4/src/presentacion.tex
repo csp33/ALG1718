@@ -1,0 +1,1002 @@
+\documentclass{beamer}
+\usepackage[outputdir=build]{minted}
+\usepackage[skins,minted,breakable]{tcolorbox}
+\usepackage[spanish]{babel}
+\usepackage{subcaption}
+\usetikzlibrary{chains}
+\usetikzlibrary{matrix,backgrounds}
+\usepackage{multirow}
+\usepackage{multicol}
+\usepackage{subcaption}
+\usepackage{xcolor}
+\usepackage{pgfgantt}
+
+\usepackage{forest}
+\usepackage{color, colortbl}
+\usepackage{pgfgantt}
+\graphicspath{ {../img/} {../../LaTeX/img/} {/home/csp98/latex/img/}}
+\selectlanguage{spanish}
+\usepackage[utf8]{inputenc}
+\usetheme{PaloAlto}
+\setbeamerfont{section in sidebar}{size=\fontsize{2}{4}\selectfont}
+\setbeamerfont{subsection in sidebar}{size=\fontsize{2}{3}\selectfont}
+\setbeamerfont{subsubsection in sidebar}{size=\fontsize{2}{2}\selectfont}
+
+\setbeamerfont{section in toc}{size=\footnotesize}
+\setbeamerfont{subsection in toc}{size=\scriptsize}
+\setbeamerfont{subsubsection in toc}{size=\tiny}
+
+
+\title{Práctica 3}
+\date{6 de abril de 2018}
+\subtitle{Supercomputador}
+
+\author{María Jesús López Salmerón \\ Nazaret Román Guerrero \\ Laura Hernández Muñoz \\ José Baena Cobos  \\ Carlos Sánchez Páez}
+
+\makeatletter
+  \setbeamertemplate{sidebar \beamer@sidebarside}%{sidebar theme}
+  {
+    \beamer@tempdim=\beamer@sidebarwidth%
+    \advance\beamer@tempdim by -6pt%
+    \insertverticalnavigation{\beamer@sidebarwidth}%
+    \vfill
+    \ifx\beamer@sidebarside\beamer@lefttext%
+    \else%
+      \usebeamercolor{normal text}%
+      \llap{\usebeamertemplate***{navigation symbols}\hskip0.1cm}%
+      \vskip2pt%
+    \fi%
+}%
+\makeatother
+
+\subject{Algorítmica}
+\AtBeginSection[]
+  {
+     \begin{frame}<beamer>
+     \frametitle{Índice}
+     \tableofcontents[currentsection]
+     \end{frame}
+  }
+\AtBeginSubsection[]
+{
+  \begin{frame}<beamer>{Índice}
+    \tableofcontents[currentsection,currentsubsection]
+  \end{frame}
+}
+
+% Let's get started
+\begin{document}
+\centering
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}{Índice}
+  \tableofcontents
+  % You might wish to add the option [pausesections]
+\end{frame}
+
+\section{Presentación del problema}
+
+
+\begin{frame}[fragile]{Supercomputador}
+\begin{figure}[H]
+\centering
+\begin{equation*}
+  \text{Tiempo de }proceso_i =
+  \begin{cases}
+    p(i) & \text{segundos en el supercomputador} \\
+    	&	+\\
+    f(i) & \text{segundos en un PC}
+  \end{cases}
+\end{equation*}
+\begin{forest}
+for tree={draw,fill=blue!20 , rounded corners , l sep=20pt}
+[Supercomputador 
+    [$PC_1$]
+    [$PC_2$]
+    [$PC_3$]
+    [\ldots,fill=white,draw=white,edge=white]
+    [$PC_{n-1}$]
+    [$PC_n$]
+]
+\end{forest}
+\end{figure}
+\end{frame}
+
+\begin{frame}[fragile]{Supercomputador}
+\begin{figure}[H]
+\centering
+\begin{equation*}
+  \text{Tiempo de }proceso_i =
+  \begin{cases}
+    p(i) & \text{segundos en el supercomputador} \\
+    	&	+\\
+    f(i) & \text{segundos en un PC}
+  \end{cases}
+\end{equation*}
+\begin{forest}
+for tree={draw,fill=blue!20 , rounded corners , l sep=20pt}
+[Supercomputador,fill=green 
+    [$PC_1$]
+    [$PC_2$]
+    [$PC_3$]
+    [\ldots,fill=white,draw=white,edge=white]
+    [$PC_{n-1}$]
+    [$PC_n$]
+]
+\end{forest}
+\end{figure}
+\end{frame}
+
+\begin{frame}[fragile]{Supercomputador}
+\begin{figure}[H]
+\centering
+\begin{equation*}
+  \text{Tiempo de }proceso_i =
+  \begin{cases}
+    p(i) & \text{segundos en el supercomputador} \\
+    	&	+\\
+    f(i) & \text{segundos en un PC}
+  \end{cases}
+\end{equation*}
+\begin{forest}
+for tree={draw,fill=blue!20 , rounded corners , l sep=20pt}
+[Supercomputador
+    [$PC_1$,fill=green]
+    [$PC_2$]
+    [$PC_3$]
+    [\ldots,fill=white,draw=white,edge=white]
+    [$PC_{n-1}$]
+    [$PC_n$]
+]
+\end{forest}
+\end{figure}
+\end{frame}
+
+\begin{frame}[fragile]{Supercomputador}
+\begin{figure}[H]
+\centering
+\begin{equation*}
+  \text{Tiempo de }proceso_i =
+  \begin{cases}
+    p(i) & \text{segundos en el supercomputador} \\
+    	&	+\\
+    f(i) & \text{segundos en un PC}
+  \end{cases}
+\end{equation*}
+\begin{forest}
+for tree={draw,fill=blue!20 , rounded corners , l sep=20pt}
+[Supercomputador,fill=purple
+    [$PC_1$,fill=green]
+    [$PC_2$]
+    [$PC_3$]
+    [\ldots,fill=white,draw=white,edge=white]
+    [$PC_{n-1}$]
+    [$PC_n$]
+]
+\end{forest}
+\end{figure}
+\end{frame}
+
+\begin{frame}[fragile]{Supercomputador}
+\begin{figure}[H]
+\centering
+\begin{equation*}
+  \text{Tiempo de }proceso_i =
+  \begin{cases}
+    p(i) & \text{segundos en el supercomputador} \\
+    	&	+\\
+    f(i) & \text{segundos en un PC}
+  \end{cases}
+\end{equation*}
+\begin{forest}
+for tree={draw,fill=blue!20 , rounded corners , l sep=20pt}
+[Supercomputador
+    [$PC_1$,fill=green]
+    [$PC_2$,fill=purple]
+    [$PC_3$]
+    [\ldots,fill=white,draw=white,edge=white]
+    [$PC_{n-1}$]
+    [$PC_n$]
+]
+\end{forest}
+\end{figure}
+\end{frame}
+
+\begin{frame}[fragile]{Supercomputador}
+\begin{figure}[H]
+\centering
+\begin{equation*}
+  \text{Tiempo de }proceso_i =
+  \begin{cases}
+    p(i) & \text{segundos en el supercomputador} \\
+    	&	+\\
+    f(i) & \text{segundos en un PC}
+  \end{cases}
+\end{equation*}
+\begin{forest}
+for tree={draw,fill=blue!20 , rounded corners , l sep=20pt}
+[Supercomputador
+    [$PC_1$,fill=green]
+    [$PC_2$,fill=purple]
+    [$PC_3$ ,fill=yellow]
+    [\ldots,fill=white,draw=white,edge=white]
+    [$PC_{n-1}$, fill=brown!40]
+    [$PC_n$, fill=black!20]
+]
+\end{forest}
+\end{figure}
+\end{frame}
+
+\begin{frame}[fragile]{Ejemplo}
+\begin{table}
+\begin{tabular}{|c|c|c|}
+\hline
+\textbf{Proceso} & \textbf{$p(i)$} & \textbf{$f(i)$} \\
+\hline
+$P_1$ & 4 & 6 \\
+\hline
+$P_2$ & 5 & 5 \\
+\hline
+$P_3$ & 3 & 7 \\
+\hline
+$P_4$ & 8 & 2 \\
+\hline
+\end{tabular}
+\end{table}
+\end{frame}
+
+
+\begin{frame}[fragile]{Ejemplo}
+\begin{figure}[H]
+\centering
+\begin{table}
+\small
+\begin{tabular}{|c|c|c|}
+\hline
+\textbf{Proceso} & \textbf{$p(i)$} & \textbf{$f(i)$} \\
+\hline
+$P_1$ & 4 & 6 \\
+\hline
+$P_2$ & 5 & 5 \\
+\hline
+$P_3$ & 3 & 7 \\
+\hline
+$P_4$ & 8 & 2 \\
+\hline
+\end{tabular}
+\end{table}
+
+\vspace{0.2cm}
+
+\begin{ganttchart}[
+x unit=0.3cm,
+y unit title=0.4cm,
+y unit chart=0.5cm,
+include title in canvas=false,
+title label font=\scriptsize,
+title/.style={draw=none, fill=none}, 
+vgrid, hgrid, link/.style={-latex, red}
+]{1}{23}
+\ganttbar[bar/.append style={fill=blue}]{$P_3$}{1}{3} 
+\ganttbar[bar/.append style={fill=red}]{$P_3$}{4}{10} \\
+
+\ganttbar[bar/.append style={fill=blue}]{$P_1$}{4}{7} 
+\ganttbar[bar/.append style={fill=red}]{$P_1$}{8}{13} \\
+
+\ganttbar[bar/.append style={fill=blue}]{$P_2$}{8}{12} 
+\ganttbar[bar/.append style={fill=red}]{$P_2$}{13}{17} \\
+
+\ganttbar[bar/.append style={fill=blue}]{$P_4$}{13}{20} 
+\ganttbar[bar/.append style={fill=red}]{$P_4$}{21}{22} 
+
+\setganttlinklabel{f-s}{}
+
+\ganttlink[link type=f-s]{elem0}{elem2}
+
+\ganttlink[link type=f-s]{elem2}{elem4}
+
+\ganttlink[link type=f-s]{elem4}{elem6}
+\end{ganttchart}
+
+
+%%%LEYENDA%%%%%
+\fcolorbox{black}{red}{\rule{0pt}{1.5pt}\rule{1.5pt}{0pt}}\quad \scriptsize{Tiempo de PC.}
+\quad 
+\fcolorbox{black}{blue}{\rule{0pt}{1.5pt}\rule{1.5pt}{0pt}}\quad \scriptsize{Tiempo de supercomputador.}
+
+\end{figure}
+
+\end{frame}
+
+\begin{frame}[fragile]{Ejemplo}
+\begin{figure}[H]
+\centering
+\begin{table}
+\tiny
+\begin{tabular}{|c|c|c|}
+\hline
+\textbf{Proceso} & \textbf{$p(i)$} & \textbf{$f(i)$} \\
+\hline
+$P_1$ & 4 & 6 \\
+\hline
+$P_2$ & 5 & 5 \\
+\hline
+$P_3$ & 3 & 7 \\
+\hline
+$P_4$ & 8 & 2 \\
+\hline
+\end{tabular}
+\end{table}
+
+\vspace{0.2cm}
+
+\begin{ganttchart}[
+x unit=0.2cm,
+y unit title=0.25cm,
+y unit chart=0.35cm,
+include title in canvas=false,
+title label font=\scriptsize,
+title/.style={draw=none, fill=none}, 
+vgrid, hgrid, link/.style={-latex, red}
+]{1}{28}
+\ganttbar[bar/.append style={fill=blue}]{$P_3$}{1}{3} 
+\ganttbar[bar/.append style={fill=red}]{$P_3$}{4}{10} \\
+
+\ganttbar[bar/.append style={fill=blue}]{$P_1$}{4}{7} 
+\ganttbar[bar/.append style={fill=red}]{$P_1$}{8}{13} \\
+
+\ganttbar[bar/.append style={fill=blue}]{$P_2$}{8}{12} 
+\ganttbar[bar/.append style={fill=red}]{$P_2$}{13}{17} \\
+
+\ganttbar[bar/.append style={fill=blue}]{$P_4$}{13}{20} 
+\ganttbar[bar/.append style={fill=red}]{$P_4$}{21}{22} 
+
+\setganttlinklabel{f-s}{}
+
+\ganttlink[link type=f-s]{elem0}{elem2}
+
+\ganttlink[link type=f-s]{elem2}{elem4}
+
+\ganttlink[link type=f-s]{elem4}{elem6}
+\end{ganttchart}
+
+\vspace{0.2cm}
+
+\begin{ganttchart}[
+x unit=0.2cm,
+y unit title=0.25cm,
+y unit chart=0.35cm,
+include title in canvas=false,
+title label font=\scriptsize,
+title/.style={draw=none, fill=none}, 
+vgrid, hgrid, link/.style={-latex, red}
+]{1}{28}
+\ganttbar[bar/.append style={fill=blue}]{$P_1$}{1}{5} 
+\ganttbar[bar/.append style={fill=red}]{$P_3$}{5}{10} \\
+
+\ganttbar[bar/.append style={fill=blue}]{$P_2$}{6}{11} 
+\ganttbar[bar/.append style={fill=red}]{$P_1$}{12}{17} \\
+
+\ganttbar[bar/.append style={fill=blue}]{$P_3$}{12}{15} 
+\ganttbar[bar/.append style={fill=red}]{$P_2$}{16}{23} \\
+
+\ganttbar[bar/.append style={fill=blue}]{$P_4$}{16}{24} 
+\ganttbar[bar/.append style={fill=red}]{$P_4$}{25}{27} 
+
+\setganttlinklabel{f-s}{}
+
+\ganttlink[link type=f-s]{elem0}{elem2}
+
+\ganttlink[link type=f-s]{elem2}{elem4}
+
+\ganttlink[link type=f-s]{elem4}{elem6}
+\end{ganttchart}
+
+%%%LEYENDA%%%%%
+\fcolorbox{black}{red}{\rule{0pt}{1.5pt}\rule{1.5pt}{0pt}}\quad \scriptsize{Tiempo de PC.}
+\quad 
+\fcolorbox{black}{blue}{\rule{0pt}{1.5pt}\rule{1.5pt}{0pt}}\quad \scriptsize{Tiempo de supercomputador.}
+\end{figure}
+
+\end{frame}
+
+\begin{frame}[fragile]{Ejemplo}
+\begin{figure}[H]
+\centering
+\begin{table}
+\tiny
+\begin{tabular}{|c|c|c|}
+\hline
+\textbf{Proceso} & \textbf{$p(i)$} & \textbf{$f(i)$} \\
+\hline
+$P_1$ & 4 & 6 \\
+\hline
+$P_2$ & 5 & 5 \\
+\hline
+$P_3$ & 3 & 7 \\
+\hline
+$P_4$ & 8 & 2 \\
+\hline
+\end{tabular}
+\end{table}
+
+\vspace{0.2cm}
+
+\begin{ganttchart}[
+x unit=0.2cm,
+y unit title=0.25cm,
+y unit chart=0.35cm,
+include title in canvas=false,
+title label font=\scriptsize,
+title/.style={draw=none, fill=none}, 
+vgrid, hgrid, link/.style={-latex, red}
+]{1}{28}
+\ganttbar[bar/.append style={fill=blue}]{$P_3$}{1}{3} 
+\ganttbar[bar/.append style={fill=red}]{$P_3$}{4}{10} \\
+
+\ganttbar[bar/.append style={fill=blue}]{$P_1$}{4}{7} 
+\ganttbar[bar/.append style={fill=red}]{$P_1$}{8}{13} \\
+
+\ganttbar[bar/.append style={fill=blue}]{$P_2$}{8}{12} 
+\ganttbar[bar/.append style={fill=red}]{$P_2$}{13}{17} \\
+
+\ganttbar[bar/.append style={fill=blue}]{$P_4$}{13}{20} 
+\ganttbar[bar/.append style={fill=red}]{$P_4$}{21}{22} 
+
+\setganttlinklabel{f-s}{}
+
+\ganttlink[link type=f-s]{elem0}{elem2}
+
+\ganttlink[link type=f-s]{elem2}{elem4}
+
+\ganttlink[link type=f-s]{elem4}{elem6}
+\end{ganttchart}
+
+\vspace{0.2cm}
+
+\begin{ganttchart}[
+x unit=0.2cm,
+y unit title=0.25cm,
+y unit chart=0.35cm,
+include title in canvas=false,
+title label font=\scriptsize,
+title/.style={draw=none, fill=none}, 
+vgrid, hgrid, link/.style={-latex, red}
+]{1}{28}
+\ganttbar[bar/.append style={fill=blue}]{$P_1$}{1}{5} 
+\ganttbar[bar/.append style={fill=red}]{$P_3$}{5}{10} \\
+
+\ganttbar[bar/.append style={fill=blue}]{$P_2$}{6}{11} 
+\ganttbar[bar/.append style={fill=red}]{$P_1$}{12}{17} \\
+
+\ganttbar[bar/.append style={fill=blue}]{$P_3$}{12}{15} 
+\ganttbar[bar/.append style={fill=red}]{$P_2$}{16}{23} \\
+
+\ganttbar[bar/.append style={fill=blue}]{$P_4$}{16}{24} 
+\ganttbar[bar/.append style={fill=red}]{$P_4$}{25}{27} 
+
+\setganttlinklabel{f-s}{}
+
+\ganttlink[link type=f-s]{elem0}{elem2}
+
+\ganttlink[link type=f-s]{elem2}{elem4}
+
+\ganttlink[link type=f-s]{elem4}{elem6}
+\end{ganttchart}
+
+%%%LEYENDA%%%%%
+\fcolorbox{black}{red}{\rule{0pt}{1.5pt}\rule{1.5pt}{0pt}}\quad \scriptsize{Tiempo de PC.}
+\quad 
+\fcolorbox{black}{blue}{\rule{0pt}{1.5pt}\rule{1.5pt}{0pt}}\quad \scriptsize{Tiempo de supercomputador.}
+
+\end{figure}
+
+\begin{center}
+\large
+Para 4 procesos hay $4!=24$ posibles soluciones.
+\end{center}
+\end{frame}
+
+\section{Algoritmo tradicional}
+
+\begin{frame}[fragile]{Algoritmo tradicional}
+\begin{enumerate}
+	\item Probar las distintas combinaciones ($n!$)
+\end{enumerate}
+\end{frame}
+
+\begin{frame}[fragile]{Algoritmo tradicional}
+\begin{enumerate}
+	\item Probar las distintas combinaciones ($n!$)
+	\item Elegir la que menor tiempo total consuma.
+\end{enumerate}
+\end{frame}
+
+\begin{frame}[fragile]{Algoritmo tradicional}
+\begin{enumerate}
+	\item Probar las distintas combinaciones ($n!$)
+	\item Elegir la que menor tiempo total consuma.
+\end{enumerate}
+\vspace{2cm}
+\Huge{$O(n!)$}
+\end{frame}
+
+\section{Algoritmo voraz}
+
+\subsection{Elementos del algoritmo voraz}
+
+\begin{frame}[fragile]{Elementos del algoritmo voraz}
+\begin{itemize}
+	\item \textbf{Conjunto de candidatos}. Todos los procesos a ejecutar. $P=\{p_1, p_2, ..., p_n\}$.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Elementos del algoritmo voraz}
+\begin{itemize}
+	\item \textbf{Conjunto de candidatos}. Todos los procesos a ejecutar. $P=\{p_1, p_2, ..., p_n\}$.
+	\item \textbf{Conjunto de seleccionados}. Aquellos procesos que iremos incorporando a la lista final.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Elementos del algoritmo voraz}
+\begin{itemize}
+	\item \textbf{Conjunto de candidatos}. Todos los procesos a ejecutar. $P=\{p_1, p_2, ..., p_n\}$.
+	\item \textbf{Conjunto de seleccionados}. Aquellos procesos que iremos incorporando a la lista final.
+	\item \textbf{Función solución}. $p_i$ completado $\forall i \in [1,\#P]$.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Elementos del algoritmo voraz}
+\begin{itemize}
+	\item \textbf{Conjunto de candidatos}. Todos los procesos a ejecutar. $P=\{p_1, p_2, ..., p_n\}$.
+	\item \textbf{Conjunto de seleccionados}. Aquellos procesos que iremos incorporando a la lista final.
+	\item \textbf{Función solución}. $p_i$ completado $\forall i \in [1,\#P]$.
+	\item \textbf{Función de factibilidad}. El tiempo de ejecución de un proceso debe ser finito.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Elementos del algoritmo voraz}
+\begin{itemize}
+	\item \textbf{Conjunto de candidatos}. Todos los procesos a ejecutar. $P=\{p_1, p_2, ..., p_n\}$.
+	\item \textbf{Conjunto de seleccionados}. Aquellos procesos que iremos incorporando a la lista final.
+	\item \textbf{Función solución}. $p_i$ completado $\forall i \in [1,\#P]$.
+	\item \textbf{Función de factibilidad}. El tiempo de ejecución de un proceso debe ser finito.
+	\item \textbf{Función de selección}. Seleccionaremos aquel proceso que tenga un $f(i)$ mayor.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Elementos del algoritmo voraz}
+\begin{itemize}
+	\item \textbf{Conjunto de candidatos}. Todos los procesos a ejecutar. $P=\{p_1, p_2, ..., p_n\}$.
+	\item \textbf{Conjunto de seleccionados}. Aquellos procesos que iremos incorporando a la lista final.
+	\item \textbf{Función solución}. $p_i$ completado $\forall i \in [1,\#P]$.
+	\item \textbf{Función de factibilidad}. El tiempo de ejecución de un proceso debe ser finito.
+	\item \textbf{Función de selección}. Seleccionaremos aquel proceso que tenga un $f(i)$ mayor.
+	\item \textbf{Función objetivo}. Obtener la solución cuyo tiempo global sea menor, siendo $t_{fin_{global}} = \sum_{i=1}^{n} p(i) + $máx$\{t_{restante}(p_1),...,t_{restante}(p_n)\}$.
+\end{itemize}
+\end{frame}
+
+\subsection{Metodología}
+\begin{frame}[fragile]{Metodología del algoritmo voraz}
+\begin{enumerate}
+	\item Ordenar el vector de procesos de forma decreciente según su $f(i)\rightarrow $ \emph{Quicksort}.
+\end{enumerate}
+\end{frame}
+
+\begin{frame}[fragile]{Metodología del algoritmo voraz}
+\begin{enumerate}
+	\item Ordenar el vector de procesos de forma decreciente según su $f(i)\rightarrow $ \emph{Quicksort}.
+\end{enumerate}
+\vspace{2cm}
+\Huge{$O(n\cdot log(n))$}
+\end{frame}
+
+\subsection{Ejemplo de uso}
+
+\begin{frame}[fragile]{Ejemplo}
+\begin{table}
+\begin{tabular}{|c|c|c|}
+\hline
+\textbf{Proceso} & \textbf{$p(i)$} & \textbf{$f(i)$} \\
+\hline
+$P_1$ & 4 & 6 \\
+\hline
+$P_2$ & 5 & 5 \\
+\hline
+$P_3$ & 3 & 7 \\
+\hline
+$P_4$ & 8 & 2 \\
+\hline
+\end{tabular}
+\end{table}
+\end{frame}
+
+\begin{frame}[fragile]{Ejemplo}
+\begin{figure}[H]
+\centering
+\begin{table}
+\footnotesize
+\begin{tabular}{|c|c|c|}
+\hline
+\textbf{Proceso} & \textbf{$p(i)$} & \textbf{$f(i)$} \\
+\hline
+$P_1$ & 4 & 6 \\
+\hline
+$P_2$ & 5 & 5 \\
+\hline
+\rowcolor{green!50} $P_3$ & 3 & \textbf{7} \\
+\hline
+$P_4$ & 8 & 2 \\
+\hline
+\end{tabular}
+\end{table}
+
+\vspace{0.2cm}
+
+\begin{ganttchart}[
+x unit=0.4cm,
+y unit title=0.5cm,
+y unit chart=0.7cm,
+include title in canvas=false,
+title label font=\scriptsize,
+title/.style={draw=none, fill=none}, 
+vgrid, hgrid, link/.style={-latex, red}
+]{1}{23}
+\gantttitlelist{1,...,23}{1} \\
+\ganttbar[bar/.append style={fill=blue}]{$P_3$}{1}{3} 
+\ganttbar[bar/.append style={fill=red}]{$P_3$}{4}{10} \\
+\\
+\\	
+%\ganttbar[bar/.append style={fill=blue}]{$P_1$}{4}{7} 
+%\ganttbar[bar/.append style={fill=red}]{$P_1$}{8}{13} \\
+
+%\ganttbar[bar/.append style={fill=blue}]{$P_2$}{8}{12} 
+%\ganttbar[bar/.append style={fill=red}]{$P_2$}{13}{17} \\
+
+%\ganttbar[bar/.append style={fill=blue}]{$P_4$}{13}{20} 
+%\ganttbar[bar/.append style={fill=red}]{$P_4$}{21}{22} 
+
+%\setganttlinklabel{f-s}{}
+
+%\ganttlink[link type=f-s]{elem0}{elem2}
+
+%\ganttlink[link type=f-s]{elem2}{elem4}
+
+%\ganttlink[link type=f-s]{elem4}{elem6}
+\end{ganttchart}
+
+\vspace{0.5cm}
+
+%%%LEYENDA%%%%%
+\fcolorbox{black}{red}{\rule{0pt}{3pt}\rule{3pt}{0pt}}\quad \footnotesize{Tiempo de PC.}
+\quad 
+\fcolorbox{black}{blue}{\rule{0pt}{3pt}\rule{3pt}{0pt}}\quad \footnotesize{Tiempo de supercomputador.}
+\end{figure}
+
+\end{frame}
+
+
+\begin{frame}[fragile]{Ejemplo}
+\begin{figure}[H]
+\centering
+\begin{table}
+\footnotesize
+\begin{tabular}{|c|c|c|}
+\hline
+\textbf{Proceso} & \textbf{$p(i)$} & \textbf{$f(i)$} \\
+\hline
+\rowcolor{green!50}$P_1$ & 4 & \textbf{6} \\
+\hline
+$P_2$ & 5 & 5 \\
+\hline
+\rowcolor{blue!20} $P_3$ & 3 & 7 \\
+\hline
+$P_4$ & 8 & 2 \\
+\hline
+\end{tabular}
+\end{table}
+
+\vspace{0.2cm}
+
+\begin{ganttchart}[
+x unit=0.4cm,
+y unit title=0.5cm,
+y unit chart=0.7cm,
+include title in canvas=false,
+title label font=\scriptsize,
+title/.style={draw=none, fill=none}, 
+vgrid, hgrid, link/.style={-latex, red}
+]{1}{23}
+\gantttitlelist{1,...,23}{1} \\
+\ganttbar[bar/.append style={fill=blue}]{$P_3$}{1}{3} 
+\ganttbar[bar/.append style={fill=red}]{$P_3$}{4}{10} \\
+
+\ganttbar[bar/.append style={fill=blue}]{$P_1$}{4}{7} 
+\ganttbar[bar/.append style={fill=red}]{$P_1$}{8}{13} \\
+\\
+%\ganttbar[bar/.append style={fill=blue}]{$P_2$}{8}{12} 
+%\ganttbar[bar/.append style={fill=red}]{$P_2$}{13}{17} \\
+
+%\ganttbar[bar/.append style={fill=blue}]{$P_4$}{13}{20} 
+%\ganttbar[bar/.append style={fill=red}]{$P_4$}{21}{22} 
+
+\setganttlinklabel{f-s}{}
+
+\ganttlink[link type=f-s]{elem0}{elem2}
+
+%\ganttlink[link type=f-s]{elem2}{elem4}
+
+%\ganttlink[link type=f-s]{elem4}{elem6}
+\end{ganttchart}
+
+\vspace{0.5cm}
+%%%LEYENDA%%%%%
+\fcolorbox{black}{red}{\rule{0pt}{3pt}\rule{3pt}{0pt}}\quad \footnotesize{Tiempo de PC.}
+\quad 
+\fcolorbox{black}{blue}{\rule{0pt}{3pt}\rule{3pt}{0pt}}\quad \footnotesize{Tiempo de supercomputador.}
+\end{figure}
+
+\end{frame}
+
+\begin{frame}[fragile]{Ejemplo}
+\begin{figure}[H]
+\centering
+\begin{table}
+\footnotesize
+\begin{tabular}{|c|c|c|}
+\hline
+\textbf{Proceso} & \textbf{$p(i)$} & \textbf{$f(i)$} \\
+\hline
+\rowcolor{blue!20}$P_1$ & 4 & 6 \\
+\hline
+\rowcolor{green!50}$P_2$ & 5 & \textbf{5} \\
+\hline
+\rowcolor{blue!20} $P_3$ & 3 & 7 \\
+\hline
+$P_4$ & 8 & 2 \\
+\hline
+\end{tabular}
+\end{table}
+
+\vspace{0.2cm}
+
+\begin{ganttchart}[
+x unit=0.4cm,
+y unit title=0.5cm,
+y unit chart=0.7cm,
+include title in canvas=false,
+title label font=\scriptsize,
+title/.style={draw=none, fill=none}, 
+vgrid, hgrid, link/.style={-latex, red}
+]{1}{23}
+\gantttitlelist{1,...,23}{1} \\
+\ganttbar[bar/.append style={fill=blue}]{$P_3$}{1}{3} 
+\ganttbar[bar/.append style={fill=red}]{$P_3$}{4}{10} \\
+
+\ganttbar[bar/.append style={fill=blue}]{$P_1$}{4}{7} 
+\ganttbar[bar/.append style={fill=red}]{$P_1$}{8}{13} \\
+
+\ganttbar[bar/.append style={fill=blue}]{$P_2$}{8}{12} 
+\ganttbar[bar/.append style={fill=red}]{$P_2$}{13}{17} \\
+
+%\ganttbar[bar/.append style={fill=blue}]{$P_4$}{13}{20} 
+%\ganttbar[bar/.append style={fill=red}]{$P_4$}{21}{22} 
+
+\setganttlinklabel{f-s}{}
+
+\ganttlink[link type=f-s]{elem0}{elem2}
+
+\ganttlink[link type=f-s]{elem2}{elem4}
+
+%\ganttlink[link type=f-s]{elem4}{elem6}
+\end{ganttchart}
+
+\vspace{0.5cm}
+
+%%%LEYENDA%%%%%
+\fcolorbox{black}{red}{\rule{0pt}{3pt}\rule{3pt}{0pt}}\quad \footnotesize{Tiempo de PC.}
+\quad 
+\fcolorbox{black}{blue}{\rule{0pt}{3pt}\rule{3pt}{0pt}}\quad \footnotesize{Tiempo de supercomputador.}
+
+\end{figure}
+
+\end{frame}
+
+
+\begin{frame}[fragile]{Ejemplo}
+\begin{figure}[H]
+\centering
+\begin{table}
+\footnotesize
+\begin{tabular}{|c|c|c|}
+\hline
+\textbf{Proceso} & \textbf{$p(i)$} & \textbf{$f(i)$} \\
+\hline
+\rowcolor{blue!20}$P_1$ & 4 & 6 \\
+\hline
+\rowcolor{blue!20}$P_2$ & 5 & 5 \\
+\hline
+\rowcolor{blue!20} $P_3$ & 3 & 7 \\
+\hline
+\rowcolor{green!50}$P_4$ & 8 & \textbf{2} \\
+\hline
+\end{tabular}
+\end{table}
+
+\vspace{0.2cm}
+
+\begin{ganttchart}[
+x unit=0.4cm,
+y unit title=0.5cm,
+y unit chart=0.7cm,
+include title in canvas=false,
+title label font=\scriptsize,
+title/.style={draw=none, fill=none}, 
+vgrid, hgrid, link/.style={-latex, red}
+]{1}{23}
+\gantttitlelist{1,...,23}{1} \\
+\ganttbar[bar/.append style={fill=blue}]{$P_3$}{1}{3} 
+\ganttbar[bar/.append style={fill=red}]{$P_3$}{4}{10} \\
+
+\ganttbar[bar/.append style={fill=blue}]{$P_1$}{4}{7} 
+\ganttbar[bar/.append style={fill=red}]{$P_1$}{8}{13} \\
+
+\ganttbar[bar/.append style={fill=blue}]{$P_2$}{8}{12} 
+\ganttbar[bar/.append style={fill=red}]{$P_2$}{13}{17} \\
+
+\ganttbar[bar/.append style={fill=blue}]{$P_4$}{13}{20} 
+\ganttbar[bar/.append style={fill=red}]{$P_4$}{21}{22} 
+
+\setganttlinklabel{f-s}{}
+
+\ganttlink[link type=f-s]{elem0}{elem2}
+
+\ganttlink[link type=f-s]{elem2}{elem4}
+
+\ganttlink[link type=f-s]{elem4}{elem6}
+\end{ganttchart}
+
+\vspace{0.5cm}
+%%%LEYENDA%%%%%
+\fcolorbox{black}{red}{\rule{0pt}{3pt}\rule{3pt}{0pt}}\quad \footnotesize{Tiempo de PC.}
+\quad 
+\fcolorbox{black}{blue}{\rule{0pt}{3pt}\rule{3pt}{0pt}}\quad \footnotesize{Tiempo de supercomputador.}
+\end{figure}
+
+\end{frame}
+
+\section{Demostración de optimalidad}
+
+\begin{frame}[fragile]{Demostración de optimalidad}
+
+\begin{itemize}
+	\item $P=\{p_1,p_2,...,p_n\} \rightarrow $ conjunto de procesos candidatos.
+	\item $t_{fin_{global}} = \sum_{i=1}^{n} p(i) + $máx$\{t_{restante}(p_1),...,t_{restante}(p_n)\}$
+	\item $p_x \in P$ un proceso tal que $f(p_x)\geq f(p_i) \forall i \in [1,\#P]$.
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile]{Demostración de optimalidad}
+
+Si $p_x$ se ejecuta el primero:
+\begin{itemize}
+	\item $t_{inicio}(f(p_x))= t_0 + p(p_x)$
+	\item $t_{fin}(f(p_x))= t_{inicio}(f(p_x)) + f(p_x)$
+\end{itemize}
+
+\vspace{0.2cm}
+
+Sea $t_{fin}(p)=t_0 + \sum^{n}_{i=1}p(i)$ el momento en el que han finalizado todos los cómputos del superordenador. Entonces:
+\begin{equation*}
+	t_{restante}(p_x)=t_{fin}(p_x) - t_{fin}(p)
+\end{equation*}
+\begin{center}
+\textbf{Reducción al absurdo}
+\end{center}
+\end{frame}
+
+\begin{frame}[fragile]{Demostración de optimalidad}
+
+Supongamos que no eligiendo $p_x$ como el primer proceso obtenemos una solución óptima. Entonces:
+\begin{itemize}
+\item $t_{inicio}^{\prime}(f(p_x))= t_0 + 
+\underbrace{\sum^{pos_x-1}_{i=1} p(p_i)}_{\text{espera}} + p(p_x) $
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Demostración de optimalidad}
+
+Supongamos que no eligiendo $p_x$ como el primer proceso obtenemos una solución óptima. Entonces:
+\begin{itemize}
+\item $t_{inicio}^{\prime}(f(p_x))= t_0 + 
+\underbrace{\sum^{pos_x-1}_{i=1} p(p_i)}_{\text{espera}} + p(p_x) $
+
+\item $t_{inicio}^{\prime}(p_x) > t_{inicio}(p_x) \rightarrow 
+	t_{fin}^{\prime}(p_x) > t_{fin}(p_x) \rightarrow t_{restante}p(x)^{\prime} > t_{restante}(p_x)$
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile]{Demostración de optimalidad}
+Supongamos que no eligiendo $p_x$ como el primer proceso obtenemos una solución óptima. Entonces:
+\begin{itemize}
+\item $t_{inicio}^{\prime}(f(p_x))= t_0 + 
+\underbrace{\sum^{pos_x-1}_{i=1} p(p_i)}_{\text{espera}} + p(p_x) \rightarrow $
+
+\item $t_{inicio}^{\prime}(p_x) > t_{inicio}(p_x) \rightarrow 
+	t_{fin}^{\prime}(p_x) > t_{fin}(p_x) \rightarrow t_{restante}p(x)^{\prime} > t_{restante}(p_x)$
+\end{itemize}
+
+Por tanto, como $t_{restante}p(x)^{\prime}$ es mayor:
+\end{frame}
+
+\begin{frame}[fragile]{Demostración de optimalidad}
+
+Supongamos que no eligiendo $p_x$ como el primer proceso obtenemos una solución óptima. Entonces:
+\begin{itemize}
+\item $t_{inicio}^{\prime}(f(p_x))= t_0 + 
+\underbrace{\sum^{pos_x-1}_{i=1} p(p_i)}_{\text{espera}} + p(p_x) \rightarrow $
+
+\item $t_{inicio}^{\prime}(p_x) > t_{inicio}(p_x) \rightarrow 
+	t_{fin}^{\prime}(p_x) > t_{fin}(p_x) \rightarrow t_{restante}p(x)^{\prime} > t_{restante}(p_x)$
+\end{itemize}
+
+Por tanto, como $t_{restante}p(x)^{\prime}$ es mayor:
+\begin{center}
+máx$^{\prime}\{t_{restante}(p_1),...,t_{restante}(p_x),...,t_{restante}(p_n)\} > $ \\máx$\{t_{restante}(p_1),...,t_{restante}(p_x),...,t_{restante}(p_n)\}$
+\end{center}
+Por tanto, $t_{fin_{global}}^{\prime}> t_{fin_{global}}  $
+\end{frame}
+
+\begin{frame}[fragile]{Demostración de optimalidad}
+
+Supongamos que no eligiendo $p_x$ como el primer proceso obtenemos una solución óptima. Entonces:
+\begin{itemize}
+\item $t_{inicio}^{\prime}(f(p_x))= t_0 + 
+\underbrace{\sum^{pos_x-1}_{i=1} p(p_i)}_{\text{espera}} + p(p_x) \rightarrow $
+
+\item $t_{inicio}^{\prime}(p_x) > t_{inicio}(p_x) \rightarrow 
+	t_{fin}^{\prime}(p_x) > t_{fin}(p_x) \rightarrow t_{restante}p(x)^{\prime} > t_{restante}(p_x)$
+\end{itemize}
+
+Por tanto, como $t_{restante}p(x)^{\prime}$ es mayor:
+\begin{center}
+máx$^{\prime}\{t_{restante}(p_1),...,t_{restante}(p_x),...,t_{restante}(p_n)\} > $ \\máx$\{t_{restante}(p_1),...,t_{restante}(p_x),...,t_{restante}(p_n)\}$
+\end{center}
+Por tanto, $t_{fin_{global}}^{\prime}> t_{fin_{global}} \rightarrow $ Solución no óptima
+\end{frame}
+
+\begin{frame}[fragile]{Demostración de optimalidad}
+
+Supongamos que no eligiendo $p_x$ como el primer proceso obtenemos una solución óptima. Entonces:
+\begin{itemize}
+\item $t_{inicio}^{\prime}(f(p_x))= t_0 + 
+\underbrace{\sum^{pos_x-1}_{i=1} p(p_i)}_{\text{espera}} + p(p_x) \rightarrow $
+
+\item $t_{inicio}^{\prime}(p_x) > t_{inicio}(p_x) \rightarrow 
+	t_{fin}^{\prime}(p_x) > t_{fin}(p_x) \rightarrow t_{restante}p(x)^{\prime} > t_{restante}(p_x)$
+\end{itemize}
+
+Por tanto, como $t_{restante}p(x)^{\prime}$ es mayor:
+\begin{center}
+máx$^{\prime}\{t_{restante}(p_1),...,t_{restante}(p_x),...,t_{restante}(p_n)\} > $ \\máx$\{t_{restante}(p_1),...,t_{restante}(p_x),...,t_{restante}(p_n)\}$
+\end{center}
+Por tanto, $t_{fin_{global}}^{\prime}> t_{fin_{global}} \rightarrow $ Solución no óptima $\rightarrow$\\ \textcolor{red}{contradicción} $\rightarrow$ nuestra hipótesis es correcta.
+\end{frame}
+
+
+\section*{Fin de la presentación}
+
+\begin{frame}{Fin}
+\begin{center}
+\huge{Fin de la presentación}
+\end{center}
+\end{frame}
+
+
+\end{document}
+
+
