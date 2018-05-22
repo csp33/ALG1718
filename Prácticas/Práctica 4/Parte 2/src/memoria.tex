@@ -17,7 +17,7 @@
 \selectlanguage{spanish}
 \usepackage[utf8]{inputenc}
 \usepackage{graphicx}
-\usepackage[a4paper,left=3cm,right=2cm,top=2.5cm,bottom=2.5cm]{geometry}
+\usepackage[a4paper,left=2cm,right=2cm,top=2.5cm,bottom=2.5cm]{geometry}
 \newtheorem{ppio}{Principio }
 
 \newmintedfile[cppcode]{c++}{
@@ -79,276 +79,105 @@ tabsize=2,
 %%%%%%%%%%%%%%%%%%%%%%%%Comienzo del documento%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Descripción de la práctica}
 
-El objetivo de esta práctica es abarcar el problema del viajante de comercio (TSP, \textit{Travel Salesman Problem}) mediante estrategias voraces. En concreto, seguiremos tres heurísticas diferentes:
+El objetivo de esta práctica es abarcar el problema del viajante de comercio (TSP, \textit{Travel Salesman Problem}) mediante estrategias voraces. En concreto, seguiremos la heurística de \textit{Branch and Bound}.\\
 
-\begin{enumerate}
-	\item \textbf{Vecino más cercano}.
-	\item \textbf{Inserción más económica}.
-	\item \textbf{Derivado de Kruskal}.
-\end{enumerate}
-
-Todas las heurísticas desarrolladas tienen varias características en común:
+Tiene las siguientes características:
 \begin{itemize}
 	\item \textbf{Conjunto de candidatos}. Ciudades a visitar.
 	\item \textbf{Conjunto de seleccionados}. Aquellas ciudades que vayamos incorporando al circuito.
 	\item \textbf{Función solución}. Todas las ciudades han sido visitadas y hemos vuelto a la primera.
 	\item \textbf{Función de factibilidad}. La ciudad no ha sido visitada aún.
+	\item \textbf{Función selección}. De entre todos los candidatos, elegimos aquella ciudad que incrementa menos el coste del circuito que llevamos hasta el momento. 
 \end{itemize}
 
-Por tanto, será la función de selección la que diferencie una de otra.
+\section{Descripción del algoritmo}
 
-\section{Vecino más cercano}
+\subsection{Datos y estructuras utilizadas}
 
 \begin{itemize}
-	\item \textbf{Función de selección}. Seleccionaremos aquella ciudad cuya distancia euclídea sea menor con respecto a la última ciudad añadida al conjunto de seleccionados.
+	\item \textbf{Distancia}. Comienza inicializada a +$\infty$.
+	\item \textbf{Cota inferior}. Utilizamos una cota inferior optimista que inicializamos mediante un algoritmo greedy, aproximado al algoritmo \textit{vecino más cercano}. La heurística que sigue el algoritmo es la siguiente:
+
+\[
+\centering \frac{1}{2} \sum_{i=0}^{n}coste_{entrada}(i)+coste_{salida}(i)
+\]
+
+En la sumatoria se acumulan progresivamente los costes de entrada y de salida de cada nodo que sean menores entre las aristas posibles de cada uno. Tras completar la sumatoria se divide a la mitad debido a que la salida de un nodo es la entrada del siguiente.
+	\item \textbf{Solución parcial}. Es un vector que contiene la solución, pudiendo o no estar completa. En el caso de que esté completa pasa a ser la nueva cota.
+	\item \textbf{Visitados}. Es un vector de booleanos que contiene \textit{true} si la ciudad ya ha sido visitada y \textit{false} en otro caso.
+
 \end{itemize}
 
-Para abarcar más posibilidades, ejecutaremos el algoritmo voraz teniendo en cuenta todas las posibles ciudades de inicio, quedándonos con la distancia total más pequeña.
+\subsection{Procedimiento}
 
-\section{Inserción más económica}
+El ajuste inicial que se lleva a cabo es el siguiente:
 
-\begin{itemize}
-	\item \textbf{Función de selección}. Seleccionamos la ciudad que incremente mínimamente la distancia total del circuito.
-\end{itemize}
+\begin{enumerate}
+	\item Se calcula la cota inferior inicial mediante el algoritmo greedy anteoriormente explicado.
+	\item Se toma la primera ciudad y se introduce en la solución parcial. La ciudad ya ha sido visitada, por tanto se pone a \textit{true} en el vector de visitados.
+	\item Se llama entonces al método recursivo que lleva a cabo el algoritmo \textit{Branch and Bound} propiamente dicho.
 
-El conjunto de seleccionados comienza inicializado por el circuito formado por las ciudades más al norte, más al este y más al oeste.
+\end{enumerate}
 
-\section{Derivado de Kruskal}
+El seguimiento del algoritmo es el que sigue:
 
-\begin{itemize}
-	\item \textbf{Función de selección}. Elegiremos aquella arista cuyo coste sea menor y cuyas ciudades no hayan sido visitadas aún.
-\end{itemize}
+\begin{enumerate}
+	\item En el caso base se comprueba si hemos llegado a un nodo hoja del árbol. Si efectivamente estamos en un nodo hoja, cerramos el circuito y comprobamos si la solución parcial es mejor que la actual (la distancia es menor). En caso afirmativo, ésta se actualiza.
+	\item Si no estamos en el caso base, se siguen los siguientes pasos
+	\begin{enumerate}
+		\item Recorremos todas las ciudades restantes.
+		\item Comprobamos que no ha sido visitada y que no es la misma ciudad en la que estamos actualmente.
+		\item Calculamos el coste que supone añadir la nueva ciudad al recorrido.
+		\item Calculamos la cota de la rama actual. Se puede calcular de dos formas: si el nivel es el 1 la calculamos como la media entre el menor arco entrante de la última ciudad de la solución parcial y la nueva que queremos añadir. Si el nivel no es el 1, se calcula como la media entre el menor arco saliente de la última ciudad de la solución parcial y el menor arco entrante de la ciudad a añadir.
+		\item Comprobamos si la suma entre la cota actual y el peso actual es menor que la distancia total, hemos encontrado una cota menor y por tanto exploramos los hijos mediante una llamada recursiva.
+		\item Deshacemos los cambios que hemos realizado para que el siguiente hijo que evaluemos encuentre las variables en las mismas condiciones que el que se acaba de comprobar.
+	\end{enumerate}
+\end{enumerate}
 
-Si el número de ciudades es impar, forzosamente tendremos que añadir la ciudad faltante al final, justo antes de cerrar el circuito.
-
-
-\section{Comparación de estrategias}
-
-%Tabla con distancias y distancia óptima
+\section{Resultados obtenidos}
 
 \begin{figure}[H]
 \centering
 \begin{tabular}{|c|c|}
 \hline
-\multicolumn{2}{|c|}{\textit{ulysses16.tsp}}\\
+\textbf{Número de ciudades} & \textbf{Tiempo(s)}\\
 \hline
-\textbf{Vecino más cercano} & 77.1269\\
-\textbf{Inserción más económica} & 51.9733\\
-\textbf{Derivado de Kruskal} & 117.705\\
-\textbf{Solución más óptima} & 74.1087\\
+6 & $1.27 \cdot 10^{-5}$\\
 \hline
-\end{tabular}
-\vspace{0.5cm}
-\quad
-\begin{tabular}{|c|c|}
-\hline	
-\multicolumn{2}{|c|}{\textit{gr96.tsp}}\\
+7 & $4.39 \cdot 10^{-5}$\\
 \hline
-\textbf{Vecino más cercano} & 603.302\\
-\textbf{Inserción más económica} & 620.367\\
-\textbf{Derivado de Kruskal} & 2026.4\\
-\textbf{Solución más óptima} & 512.309\\
-\hline	
-\end{tabular}
-\vspace{0.5cm}
-\quad
-\begin{tabular}{|c|c|}
-\hline	
-\multicolumn{2}{|c|}{\textit{a280.tsp}}\\
+8 & $0.0002036$\\
 \hline
-\textbf{Vecino más cercano} & 3094.28\\
-\textbf{Inserción más económica} & 3192.42\\
-\textbf{Derivado de Kruskal} & 6298.26\\
-\textbf{Solución más óptima} & 2586.77\\
-\hline	
-\end{tabular}
-\vspace{0.5cm}
-\quad
-\begin{tabular}{|c|c|}
-\hline	
-\multicolumn{2}{|c|}{\textit{att48.tsp}}\\
+9 & $0.0054381$\\
 \hline
-\textbf{Vecino más cercano} & 39236.9\\
-\textbf{Inserción más económica} & 40341.7\\
-\textbf{Derivado de Kruskal} & 101148\\
-\textbf{Solución más óptima} & 33523.7\\
-\hline	
-\end{tabular}
-\vspace{0.5cm}
-\quad
-\begin{tabular}{|c|c|}
-\hline	
-\multicolumn{2}{|c|}{\textit{pa561.tsp}}\\
+10 & $0.0325048$\\
 \hline
-\textbf{Vecino más cercano} & 18347\\
-\textbf{Inserción más económica} & 17688.4 \\
-\textbf{Derivado de Kruskal} & -\\
-\textbf{Solución más óptima} & 19330.8\\
-\hline	
-\end{tabular}
-\vspace{0.5cm}
-\quad
-\begin{tabular}{|c|c|}
-\hline	
-\multicolumn{2}{|c|}{\textit{lin105.tsp}}\\
+11 & $0.381596$\\
 \hline
-\textbf{Vecino más cercano} & 16939.4\\
-\textbf{Inserción más económica} & 19063.7\\
-\textbf{Derivado de Kruskal} & -\\
-\textbf{Solución más óptima} & 14383\\
-\hline	
-\end{tabular}
-\vspace{0.5cm}
-\quad
-\begin{tabular}{|c|c|}
-\hline	
-\multicolumn{2}{|c|}{\textit{pr76.tsp}}\\
+12 & $2.23487$\\
 \hline
-\textbf{Vecino más cercano} & 130921\\
-\textbf{Inserción más económica} & 136636\\
-\textbf{Derivado de Kruskal} & 339435\\
-\textbf{Solución más óptima} & 108159\\
-\hline	
-\end{tabular}
-\vspace{0.5cm}
-\quad
-\begin{tabular}{|c|c|}
-\hline	
-\multicolumn{2}{|c|}{\textit{tsp225.tsp}}\\
+13 & $8.90865$\\
 \hline
-\textbf{Vecino más cercano} & 4633.2\\
-\textbf{Inserción más económica} & 4734.51\\
-\textbf{Derivado de Kruskal} & -\\
-\textbf{Solución más óptima} & 3859 \\
-\hline	
-\end{tabular}
-\vspace{0.5cm}
-\quad
-\begin{tabular}{|c|c|}
-\hline	
-\multicolumn{2}{|c|}{\textit{ch130.tsp}}\\
+14 & $107.772$ (2 minutos y 20 segundos)\\
 \hline
-\textbf{Vecino más cercano} & 7198.74\\
-\textbf{Inserción más económica} & 7455.72\\
-\textbf{Derivado de Kruskal} & 27989.2\\
-\textbf{Solución más óptima} & 6110.86\\
-\hline	
-\end{tabular}
-\vspace{0.5cm}
-\quad
-\begin{tabular}{|c|c|}
-\hline	
-\multicolumn{2}{|c|}{\textit{berlin52.tsp}}\\
+15 & $1192.761$ (19 minutos y 53 segundos)\\
 \hline
-\textbf{Vecino más cercano} & 8182.19\\
-\textbf{Inserción más económica} & 9064.04\\
-\textbf{Derivado de Kruskal} & 18510.4\\
-\textbf{Solución más óptima} & 7544.37\\
-\hline	
-\end{tabular}
-\vspace{0.5cm}
-\quad
-\begin{tabular}{|c|c|}
-\hline	
-\multicolumn{2}{|c|}{\textit{rd100.tsp}}\\
+16 & $ $ ( minutos y segundos)\\
 \hline
-\textbf{Vecino más cercano} & 9427.33\\
-\textbf{Inserción más económica} & 9655.6\\
-\textbf{Derivado de Kruskal} & 32970.2\\
-\textbf{Solución más óptima} & 9724.75\\
-\hline	
-\end{tabular}
-\vspace{0.5cm}
-\quad
-\begin{tabular}{|c|c|}
-\hline	
-\multicolumn{2}{|c|}{\textit{st70.tsp}}\\
-\hline
-\textbf{Vecino más cercano} & 761.689\\
-\textbf{Inserción más económica} & 824.228\\
-\textbf{Derivado de Kruskal} & 2096.12\\
-\textbf{Solución más óptima} & 678.597 \\
-\hline	
-\end{tabular}
-\caption{Comparación de resultados.}
-\end{figure}
-%figure con subfigures de los recorridos.
 
-%%%%%%%%%%%%%%%%%%%%%%%
-\begin{figure}[H]
-\centering
-\begin{subfigure}[b]{0.36\textwidth}
-\includegraphics[width=\textwidth]{ulysses16_vmc.png}
-\caption{Vecino más cercano}
-\end{subfigure}
-\quad
-\begin{subfigure}[b]{0.36\textwidth}
-\includegraphics[width=\textwidth]{ulysses16_ime.png}
-\caption{Inserción más económica}
-\end{subfigure}
 
-\vspace{1cm}
+\end{tabular}
 
-\begin{subfigure}[b]{0.36\textwidth}
-\includegraphics[width=\textwidth]{ulysses16_kruskal.png}
-\caption{Derivado de Kruskal}
-\end{subfigure}
-\quad
-\begin{subfigure}[b]{0.36\textwidth}
-\includegraphics[width=\textwidth]{ulysses16_mejor.png}
-\caption{Versión óptima}
-\end{subfigure}
-\caption{\textit{ulysses16.tsp}}
 \end{figure}
 
-\begin{figure}[H]
-\centering
-\begin{subfigure}[b]{0.36\textwidth}
-\includegraphics[width=\textwidth]{berlin52_vmc.png}
-\caption{Vecino más cercano}
-\end{subfigure}
-\quad
-\begin{subfigure}[b]{0.36\textwidth}
-\includegraphics[width=\textwidth]{berlin52_ime.png}
-\caption{Inserción más económica}
-\end{subfigure}
+\section{Conclusiones}
 
-\vspace{1cm}
+Lo más destacable de este algoritmo es que en términos de orden de eficiencia es pésimo pero, sin embargo, proporciona una solución muy óptima.
 
-\begin{subfigure}[b]{0.36\textwidth}
-\includegraphics[width=\textwidth]{berlin52_kruskal.png}
-\caption{Derivado de Kruskal}
-\end{subfigure}
-\quad
-\begin{subfigure}[b]{0.36\textwidth}
-\includegraphics[width=\textwidth]{berlin52_mejor.png}
-\caption{Versión óptima}
-\end{subfigure}
-\caption{\textit{berlin52.tsp}}
-\end{figure}
-
-
-
-\newpage
 \section{Anexo: código fuente}
 
-\cppcode{tsp.cpp}
-\captionof{figure}{Programa que calcula el orden según las distintas heurísticas}
 
-\cppcode{calcular_distancia.cpp}
-\captionof{figure}{Programa que calcula la distancia del circuito a partir de un fichero con coordenadas y una lista ordenada de ciudades con sus respectivas coordenadas.}
 
-\script{ejecucion_mejor_opcion.sh}
-\captionof{figure}{Script que genera archivos de coordenadas a partir de la mejor opción dada como lista.}
-
-\script{ejecucion_tres_heuristicas.sh}
-\captionof{figure}{Script que genera archivos de coordenadas a partir de las tres heurísticas desarrolladas.}
-
-\script{gnuplot.sh}
-\captionof{figure}{Script que genera las gráficas de los problemas a partir de archivos de coordenadas.}
-
-\script{practica.sh}
-\captionof{figure}{Script genera todo lo necesario para la práctica.}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%Fin del documento%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \end{document}
