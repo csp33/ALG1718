@@ -216,7 +216,6 @@ void TravelSalesman::RecBranchBound(int cota_actual, double peso_actual,
     if (resultado_actual < distancia_total) {
       distancia_total = resultado_actual;
       camino = solucion_parcial;
-      //  camino.push_back(camino[0]);
     }
   } else { // Sigo expandiendo
     for (auto it = ciudades.begin(); it != ciudades.end(); ++it) {
