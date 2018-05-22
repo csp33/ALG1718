@@ -1,6 +1,8 @@
 
+#include <chrono>
 #include <climits>
 #include <cmath>
+#include <ctime>
 #include <fstream>
 #include <iostream>
 #include <limits>
@@ -8,7 +10,9 @@
 #include <string>
 #include <vector>
 using namespace std;
-const int N = 6;
+using namespace std::chrono;
+
+#define DEBUG 0
 
 struct ciudad {
   int n;
@@ -24,7 +28,7 @@ bool operator!=(const ciudad &una, const ciudad &otra) {
 }
 
 ostream &operator<<(ostream &flujo, const vector<ciudad> &v) {
-  for (auto it = v.begin(); it != v.end(); ++it) {
+  for (auto it = v.begin(); it != v.end() ; ++it) {
     if (it != v.begin())
       flujo << "->";
     flujo << it->n + 1;
@@ -34,7 +38,7 @@ ostream &operator<<(ostream &flujo, const vector<ciudad> &v) {
 class TravelSalesman {
 
 private:
-  const int MAX = numeric_limits<int>::max();
+  const double MAX = numeric_limits<double>::max();
   vector<ciudad> ciudades; // Almaceno problema
   double distancia_total;  // Distancia del circuito
   vector<ciudad> camino;   // Solución final.
@@ -45,13 +49,13 @@ private:
   void InicializarMatrizDistancias();
   void Reservar(int n);
   void ResetVisitados();
-  void RecBranchBound(int cota_actual, int peso_actual, int nivel,
+  void RecBranchBound(int cota_actual, double peso_actual, int nivel,
                       vector<ciudad> solucion_parcial);
-  int CalcularCotaInicial() const;
+  double CalcularCotaInicial() const;
 
-  int MenorEntrante(const ciudad &ciudad) const;
+  double MenorEntrante(const ciudad &ciudad) const;
 
-  int MenorSaliente(const ciudad &ciudad) const;
+  double MenorSaliente(const ciudad &ciudad) const;
 
 public:
   TravelSalesman();
@@ -65,7 +69,7 @@ public:
 };
 
 TravelSalesman::TravelSalesman() {
-  distancia_total = 0;
+  distancia_total = MAX;
   ResetVisitados();
 }
 
@@ -158,16 +162,16 @@ void TravelSalesman::Reservar(int n) {
     matriz_distancias[i].resize(n);
 }
 
-int TravelSalesman::MenorEntrante(const ciudad &ciudad) const {
-  int menor = MAX;
+double TravelSalesman::MenorEntrante(const ciudad &ciudad) const {
+  double menor = MAX;
   for (int i = 0; i < ciudades.size(); i++)
     if (i != ciudad.n && matriz_distancias[i][ciudad.n] < menor)
       menor = matriz_distancias[i][ciudad.n];
   return menor;
 }
 
-int TravelSalesman::MenorSaliente(const ciudad &ciudad) const {
-  int menor_entrante = MAX, menor_saliente = MAX;
+double TravelSalesman::MenorSaliente(const ciudad &ciudad) const {
+  double menor_entrante = MAX, menor_saliente = MAX;
   for (int i = 0; i < ciudades.size(); i++) {
     if (ciudad.n != i) {
       if (matriz_distancias[i][ciudad.n] <= menor_entrante) {
@@ -181,8 +185,8 @@ int TravelSalesman::MenorSaliente(const ciudad &ciudad) const {
   return menor_saliente;
 }
 
-int TravelSalesman::CalcularCotaInicial() const {
-  int cota = 0;
+double TravelSalesman::CalcularCotaInicial() const {
+  double cota = 0;
   for (auto it = ciudades.begin(); it != ciudades.end(); ++it)
     cota += MenorEntrante(*it) + MenorSaliente(*it);
   cota /= 2;
@@ -190,32 +194,34 @@ int TravelSalesman::CalcularCotaInicial() const {
 }
 
 void TravelSalesman::BranchBound() {
-  int cota_inferior = CalcularCotaInicial();
-  cout<<"cota inicial "<<cota_inferior<<endl;
+  double cota_inferior = CalcularCotaInicial();
   vector<ciudad> solucion_parcial;
+  camino.resize(ciudades.size() + 1);
+  solucion_parcial.resize(ciudades.size() + 1);
   ciudad primera = ciudades[0];
   solucion_parcial.push_back(primera); // Meto primera ciudad.
   visitados[primera.n] = true;
-  solucion_parcial.resize(ciudades.size() + 1);
-  camino.resize(ciudades.size() + 1);
   RecBranchBound(cota_inferior, 0, 1, solucion_parcial);
+  camino.erase(camino.end()-1);
 }
 
-void TravelSalesman::RecBranchBound(int cota_actual, int peso_actual, int nivel,
+void TravelSalesman::RecBranchBound(int cota_actual, double peso_actual,
+                                    int nivel,
                                     vector<ciudad> solucion_parcial) {
   int n_primera = solucion_parcial[0].n;
   int n_ultima = solucion_parcial[nivel - 1].n;
   if (nivel == ciudades.size()) { // Caso base
-    int resultado_actual = peso_actual + matriz_distancias[n_primera][n_ultima];
+    double resultado_actual =
+        peso_actual + matriz_distancias[n_primera][n_ultima];
     if (resultado_actual < distancia_total) {
       distancia_total = resultado_actual;
       camino = solucion_parcial;
-    //  camino.push_back(camino[0]);
+      //  camino.push_back(camino[0]);
     }
   } else { // Sigo expandiendo
     for (auto it = ciudades.begin(); it != ciudades.end(); ++it) {
       if (matriz_distancias[n_ultima][it->n] != 0 && !visitados[it->n]) {
-        int temp = cota_actual; // Guardo cota actual
+        double temp = cota_actual; // Guardo cota actual
         peso_actual += matriz_distancias[n_ultima][it->n];
         if (nivel == 1)
           cota_actual -= (MenorEntrante(solucion_parcial[nivel - 1]) +
@@ -225,9 +231,9 @@ void TravelSalesman::RecBranchBound(int cota_actual, int peso_actual, int nivel,
           cota_actual -= (MenorSaliente(solucion_parcial[nivel - 1]) +
                           MenorEntrante(*it)) /
                          2;
-        int actual = cota_actual + peso_actual;
+        double actual = cota_actual + peso_actual;
         if (actual < distancia_total) { // La solución puede mejorar
-          solucion_parcial[nivel]=*it;
+          solucion_parcial[nivel] = *it;
           visitados[it->n] = true;
           RecBranchBound(cota_actual, peso_actual, nivel + 1, solucion_parcial);
         }
@@ -235,7 +241,8 @@ void TravelSalesman::RecBranchBound(int cota_actual, int peso_actual, int nivel,
         peso_actual -= matriz_distancias[it->n][n_ultima];
         cota_actual = temp; // Restauro la cota.
         ResetVisitados();
-        for (auto it=solucion_parcial.begin();it != solucion_parcial.end();++it)
+        for (auto it = solucion_parcial.begin(); it != solucion_parcial.end();
+             ++it)
           visitados[it->n] = true;
       }
     }
@@ -247,10 +254,28 @@ int main(int argc, char **argv) {
     cerr << "Error de formato: " << argv[0] << " <fichero>." << endl;
     exit(-1);
   }
-
   TravelSalesman instancia(argv[1]);
+
+  auto tantes = high_resolution_clock::now();
+
   instancia.BranchBound();
 
+  auto tdespues = high_resolution_clock::now();
+
+  double tiempo = duration_cast<duration<double>>(tdespues - tantes).count();
+
+  cout << "Tamaño=" << instancia.GetTamanio() << " Tiempo (s)=" << tiempo
+       << endl;
+
+  string nombre;
+  nombre = "bb";
+  nombre += to_string(instancia.GetTamanio());
+  nombre += ".tsp";
+  instancia.Exportar(nombre.c_str());
+
+#if DEBUG
   instancia.imprimirResultado();
+#endif
+
   return 0;
 }
