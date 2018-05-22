@@ -51,7 +51,7 @@ tabsize=2,
 \textsc{ \Large Algorítmica\\[0.2cm]}
 \textsc{GRADO EN INGENIERÍA INFORMÁTICA}\\[1cm]
 
-{\Huge\bfseries Práctica 3\\}
+{\Huge\bfseries Práctica 4\\}
 \noindent\rule[-1ex]{\textwidth}{3pt}\\[3.5ex]
 {\large\bfseries El viajante de comercio}
 \end{minipage}
@@ -122,7 +122,7 @@ El ajuste inicial que se lleva a cabo es el siguiente:
 El seguimiento del algoritmo es el que sigue:
 
 \begin{enumerate}
-	\item En el caso base se comprueba si hemos llegado a un nodo hoja del árbol. Si efectivamente estamos en un nodo hoja, cerramos el circuito y comprobamos si la solución parcial es mejor que la actual (la distancia es menor). En caso afirmativo, ésta se actualiza.
+	\item En el caso base se comprueba si hemos llegado a un nodo hoja del árbol. Si efectivamente estamos en un nodo hoja, cerramos el circuito y comprobamos si la solución parcial actual es mejor que la global (la distancia es menor). En caso afirmativo, ésta se actualiza.
 	\item Si no estamos en el caso base, se siguen los siguientes pasos
 	\begin{enumerate}
 		\item Recorremos todas las ciudades restantes.
@@ -162,12 +162,70 @@ El seguimiento del algoritmo es el que sigue:
 \hline
 15 & $1192.761$ (19 minutos y 53 segundos)\\
 \hline
-16 & $ $ ( minutos y segundos)\\
+16 & $ + 4h $ \\
 \hline
-
-
 \end{tabular}
+\caption{Tiempos obtenidos}
+\end{figure}
 
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.75]{bb6.png}
+\caption{ulysses6.tsp}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.75]{bb7.png}
+\caption{ulysses7.tsp}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.75]{bb8.png}
+\caption{ulysses8.tsp}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.75]{bb9.png}
+\caption{ulysses9.tsp}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.75]{bb10.png}
+\caption{ulysses10.tsp}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.75]{bb11.png}
+\caption{ulysses11.tsp}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.75]{bb12.png}
+\caption{ulysses12.tsp}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.75]{bb13.png}
+\caption{ulysses13.tsp}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.75]{bb14.png}
+\caption{ulysses14.tsp}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.75]{bb15.png}
+\caption{ulysses15.tsp}
 \end{figure}
 
 \section{Conclusiones}
@@ -176,8 +234,8 @@ Lo más destacable de este algoritmo es que en términos de orden de eficiencia 
 
 \section{Anexo: código fuente}
 
-
-
+\cppcode{tsp.cpp}
+\captionof{figure}{TSP mediante Branch\&Bound}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%Fin del documento%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \end{document}
