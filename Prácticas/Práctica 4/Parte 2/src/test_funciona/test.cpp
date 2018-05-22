@@ -11,7 +11,7 @@
 #include <string>
 #include <vector>
 using namespace std;
-const int N = 6;
+const int N = 16;
 
 struct ciudad {
   int n;
@@ -212,55 +212,54 @@ public:
           final_res = curr_res;
         }
       }
-      return;
-    }
+    } else {
+      // for any other level iterate for all vertices to
+      // build the search space tree recursively
+      for (int i = 0; i < N; i++) {
+        // Consider next vertex if it is not same (diagonal
+        // entry in adjacency matrix and not visited
+        // already)
+        if (adj[curr_path[level - 1]][i] != 0 && visited[i] == false) {
+          int temp = curr_bound;
+          curr_weight += adj[curr_path[level - 1]][i];
 
-    // for any other level iterate for all vertices to
-    // build the search space tree recursively
-    for (int i = 0; i < N; i++) {
-      // Consider next vertex if it is not same (diagonal
-      // entry in adjacency matrix and not visited
-      // already)
-      if (adj[curr_path[level - 1]][i] != 0 && visited[i] == false) {
-        int temp = curr_bound;
-        curr_weight += adj[curr_path[level - 1]][i];
+          // different computation of curr_bound for
+          // level 2 from the other levels
+          if (level == 1)
+            curr_bound -=
+                ((firstMin(adj, curr_path[level - 1]) + firstMin(adj, i)) / 2);
+          else
+            curr_bound -=
+                ((secondMin(adj, curr_path[level - 1]) + firstMin(adj, i)) / 2);
 
-        // different computation of curr_bound for
-        // level 2 from the other levels
-        if (level == 1)
-          curr_bound -=
-              ((firstMin(adj, curr_path[level - 1]) + firstMin(adj, i)) / 2);
-        else
-          curr_bound -=
-              ((secondMin(adj, curr_path[level - 1]) + firstMin(adj, i)) / 2);
+          // curr_bound + curr_weight is the actual lower bound
+          // for the node that we have arrived on
+          // If current lower bound < final_res, we need to explore
+          // the node further
+          if (curr_bound + curr_weight < final_res) {
+            curr_path[level] = i;
+            visited[i] = true;
 
-        // curr_bound + curr_weight is the actual lower bound
-        // for the node that we have arrived on
-        // If current lower bound < final_res, we need to explore
-        // the node further
-        if (curr_bound + curr_weight < final_res) {
-          curr_path[level] = i;
-          visited[i] = true;
+            // call TSPRec for the next level
+            TSPRec(adj, curr_bound, curr_weight, level + 1, curr_path);
+          }
 
-          // call TSPRec for the next level
-          TSPRec(adj, curr_bound, curr_weight, level + 1, curr_path);
+          // Else we have to prune the node by resetting
+          // all changes to curr_weight and curr_bound
+          curr_weight -= adj[curr_path[level - 1]][i];
+          curr_bound = temp;
+
+          // Also reset the visited array
+          memset(visited, false, sizeof(visited));
+          for (int j = 0; j <= level - 1; j++)
+            visited[curr_path[j]] = true;
         }
-
-        // Else we have to prune the node by resetting
-        // all changes to curr_weight and curr_bound
-        curr_weight -= adj[curr_path[level - 1]][i];
-        curr_bound = temp;
-
-        // Also reset the visited array
-        memset(visited, false, sizeof(visited));
-        for (int j = 0; j <= level - 1; j++)
-          visited[curr_path[j]] = true;
       }
     }
   }
 
   // This function sets up final_path[]
-  //Calcula un camino mediante Branch&Bound
+  // Calcula un camino mediante Branch&Bound
   void TSP(int adj[N][N]) {
     int curr_path[N + 1];
 
@@ -278,7 +277,7 @@ public:
 
     // Rounding off the lower bound to an integer
     curr_bound = (curr_bound & 1) ? curr_bound / 2 + 1 : curr_bound / 2;
-
+    cout << "cota inicial " << curr_bound << endl;
     // We start at vertex 1 so the first vertex
     // in curr_path[] is 0
     visited[0] = true;

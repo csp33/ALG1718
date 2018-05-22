@@ -1,5 +1,3 @@
-// C++ program to solve Traveling Salesman Problem
-// using Branch and Bound.
 
 #include <climits>
 #include <cmath>
@@ -17,6 +15,7 @@ struct ciudad {
   double x;
   double y;
 };
+
 bool operator==(const ciudad &una, const ciudad &otra) {
   return una.x == otra.x && una.y == otra.y;
 }
@@ -28,276 +27,220 @@ ostream &operator<<(ostream &flujo, const vector<ciudad> &v) {
   for (auto it = v.begin(); it != v.end(); ++it) {
     if (it != v.begin())
       flujo << "->";
-    flujo << it->n;
+    flujo << it->n + 1;
   }
   return flujo;
 }
-
-// final_path[] stores the final solution ie, the
-// path of the salesman.
-int final_path[N + 1];
-
-// visited[] keeps track of the already visited nodes
-// in a particular path
-bool visited[N];
-
-// Stores the final minimum weight of shortest tour.
-int final_res = INT_MAX;
-
 class TravelSalesman {
 
 private:
-  vector<ciudad> ciudades;
-  double distancia_total;
-  vector<ciudad> camino;
+  const int MAX = numeric_limits<int>::max();
+  vector<ciudad> ciudades; // Almaceno problema
+  double distancia_total;  // Distancia del circuito
+  vector<ciudad> camino;   // Solución final.
   vector<vector<double>> matriz_distancias;
   vector<bool> visitados;
+  double calcularDistanciaCamino(const vector<ciudad> &path) const;
+  double distanciaEuclidea(const ciudad &una, const ciudad &otra) const;
+  void InicializarMatrizDistancias();
+  void Reservar(int n);
+  void ResetVisitados();
+  void RecBranchBound(int cota_actual, int peso_actual, int nivel,
+                      vector<ciudad> solucion_parcial);
+  int CalcularCotaInicial() const;
 
-  double calcularDistanciaCamino(const vector<ciudad> &path) {
-    double distancia = 0;
-    for (int i = 0, j = 1; j < path.size(); i++, j++)
-      distancia += distanciaEuclidea(path[i], path[j]);
-    return distancia;
-  }
+  int MenorEntrante(const ciudad &ciudad) const;
 
-  double distanciaEuclidea(const ciudad &una, const ciudad &otra) {
-    double resultado;
-    if (una == otra)
-      resultado = 0;
-    else
-      resultado = sqrt(pow(una.x - otra.x, 2) + pow(una.y - otra.y, 2));
-    return resultado;
-  }
-
-  void InicializarMatrizDistancias() {
-    for (int i = 0; i < ciudades.size(); i++)
-      for (int j = 0; j < ciudades.size(); j++)
-        matriz_distancias[i][j] = distanciaEuclidea(ciudades[i], ciudades[j]);
-  }
-
-  void Reservar(int n) {
-    visitados.resize(n);
-    matriz_distancias.resize(n);
-    for (int i = 0; i < n; i++)
-      matriz_distancias[i].resize(n);
-  }
-
-  void ResetVisitados() {
-    for (auto it = visitados.begin(); it != visitados.end(); ++it)
-      *it = false;
-  }
+  int MenorSaliente(const ciudad &ciudad) const;
 
 public:
-  TravelSalesman() {
-    distancia_total = 0;
-    ResetVisitados();
-  }
-  TravelSalesman(char *archivo) {
-    CargarDatos(archivo);
-    distancia_total = 0;
-    ResetVisitados();
-  }
-  ~TravelSalesman() {}
+  TravelSalesman();
+  TravelSalesman(char *archivo);
+  int GetTamanio() const;
+  void CargarDatos(char *archivo);
+  void imprimirResultado() const;
+  void Exportar(const char *name) const;
 
-  vector<vector<double>> getMatrizDistancias() { return matriz_distancias; }
-
-  int GetTamanio() { return ciudades.size(); }
-
-  void CargarDatos(char *archivo) {
-    ifstream datos;
-    string s;
-    int n;
-    ciudad aux;
-    datos.open(archivo);
-    if (datos.is_open()) {
-      datos >> s; // Leo DIMENSIÓN (cabecera)
-      datos >>
-          n; // Leo NÚMERO de ciudades y reservo espacio en matrices y vector.
-      Reservar(n);
-
-      for (int i = 0; i < n; i++) {
-        datos >> aux.n; // Leo número de ciudad
-        aux.n--; // Decremento el número: los índices del archivo comienzan
-                 // en 1. Los del vector en 0.
-        datos >> aux.x >> aux.y; // Leo coordenadas
-        ciudades.push_back(aux);
-      }
-      datos.close();
-    } else
-      cout << "Error al leer " << archivo << endl;
-
-    InicializarMatrizDistancias();
-  }
-
-  void imprimirResultado() {
-    cout << endl << "Mejor solución:" << endl;
-    cout << camino << endl;
-    cout << "Distancia: " << distancia_total << endl;
-  }
-
-  void Exportar(const char *name) {
-    ofstream salida;
-    salida.open(name);
-    if (salida.is_open()) {
-      salida << "DIMENSION: ";
-      salida << ciudades.size() << endl;
-      salida << "DISTANCIA: " << distancia_total << endl;
-      for (auto it = camino.begin(); it != camino.end(); ++it) {
-        salida << it->n + 1 << " " << it->x << " " << it->y << endl;
-      }
-      salida.close();
-    } else
-      cout << "Error al exportar." << endl;
-  }
-
-  // Copia una solución final a la solución final.
-  void CopiarAFinal(int curr_path[]) {
-    for (int i = 0; i < N; i++)
-      final_path[i] = curr_path[i];
-    final_path[N] = curr_path[0];
-  }
-
-  // Calcula la arista de menor coste que lleva a la ciudad i.
-  // Function to find the minimum edge cost
-  // having an end at the vertex i
-  int firstMin(int adj[N][N], int i) {
-    int min = INT_MAX;
-    for (int k = 0; k < N; k++)
-      if (adj[i][k] < min && i != k)
-        min = adj[i][k];
-    return min;
-  }
-
-  // Calcula la segunda arista de menor coste que lleva a la ciudad i.
-  // function to find the second minimum edge cost
-  // having an end at the vertex i
-  int secondMin(int adj[N][N], int i) {
-    int primera = INT_MAX, second = INT_MAX;
-    for (int j = 0; j < N; j++) {
-      if (i != j) {
-        if (adj[i][j] <= primera) {
-          second = primera;
-          primera = adj[i][j];
-        } else if (adj[i][j] <= second && adj[i][j] != primera)
-          second = adj[i][j];
-      }
-    }
-    return second;
-  }
-
-  // function that takes as arguments:
-  // curr_bound -> lower bound of the root node
-  // curr_weight-> stores the weight of the path so far
-  // level-> current level while moving in the search
-  //         space tree
-  // curr_path[] -> where the solution is being stored which
-  //                would later be copied to final_path[]
-  void TSPRec(int adj[N][N], int curr_bound, int curr_weight, int level,
-              int curr_path[]) {
-    // base case is when we have reached level N which
-    // means we have covered all the nodes once
-    if (level == N) {
-      // check if there is an edge from last vertex in
-      // path back to the first vertex
-      if (adj[curr_path[level - 1]][curr_path[0]] != 0) {
-        // curr_res has the total weight of the
-        // solution we got
-        int curr_res = curr_weight + adj[curr_path[level - 1]][curr_path[0]];
-
-        // Update final result and final path if
-        // current result is better.
-        if (curr_res < final_res) {
-          CopiarAFinal(curr_path);
-          final_res = curr_res;
-        }
-      }
-      return;
-    }
-
-    // for any other level iterate for all vertices to
-    // build the search space tree recursively
-    for (int i = 0; i < N; i++) {
-      // Consider next vertex if it is not same (diagonal
-      // entry in adjacency matrix and not visited
-      // already)
-      if (adj[curr_path[level - 1]][i] != 0 && visited[i] == false) {
-        int temp = curr_bound;
-        curr_weight += adj[curr_path[level - 1]][i];
-
-        // different computation of curr_bound for
-        // level 2 from the other levels
-        if (level == 1)
-          curr_bound -=
-              ((firstMin(adj, curr_path[level - 1]) + firstMin(adj, i)) / 2);
-        else
-          curr_bound -=
-              ((secondMin(adj, curr_path[level - 1]) + firstMin(adj, i)) / 2);
-
-        // curr_bound + curr_weight is the actual lower bound
-        // for the node that we have arrived on
-        // If current lower bound < final_res, we need to explore
-        // the node further
-        if (curr_bound + curr_weight < final_res) {
-          curr_path[level] = i;
-          visited[i] = true;
-
-          // call TSPRec for the next level
-          TSPRec(adj, curr_bound, curr_weight, level + 1, curr_path);
-        }
-
-        // Else we have to prune the node by resetting
-        // all changes to curr_weight and curr_bound
-        curr_weight -= adj[curr_path[level - 1]][i];
-        curr_bound = temp;
-
-        // Also reset the visited array
-        // memset(visited, false, sizeof(visited));
-        for (int i = 0; i < N; i++)
-          visited[i] = false;
-        for (int j = 0; j <= level - 1; j++)
-          visited[curr_path[j]] = true;
-      }
-    }
-  }
-
-  // This function sets up final_path[]
-  // Calcula un camino mediante Branch&Bound
-  void TSP(int adj[N][N]) {
-    int curr_path[N + 1];
-
-    // Calculate initial lower bound for the root node
-    // using the formula 1/2 * (sum of first min +
-    // second min) for all edges.
-    // Also initialize the curr_path and visited array
-    int curr_bound = 0;
-
-    for (int i = 0; i < N; i++)
-      curr_path[i] = false;
-
-    for (int i = 0; i < N; i++)
-      visited[i] = false;
-
-    // Compute initial bound
-    for (int i = 0; i < N; i++)
-      curr_bound += (firstMin(adj, i) + secondMin(adj, i));
-
-    // Redondeo a entero.
-    curr_bound = (int)curr_bound;
-
-  //  curr_bound = (curr_bound & 1) ? curr_bound / 2 + 1 : curr_bound / 2;
-
-    // We start at vertex 1 so the first vertex
-    // in curr_path[] is 0
-		// Comienzo en la ciuad 1.
-    visited[0] = true;
-    curr_path[0] = 0;
-
-    // Call to TSPRec for curr_weight equal to
-    // 0 and level 1
-    TSPRec(adj, curr_bound, 0, 1, curr_path);
-  }
+  void BranchBound();
 };
-// Driver code
+
+TravelSalesman::TravelSalesman() {
+  distancia_total = 0;
+  ResetVisitados();
+}
+
+TravelSalesman::TravelSalesman(char *archivo) {
+  CargarDatos(archivo);
+  distancia_total = MAX;
+  ResetVisitados();
+}
+
+void TravelSalesman::imprimirResultado() const {
+  cout << endl << "Mejor solución:" << endl;
+  cout << camino << endl;
+  cout << "Distancia: " << distancia_total << endl;
+}
+
+void TravelSalesman::Exportar(const char *name) const {
+  ofstream salida;
+  salida.open(name);
+  if (salida.is_open()) {
+    salida << "DIMENSION: ";
+    salida << ciudades.size() << endl;
+    salida << "DISTANCIA: " << distancia_total << endl;
+    for (auto it = camino.begin(); it != camino.end(); ++it) {
+      salida << it->n + 1 << " " << it->x << " " << it->y << endl;
+    }
+    salida.close();
+  } else
+    cout << "Error al exportar." << endl;
+}
+
+void TravelSalesman::CargarDatos(char *archivo) {
+  ifstream datos;
+  string s;
+  int n;
+  ciudad aux;
+  datos.open(archivo);
+  if (datos.is_open()) {
+    datos >> s; // Leo DIMENSIÓN (cabecera)
+    datos >> n; // Leo NÚMERO de ciudades .
+    Reservar(n);
+
+    for (int i = 0; i < n; i++) {
+      datos >> aux.n; // Leo número de ciudad
+      aux.n--; // Decremento el número: los índices del archivo comienzan
+               // en 1. Los del vector en 0.
+      datos >> aux.x >> aux.y; // Leo coordenadas
+      ciudades.push_back(aux);
+    }
+    datos.close();
+  } else
+    cout << "Error al leer " << archivo << endl;
+  InicializarMatrizDistancias();
+}
+
+int TravelSalesman::GetTamanio() const { return ciudades.size(); }
+
+void TravelSalesman::ResetVisitados() {
+  for (auto it = visitados.begin(); it != visitados.end(); ++it)
+    *it = false;
+}
+
+double
+TravelSalesman::calcularDistanciaCamino(const vector<ciudad> &path) const {
+  double distancia = 0;
+  for (int i = 0, j = 1; j < path.size(); i++, j++)
+    distancia += distanciaEuclidea(path[i], path[j]);
+  return distancia;
+}
+
+double TravelSalesman::distanciaEuclidea(const ciudad &una,
+                                         const ciudad &otra) const {
+  double resultado;
+  if (una == otra)
+    resultado = 0;
+  else
+    resultado = sqrt(pow(una.x - otra.x, 2) + pow(una.y - otra.y, 2));
+  return resultado;
+}
+
+void TravelSalesman::InicializarMatrizDistancias() {
+  for (int i = 0; i < ciudades.size(); i++)
+    for (int j = 0; j < ciudades.size(); j++)
+      matriz_distancias[i][j] = distanciaEuclidea(ciudades[i], ciudades[j]);
+}
+
+void TravelSalesman::Reservar(int n) {
+  visitados.resize(n);
+  matriz_distancias.resize(n);
+  for (int i = 0; i < n; i++)
+    matriz_distancias[i].resize(n);
+}
+
+int TravelSalesman::MenorEntrante(const ciudad &ciudad) const {
+  int menor = MAX;
+  for (int i = 0; i < ciudades.size(); i++)
+    if (i != ciudad.n && matriz_distancias[i][ciudad.n] < menor)
+      menor = matriz_distancias[i][ciudad.n];
+  return menor;
+}
+
+int TravelSalesman::MenorSaliente(const ciudad &ciudad) const {
+  int menor_entrante = MAX, menor_saliente = MAX;
+  for (int i = 0; i < ciudades.size(); i++) {
+    if (ciudad.n != i) {
+      if (matriz_distancias[i][ciudad.n] <= menor_entrante) {
+        menor_saliente = menor_entrante;
+        menor_entrante = matriz_distancias[i][ciudad.n];
+      } else if (matriz_distancias[i][ciudad.n] <= menor_saliente &&
+                 matriz_distancias[i][ciudad.n] != menor_entrante)
+        menor_saliente = matriz_distancias[i][ciudad.n];
+    }
+  }
+  return menor_saliente;
+}
+
+int TravelSalesman::CalcularCotaInicial() const {
+  int cota = 0;
+  for (auto it = ciudades.begin(); it != ciudades.end(); ++it)
+    cota += MenorEntrante(*it) + MenorSaliente(*it);
+  cota /= 2;
+  return cota;
+}
+
+void TravelSalesman::BranchBound() {
+  int cota_inferior = CalcularCotaInicial();
+  cout<<"cota inicial "<<cota_inferior<<endl;
+  vector<ciudad> solucion_parcial;
+  ciudad primera = ciudades[0];
+  solucion_parcial.push_back(primera); // Meto primera ciudad.
+  visitados[primera.n] = true;
+  solucion_parcial.resize(ciudades.size() + 1);
+  camino.resize(ciudades.size() + 1);
+  RecBranchBound(cota_inferior, 0, 1, solucion_parcial);
+}
+
+void TravelSalesman::RecBranchBound(int cota_actual, int peso_actual, int nivel,
+                                    vector<ciudad> solucion_parcial) {
+  int n_primera = solucion_parcial[0].n;
+  int n_ultima = solucion_parcial[nivel - 1].n;
+  if (nivel == ciudades.size()) { // Caso base
+    int resultado_actual = peso_actual + matriz_distancias[n_primera][n_ultima];
+    if (resultado_actual < distancia_total) {
+      distancia_total = resultado_actual;
+      camino = solucion_parcial;
+    //  camino.push_back(camino[0]);
+    }
+  } else { // Sigo expandiendo
+    for (auto it = ciudades.begin(); it != ciudades.end(); ++it) {
+      if (matriz_distancias[n_ultima][it->n] != 0 && !visitados[it->n]) {
+        int temp = cota_actual; // Guardo cota actual
+        peso_actual += matriz_distancias[n_ultima][it->n];
+        if (nivel == 1)
+          cota_actual -= (MenorEntrante(solucion_parcial[nivel - 1]) +
+                          MenorEntrante(*it)) /
+                         2;
+        else
+          cota_actual -= (MenorSaliente(solucion_parcial[nivel - 1]) +
+                          MenorEntrante(*it)) /
+                         2;
+        int actual = cota_actual + peso_actual;
+        if (actual < distancia_total) { // La solución puede mejorar
+          solucion_parcial[nivel]=*it;
+          visitados[it->n] = true;
+          RecBranchBound(cota_actual, peso_actual, nivel + 1, solucion_parcial);
+        }
+        // Podamos
+        peso_actual -= matriz_distancias[it->n][n_ultima];
+        cota_actual = temp; // Restauro la cota.
+        ResetVisitados();
+        for (auto it=solucion_parcial.begin();it != solucion_parcial.end();++it)
+          visitados[it->n] = true;
+      }
+    }
+  }
+}
 int main(int argc, char **argv) {
 
   if (argc != 2) {
@@ -306,18 +249,8 @@ int main(int argc, char **argv) {
   }
 
   TravelSalesman instancia(argv[1]);
-  int adj[N][N];
-  vector<vector<double>> matriz = instancia.getMatrizDistancias();
-  for (int i = 0; i < N; i++)
-    for (int j = 0; j < N; j++)
-      adj[i][j] = matriz[i][j];
+  instancia.BranchBound();
 
-  instancia.TSP(adj);
-
-  printf("Minimum cost : %d\n", final_res);
-  printf("Path Taken : ");
-  for (int i = 0; i <= N; i++)
-    printf("%d ", final_path[i]);
-  printf("\n");
+  instancia.imprimirResultado();
   return 0;
 }
