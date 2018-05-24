@@ -99,7 +99,7 @@
 \centering
 \begin{minted}[breaklines,tabsize=2]{c++}
 TSP(){
-	cota_global=Estimador();
+	int cota_global=Estimador();
 	vector<ciudad> s_parcial;
 	s_parcial.push_back(ciudades[0]);
 	visitados[ciudades[0]]=true;
