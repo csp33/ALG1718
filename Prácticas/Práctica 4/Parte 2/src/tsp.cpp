@@ -18,17 +18,25 @@ struct ciudad {
   int n;
   double x;
   double y;
+  ciudad &operator=(const ciudad &otra) {
+    if (this != &otra) {
+      x = otra.x;
+      y = otra.y;
+      n = otra.n;
+    }
+    return *this;
+  }
 };
 
 bool operator==(const ciudad &una, const ciudad &otra) {
-  return una.x == otra.x && una.y == otra.y;
+  return una.n == otra.n;
 }
 bool operator!=(const ciudad &una, const ciudad &otra) {
   return !(una == otra);
 }
 
 ostream &operator<<(ostream &flujo, const vector<ciudad> &v) {
-  for (auto it = v.begin(); it != v.end() ; ++it) {
+  for (auto it = v.begin(); it != v.end(); ++it) {
     if (it != v.begin())
       flujo << "->";
     flujo << it->n + 1;
@@ -49,13 +57,14 @@ private:
   void InicializarMatrizDistancias();
   void Reservar(int n);
   void ResetVisitados();
-  void RecBranchBound(int cota_actual, double peso_actual, int nivel,
+  void RecBranchBound(double cota_actual, double peso_actual, int nivel,
                       vector<ciudad> solucion_parcial);
   double CalcularCotaInicial() const;
 
   double MenorEntrante(const ciudad &ciudad) const;
 
   double MenorSaliente(const ciudad &ciudad) const;
+  double Distancia(const ciudad &a, const ciudad &b) const;
 
 public:
   TravelSalesman();
@@ -79,6 +88,9 @@ TravelSalesman::TravelSalesman(char *archivo) {
   ResetVisitados();
 }
 
+double TravelSalesman::Distancia(const ciudad &a, const ciudad &b) const {
+  return matriz_distancias[a.n][b.n];
+}
 void TravelSalesman::imprimirResultado() const {
   cout << endl << "Mejor solución:" << endl;
   cout << camino << endl;
@@ -110,11 +122,10 @@ void TravelSalesman::CargarDatos(char *archivo) {
     datos >> s; // Leo DIMENSIÓN (cabecera)
     datos >> n; // Leo NÚMERO de ciudades .
     Reservar(n);
-
     for (int i = 0; i < n; i++) {
       datos >> aux.n; // Leo número de ciudad
       aux.n--; // Decremento el número: los índices del archivo comienzan
-               // en 1. Los del vector en 0.
+      // en 1. Los del vector en 0.
       datos >> aux.x >> aux.y; // Leo coordenadas
       ciudades.push_back(aux);
     }
@@ -194,51 +205,46 @@ double TravelSalesman::CalcularCotaInicial() const {
 }
 
 void TravelSalesman::BranchBound() {
-  double cota_inferior = CalcularCotaInicial();
+  double cota_inicial = CalcularCotaInicial();
   vector<ciudad> solucion_parcial;
-  camino.resize(ciudades.size() + 1);
-  solucion_parcial.resize(ciudades.size() + 1);
-  ciudad primera = ciudades[0];
-  solucion_parcial.push_back(primera); // Meto primera ciudad.
-  visitados[primera.n] = true;
-  RecBranchBound(cota_inferior, 0, 1, solucion_parcial);
-  camino.erase(camino.end()-1);
+  solucion_parcial.push_back(ciudades[0]); // Meto primera ciudad.
+  visitados[0] = true;
+  RecBranchBound(cota_inicial, 0, 1, solucion_parcial);
 }
 
-void TravelSalesman::RecBranchBound(int cota_actual, double peso_actual,
+void TravelSalesman::RecBranchBound(double cota_actual, double peso_actual,
                                     int nivel,
                                     vector<ciudad> solucion_parcial) {
-  int n_primera = solucion_parcial[0].n;
-  int n_ultima = solucion_parcial[nivel - 1].n;
   if (nivel == ciudades.size()) { // Caso base
-    double resultado_actual =
-        peso_actual + matriz_distancias[n_primera][n_ultima];
+    double resultado_actual = peso_actual + Distancia(solucion_parcial.back(),
+                                                      solucion_parcial.front());
     if (resultado_actual < distancia_total) {
       distancia_total = resultado_actual;
       camino = solucion_parcial;
+      camino.push_back(camino.front());
     }
   } else { // Sigo expandiendo
     for (auto it = ciudades.begin(); it != ciudades.end(); ++it) {
-      if (matriz_distancias[n_ultima][it->n] != 0 && !visitados[it->n]) {
-        double temp = cota_actual; // Guardo cota actual
-        peso_actual += matriz_distancias[n_ultima][it->n];
+      if (Distancia(*it, solucion_parcial.back()) != 0 && !visitados[it->n]) {
+        double cota_local = cota_actual;
+        double p_nuevo = peso_actual + Distancia(*it, solucion_parcial.back());
+
         if (nivel == 1)
-          cota_actual -= (MenorEntrante(solucion_parcial[nivel - 1]) +
+          cota_local -= (MenorEntrante(solucion_parcial[nivel - 1]) +
                           MenorEntrante(*it)) /
                          2;
         else
-          cota_actual -= (MenorSaliente(solucion_parcial[nivel - 1]) +
+          cota_local -= (MenorSaliente(solucion_parcial[nivel - 1]) +
                           MenorEntrante(*it)) /
                          2;
-        double actual = cota_actual + peso_actual;
+        double actual = cota_local + peso_actual;
         if (actual < distancia_total) { // La solución puede mejorar
-          solucion_parcial[nivel] = *it;
+          solucion_parcial.push_back(*it);
           visitados[it->n] = true;
-          RecBranchBound(cota_actual, peso_actual, nivel + 1, solucion_parcial);
+          RecBranchBound(cota_local, p_nuevo, nivel + 1, solucion_parcial);
+          solucion_parcial.erase(solucion_parcial.end()-1); //Deshago el cambio.
         }
-        // Podamos
-        peso_actual -= matriz_distancias[it->n][n_ultima];
-        cota_actual = temp; // Restauro la cota.
+        // Deshacemos cambios
         ResetVisitados();
         for (auto it = solucion_parcial.begin(); it != solucion_parcial.end();
              ++it)

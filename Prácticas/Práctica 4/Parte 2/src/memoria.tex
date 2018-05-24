@@ -142,27 +142,27 @@ El seguimiento del algoritmo es el que sigue:
 \hline
 \textbf{Número de ciudades} & \textbf{Tiempo(s)}\\
 \hline
-6 & $1.27 \cdot 10^{-5}$\\
+6 & $3.3886 \cdot 10^{-5}$\\
 \hline
-7 & $4.39 \cdot 10^{-5}$\\
+7 & 0.000140369\\
 \hline
-8 & $0.0002036$\\
+8 & 0.000602488\\
 \hline
-9 & $0.0054381$\\
+9 & 0.00357393\\
 \hline
-10 & $0.0325048$\\
+10 & 0.0154363\\
 \hline
-11 & $0.381596$\\
+11 & 0.128727\\
 \hline
-12 & $2.23487$\\
+12 & 0.658938\\
 \hline
-13 & $8.90865$\\
+13 & 4.02953\\
 \hline
-14 & $107.772$ (2 minutos y 20 segundos)\\
+14 & 31.2847\\
 \hline
-15 & $1192.761$ (19 minutos y 53 segundos)\\
+15 & 245.842 (4 minutos y 5.842 segundos)\\
 \hline
-16 & $ + 4h $ \\
+16 & 1541.08 (25 minutos y 41 segundos)\\
 \hline
 \end{tabular}
 \caption{Tiempos obtenidos}
@@ -228,6 +228,19 @@ El seguimiento del algoritmo es el que sigue:
 \caption{ulysses15.tsp}
 \end{figure}
 
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.75]{bb16.png}
+\caption{ulysses16.tsp}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.75]{tiempos.png}
+\caption{Evolución del tiempo de ejecución}
+\end{figure}
+
+
 \section{Conclusiones}
 
 Lo más destacable de este algoritmo es que en términos de orden de eficiencia es pésimo pero, sin embargo, proporciona una solución muy óptima.
@@ -236,6 +249,12 @@ Lo más destacable de este algoritmo es que en términos de orden de eficiencia 
 
 \cppcode{tsp.cpp}
 \captionof{figure}{TSP mediante Branch\&Bound}
+
+\script{practica.sh}
+\captionof{figure}{Ejecución de la práctica}
+
+\script{gnuplot.sh}
+\captionof{figure}{Generador de gráficas}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%Fin del documento%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \end{document}
