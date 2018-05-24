@@ -95,322 +95,44 @@
 \subsection{Algoritmo paso a paso}
 
 \begin{frame}[fragile]{Primeros pasos}
-
-\begin{enumerate}
-	\item<+-> Calculamos cota inferior mediante estimador.
-	\item<+-> $s_{parcial}$ $\leftarrow$ ciudades[0].
-	\item<+-> visitados[ciudades[0]]=true
-	\item<+-> Llamamos al algoritmo recursivo.
-\end{enumerate}
+\begin{figure}[H]
+\centering
+\begin{minted}[breaklines,tabsize=2]{c++}
+TSP(){
+	cota_global=Estimador();
+	vector<ciudad> s_parcial;
+	s_parcial.push_back(ciudades[0]);
+	visitados[ciudades[0]]=true;
+	RecTSP(cota_global,0,1,s_parcial);
+	//RecTSP(cota_actual,peso,nivel,s_parcial);
+}
+\end{minted}
+\end{figure}
 \end{frame}
 
 
 \begin{frame}[fragile]{Algoritmo recursivo}
-
-\begin{enumerate}
-	\item<+-> \textbf{Caso base}: nodo hoja.
-	\begin{enumerate}
-		\item<+-> Si la solución parcial actual es mejor que la global, actualizamos.
-	\end{enumerate}
-	\item<+-> Para cada ciudad restante:
-	\begin{enumerate}
-		\item<+-> Si no ha sido visitada la añadimos al recorrido.
-		\item<+-> Calculamos la cota de la rama actual.
-		\item<+-> Si $cota_{actual} + distancia_{actual} < distancia_{mejor}$ expandimos  el nodo.
-	\end{enumerate}
-\end{enumerate}
-\end{frame}
-
-
-\section{Ejemplo}
-
-\begin{frame}[fragile]{Ejemplo (3 ciudades)}
-\large{
-\[
-  D=\begin{bmatrix}
-    0 & 4 & 2 \\
-    4 & 0 & 3 \\
-    2 & 3 & 0 \\
-  \end{bmatrix}
- \]
+\begin{figure}[H]
+\centering
+\begin{minted}[breaklines,tabsize=2]{c++}
+RecTSP(cota_actual,peso,nivel,s_parcial){
+	if(nivel==ciudades.size()){ //Caso base.
+		CerrarCircuito(s_parcial);
+		camino=Mejor(s_parcial,camino);
+	}
+	else{	// No es nodo terminal.
+		for c in ciudades{
+			if(!visitados[c]){
+				int cota_local=CalcularCotaLocal();
+				if(cota_local+peso < Distancia(camino)){
+					s_parcial.push_back(c);
+					visitados[c]=true;
+					RecTSP(cota_local,peso,nivel+1,s_parcial);
+	}
 }
-\end{frame}
-
-\begin{frame}[fragile]{Ejemplo (3 ciudades)}
-$
-  D=\begin{bmatrix}
-    0 & 4 & 2 \\
-    4 & 0 & 3 \\
-    2 & 3 & 0 \\
-  \end{bmatrix}
-$
- \begin{figure}[H]
-\begin{tikzpicture}[sibling distance=10em,
-  every node/.style = {shape=rectangle, rounded corners,
-    draw, align=center,
-    top color=white, bottom color=blue!20}]]
-  \node[top color=green!30, bottom color=white] {1};
-\end{tikzpicture}
+\end{minted}
 \end{figure}
-cota = estimador() =  9\\
-Añadimos la ciudad 1 al camino.\\
-$s_{parcial}=\{c_1\}$\\
-$d_{mejor}=+\infty$
 \end{frame}
-
-\begin{frame}[fragile]{Ejemplo (3 ciudades)}
-$
-  D=\begin{bmatrix}
-    0 & 4 & 2 \\
-    4 & 0 & 3 \\
-    2 & 3 & 0 \\
-  \end{bmatrix}
-$
- \begin{figure}[H]
-\begin{tikzpicture}[sibling distance=10em,
-  every node/.style = {shape=rectangle, rounded corners,
-    draw, align=center,
-    top color=white, bottom color=blue!20}]]
-  \node[top color=green!30, bottom color=white] {1}
-    child { 
-    node {2}
-    };
-\end{tikzpicture}
-\end{figure}
-cota =  9\\
-No es un nodo hoja $\rightarrow$ Calculamos su primer hijo.\\
-$s_{parcial}=\{c_1\}$\\
-$d_{mejor}=+\infty$
-\end{frame}
-
-\begin{frame}[fragile]{Ejemplo (3 ciudades)}
-$
-  D=\begin{bmatrix}
-    0 & 4 & 2 \\
-    4 & 0 & 3 \\
-    2 & 3 & 0 \\
-  \end{bmatrix}
-$
- \begin{figure}[H]
-\begin{tikzpicture}[sibling distance=10em,
-  every node/.style = {shape=rectangle, rounded corners,
-    draw, align=center,
-    top color=white, bottom color=blue!20}]]
-  \node[top color=green!30, bottom color=white] {1}
-    child { 
-    node[top color=green!30, bottom color=white] {2}
-    };
-\end{tikzpicture}
-\end{figure}
-cota  = 9 \\
-No ha sido visitado $\rightarrow$ lo añadimos al camino.\\
-$s_{parcial}=\{c_1,c_2\}$\\
-$d_{mejor}=+\infty$
-\end{frame}
-
-\begin{frame}[fragile]{Ejemplo (3 ciudades)}
-$
-  D=\begin{bmatrix}
-    0 & 4 & 2 \\
-    4 & 0 & 3 \\
-    2 & 3 & 0 \\
-  \end{bmatrix}
-$
- \begin{figure}[H]
-\begin{tikzpicture}[sibling distance=10em,
-  every node/.style = {shape=rectangle, rounded corners,
-    draw, align=center,
-    top color=white, bottom color=blue!20}]]
-  \node[top color=green!30, bottom color=white] {1}
-    child { 
-    node {2}
-    };
-\end{tikzpicture}
-\end{figure}
-cota  = 9 \\
-Calculamos nueva cota. nueva=2.5\\
-$s_{parcial}=\{c_1,c_2\}$\\
-$d_{mejor}=+\infty$
-\end{frame}
-
-\begin{frame}[fragile]{Ejemplo (3 ciudades)}
-$
-  D=\begin{bmatrix}
-    0 & 4 & 2 \\
-    4 & 0 & 3 \\
-    2 & 3 & 0 \\
-  \end{bmatrix}
-$
- \begin{figure}[H]
-\begin{tikzpicture}[sibling distance=10em,
-  every node/.style = {shape=rectangle, rounded corners,
-    draw, align=center,
-    top color=white, bottom color=blue!20}]]
-  \node[top color=green!30, bottom color=white] {1}
-    child { 
-    node {2}
-    };
-\end{tikzpicture}
-\end{figure}
-cota  = \textst{9} 2.5 \\
-\textcolor{green}{Es mejor} $\rightarrow$ actualizo cota.
-$s_{parcial}=\{c_1,c_2\}$\\
-$d_{mejor}=+\infty$
-\end{frame}
-
-\begin{frame}[fragile]{Ejemplo (3 ciudades)}
-$
-  D=\begin{bmatrix}
-    0 & 4 & 2 \\
-    4 & 0 & 3 \\
-    2 & 3 & 0 \\
-  \end{bmatrix}
-$
- \begin{figure}[H]
-\begin{tikzpicture}[sibling distance=10em,
-  every node/.style = {shape=rectangle, rounded corners,
-    draw, align=center,
-    top color=white, bottom color=blue!20}]]
-  \node[top color=green!30, bottom color=white] {1}
-    child { 
-    node[top color=green!30, bottom color=white] {2}
-    	child{
-    		node{3}
-    	}
-    };
-\end{tikzpicture}
-\end{figure}
-cota  = 2.5 \\
-$cota + distancia_{actual}=6.5 < + \infty \rightarrow$ Exploro.\\
-$s_{parcial}=\{c_1,c_2\}$\\
-$d_{mejor}=+\infty$
-\end{frame}
-
-\begin{frame}[fragile]{Ejemplo (3 ciudades)}
-$
-  D=\begin{bmatrix}
-    0 & 4 & 2 \\
-    4 & 0 & 3 \\
-    2 & 3 & 0 \\
-  \end{bmatrix}
-$
- \begin{figure}[H]
-\begin{tikzpicture}[sibling distance=10em,
-  every node/.style = {shape=rectangle, rounded corners,
-    draw, align=center,
-    top color=white, bottom color=blue!20}]]
-  \node[top color=green!30, bottom color=white] {1}
-    child { 
-    node[top color=green!30, bottom color=white] {2}
-    	child{
-    		node[top color=green!30, bottom color=white]{3}
-    	}
-    };
-\end{tikzpicture}
-\end{figure}
-cota  =  2.5 \\
-Es nodo terminal y actualizo camino y distancia mejor.\\
-$s_{parcial}=\{c_1,c_2,c_3,c_1\}$\\
-$d_{mejor}$=\textst{$+\infty$}=9
-\end{frame}
-
-\begin{frame}[fragile]{Ejemplo (3 ciudades)}
-$
-  D=\begin{bmatrix}
-    0 & 4 & 2 \\
-    4 & 0 & 3 \\
-    2 & 3 & 0 \\
-  \end{bmatrix}
-$
- \begin{figure}[H]
-\begin{tikzpicture}[sibling distance=10em,
-  every node/.style = {shape=rectangle, rounded corners,
-    draw, align=center,
-    top color=white, bottom color=blue!20}]]
-  \node[top color=green!30, bottom color=white] {1}
-    child { 
-    node {2}
-    	child{
-    		node{3}
-    	}
-    }
-    child { 
-    	node {3}
-    };
-\end{tikzpicture}
-\end{figure}
-cota  =  2.5 \\
-Vuelvo al nodo raíz y calculo su otro hijo.\\
-$s_{parcial}=\{c_1\}$\\
-$d_{mejor}=6$
-\end{frame}
-
-\begin{frame}[fragile]{Ejemplo (3 ciudades)}
-$
-  D=\begin{bmatrix}
-    0 & 4 & 2 \\
-    4 & 0 & 3 \\
-    2 & 3 & 0 \\
-  \end{bmatrix}
-$
- \begin{figure}[H]
-\begin{tikzpicture}[sibling distance=10em,
-  every node/.style = {shape=rectangle, rounded corners,
-    draw, align=center,
-    top color=white, bottom color=blue!20}]]
-  \node[top color=green!30, bottom color=white] {1}
-    child { 
-    node {2}
-    	child{
-    		node{3}
-    	}
-    }
-    child { 
-    	node[top color=green!30, bottom color=white] {3}
-    };
-\end{tikzpicture}
-\end{figure}
-cota  =  2.5 \\
-No ha sido visitado $\rightarrow$ lo añadimos al camino.\\
-Calculo la nueva cota. nueva=3.2 \\
-$s_{parcial}=\{c_1,c_3\}$\\
-$d_{mejor}=9$
-\end{frame}
-
-\begin{frame}[fragile]{Ejemplo (3 ciudades)}
-$
-  D=\begin{bmatrix}
-    0 & 4 & 2 \\
-    4 & 0 & 3 \\
-    2 & 3 & 0 \\
-  \end{bmatrix}
-$
- \begin{figure}[H]
-\begin{tikzpicture}[sibling distance=10em,
-  every node/.style = {shape=rectangle, rounded corners,
-    draw, align=center,
-    top color=white, bottom color=blue!20}]]
-  \node[top color=green!30, bottom color=white] {1}
-    child { 
-    node {2}
-    	child{
-    		node{3}
-    	}
-    }
-    child { 
-    	node[top color=red!30, bottom color=white] {3}
-    };
-\end{tikzpicture}
-\end{figure}
-cota  =  2.5 \\
-Calculo la nueva cota. nueva=3.2 \\
-Es mayor $\rightarrow$ no exploro.\\
-$s_{parcial}=\{c_1,c_3\}$\\
-$d_{mejor}=9$
-\end{frame}
-
-
-
 
 \section{Resultados obtenidos}
 
@@ -511,7 +233,7 @@ $d_{mejor}=9$
 \hline
 15 & $1192.761$ (19 minutos y 53 segundos)\\
 \hline
-16 & $+4h$\\
+16 & $+6h$\\
 \hline
 \end{tabular}
 \end{figure}
