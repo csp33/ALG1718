@@ -20,5 +20,7 @@
 *.mtc
 *.mtc1
 *.synctex.gz
-*.pyg*
-minted_*/*
+
+# minted
+_minted*
+*.pyg
