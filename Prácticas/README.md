@@ -9,7 +9,7 @@
 
 	Parte 2: El viajante de comercio. Nota obtenida: 7
 
-**Práctica 4**: Algoritmos Branch&Bound
+**Práctica 4**: Algoritmos Backtracking y Branch&Bound
 
 	Parte 1: Formas de sumar n. Nota obtenida: 10
 
